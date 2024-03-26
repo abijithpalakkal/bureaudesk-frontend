@@ -24,7 +24,7 @@ const loginpage = () => {
     return (
         <div className='h-screen  bg-blue'>
             <div className='w-full h-full md:flex  p-3'>
-                <div className='md:w-1/2 hidden  md:block bg-gradient-to-t via-customBlue from-customBlue to-white rounded-l-[25px] flex justify-center items-center'>
+                <div className='md:w-1/2 hidden md:block bg-gradient-to-t via-customBlue from-customBlue to-white rounded-l-[25px] flex justify-center items-center'>
                     <div className='flex flex-col justify-center items-center gap-[80px]'>
                         <img src={logo} className='w-[110px]' />
                         <p className='text-[30px] font-semibold '>Your place to work Plan. Create. Control.</p>
