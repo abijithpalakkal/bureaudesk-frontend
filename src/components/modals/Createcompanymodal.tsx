@@ -1,11 +1,24 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import axios from 'axios';
+import { BiArrowBack } from 'react-icons/bi';
+import { AppDispatch, RootState } from '../../redux/store';
+import { useDispatch } from 'react-redux';
+import { getCompanyAction } from '../../redux/actions/useractions/getCompanyAction';
+import { useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material'
 
-function Createcompanymodal() {
+interface Props {
+    modalstatus: Dispatch<SetStateAction<boolean>>;
+};
+
+function Createcompanymodal({ modalstatus }: Props) {
     const [companyName, setCompanyName] = useState('');
     const [logo, setLogo] = useState("");
     const [businessType, setBusinessType] = useState('');
     const [description, setDescription] = useState('');
+
+    const dispatch=useDispatch<AppDispatch>()
+    const {loading}=useSelector((state:RootState)=>state.companydetails)
 
     const handleFormSubmit = async (e: any) => {
         e.preventDefault();
@@ -36,7 +49,10 @@ function Createcompanymodal() {
             withCredentials: true,
 
         }).then((data: any) => {
-            console.log(data.data, "hiiiiiiii")
+            if(data.data.status==true){
+                dispatch(getCompanyAction(data.data.payload))
+                modalstatus(false)
+            }
         })
 
     }
@@ -48,14 +64,15 @@ function Createcompanymodal() {
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen h-screen">
-
                 <div className=" inset-0 bg-black  opacity-50 relative h-full w-full"></div>
-
                 <div className="bg-white rounded-lg shadow-2xl p-6 absolute ">
+                       
+                    <div className='bg-blue-600 w-6 h-6 rounded-md flex justify-center items-center border border-black' onClick={() => { modalstatus(false) }}><BiArrowBack /></div>
                     <div className="mb-4">
                         <h2 className="text-lg font-bold">create company</h2>
                     </div>
-                    <form onSubmit={handleFormSubmit}>
+                    {loading && <div className='flex justify-center items-center'><CircularProgress/></div>}
+                    { ! loading && <form onSubmit={handleFormSubmit} className={loading?'invisible':""}>
                         <div className='flex flex-col'>
                             <label htmlFor="companyName" className='mb-2'>Company Name:</label>
                             <input
@@ -74,7 +91,6 @@ function Createcompanymodal() {
                                 id="logo"
                                 accept="image/*"
                                 onChange={handleFileChange}
-
                                 required
                             />
                         </div>
@@ -105,7 +121,7 @@ function Createcompanymodal() {
                             </button>
                         </div>
 
-                    </form>
+                    </form>}
                 </div>
             </div>
         </div>

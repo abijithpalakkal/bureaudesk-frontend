@@ -1,4 +1,3 @@
-import React from 'react'
 import Homesidebar from "../components/Homesidebar"
 import Employes from '../components/Employes'
 

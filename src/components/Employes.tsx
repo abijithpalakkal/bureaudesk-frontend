@@ -1,8 +1,6 @@
-import React from 'react'
-import { AiOutlineDown, AiOutlinePlus } from 'react-icons/ai'
-import { BiCalendarEvent } from 'react-icons/bi'
-import { GrNotification } from 'react-icons/gr'
-import { BsListTask, BsPersonSquare } from 'react-icons/bs'
+
+import {  AiOutlinePlus } from 'react-icons/ai'
+
 import Homenavbar from './Homenavbar'
 
 function Employes() {
@@ -18,5 +16,4 @@ function Employes() {
             </div>
   )
 }
-
 export default Employes

@@ -3,24 +3,39 @@ import logo from '../assets/logo_2-removebg-preview (4).png'
 import designlogo from '../assets/designlogo.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { userLoginAction } from '../redux/actions/useractions/userActions'
+import { AppDispatch } from '../redux/store'
+import { getCompanyAction } from '../redux/actions/useractions/getCompanyAction'
 
 const loginpage = () => {
-    const navigate=useNavigate()
-    const formik=useFormik({
+    const dispatch=useDispatch<AppDispatch>()
+    const navigate = useNavigate()
+    const formik = useFormik({
         initialValues: {
             email: '',
             password: ''
-          },
-          validationSchema: Yup.object({
+        },
+        validationSchema: Yup.object({
             email: Yup.string().email('Invalid email address').required('Required'),
             password: Yup.string().required('Required'),
-          }),
-          onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-          },
-        
-        })
+        }),
+        onSubmit: async values => {
+            const email:string=values.email;
+            const password:string=values.password;
+            const data={
+                email,password
+            }
+           const data1=await dispatch(userLoginAction(data))
+           if(data1.payload.companyid){
+            await dispatch(getCompanyAction(data1.payload.companyid))
+            navigate("/employees")
+           }
+        },
+    })
+
     return (
         <div className='h-screen  bg-blue'>
             <div className='w-full h-full md:flex  p-3'>
@@ -28,7 +43,7 @@ const loginpage = () => {
                     <div className='flex flex-col justify-center items-center gap-[80px]'>
                         <img src={logo} className='w-[110px]' />
                         <p className='text-[30px] font-semibold '>Your place to work Plan. Create. Control.</p>
-                        <img src={designlogo} alt="" className='w-1/2'/>
+                        <img src={designlogo} alt="" className='w-1/2' />
                     </div>
                 </div>
                 <div className='md:w-1/2'>
@@ -47,7 +62,7 @@ const loginpage = () => {
                                 />
                                 {formik.touched.email && formik.errors.email ? (
                                     <div className='text-red-600'>{formik.errors.email}</div>
-                                ):null}
+                                ) : null}
                             </div>
 
                             <div className="mb-6">
@@ -61,22 +76,22 @@ const loginpage = () => {
                                     placeholder="Enter your password"
                                     {...formik.getFieldProps('password')}
                                 />
-                               {formik.touched.password && formik.errors.password?(
-                                <div className='text-red-600'>{formik.errors.password}</div>
-                               ):null}
-                               <p className='text-sm  text-gray-700'>forgot password?</p>
+                                {formik.touched.password && formik.errors.password ? (
+                                    <div className='text-red-600'>{formik.errors.password}</div>
+                                ) : null}
+                                <p className='text-sm  text-gray-700'>forgot password?</p>
                             </div>
-                            
+
                             <div className="flex items-center justify-center">
                                 <button
                                     className="bg-blue-500 w-[200px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="button"
+                                    type="submit"
                                 >
                                     Sign In
                                 </button>
                             </div>
                             <div className="flex items-center justify-center mt-4">
-                            <p className='text-sm'>dont have an account?<span className="text-blue-500 cursor-pointer" onClick={()=>{navigate("/signup")}}>sign in</span></p>
+                                <p className='text-sm'>dont have an account?<span className="text-blue-500 cursor-pointer" onClick={() => { navigate("/signup") }}>sign in</span></p>
                             </div>
                         </form>
                     </div>

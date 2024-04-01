@@ -14,11 +14,8 @@ import { ToastContainer } from 'react-toastify'
 import { RootState } from '../redux/store'
 import { CircularProgress } from '@mui/material'
 
-
-
-
-
 const signinpage = () => {
+    const { message } = useSelector((state: RootState) => state.userdetails)
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
 
@@ -37,7 +34,7 @@ const signinpage = () => {
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null)
     ];
-       const {user, loading}=useSelector((state:RootState)=>state.userdetails)
+    const { user, loading } = useSelector((state: RootState) => state.userdetails)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -125,21 +122,26 @@ const signinpage = () => {
 
         }
     }
-    const handleverifyotp = async() => {
+    const handleverifyotp = async () => {
         const otp = "" + otp1 + otp2 + otp3 + otp4
         console.log(otp, '----------')
-        await dispatch(userSignupAction({
+         const response =await dispatch(userSignupAction({
             otp,
             email,
             password
         }))
-        navigate('/employees')
+        
+        if (response.meta.requestStatus=="fulfilled") {
+
+            navigate('/employees')
+        }
+
 
     }
 
     return (
         <div className="flex">
-            
+
             <div className="bg-gradient-to-t via-customBlue from-customBlue  w-1/4 h-screen">
 
                 <div className='flex items-center justify-center mt-5'>
@@ -165,74 +167,74 @@ const signinpage = () => {
 
             </div>
             <div className="h-screen flex flex-col justify-items-center align items-center w-3/4 overflow-hidden">
-            
+
                 <div className='w-full h-full relative blur bg-cover bg-center'>
                     <img src={office_desk} className='w-full h-full' />
                 </div>
-                { loading? 
-                <div className='flex flex-col justify-center items-center h-full absolute '><CircularProgress/></div>
-                :
-                <div className='flex flex-col justify-center items-center h-full absolute '>
-                    <h1 className='font-bold'>Signin to <span className='text-[25px] text-customBlue'>bureaudesk</span></h1>
-                    <form className='mt-6' onSubmit={formik.handleSubmit}>
-                        {!otpdisplay && <div>
-                            <label htmlFor="email">Email</label>
-                            <input type="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('email')} />
-                            {formik.touched.email && formik.errors.email && (
-                                <div className="text-red-600">{formik.errors.email}</div>
-                            )}
-                        </div>}
-                        {otpdisplay && <div className='flex flex-col '>
-                            <label htmlFor="otp" className='text-center font-bold mb-3'>OTP</label>
-                            <div >
-                                {[otp1, otp2, otp3, otp4].map((otp, index) => (
-                                    <input type="text" maxLength={1} className="shadow mx-1 font-bold appearance-none border rounded w-[70px] h-[70px] py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-center"
-                                        minLength={1}
-                                        required
-                                        ref={inputRefs[index]}
-                                        name={`otp-${index + 1}`}
-                                        id={`otp-${index + 1}`}
-                                        value={otp}
-                                        onFocus={() => setFocusedInput(index)}
-                                        onChange={(e) =>
-                                            handleOtpChange(index + 1, e.target.value)
-                                        }
-                                        onKeyDown={(e) =>
-                                            handleBackSpace(index + 1, e)
-                                        }
+                {loading ?
+                    <div className='flex flex-col justify-center items-center h-full absolute '><CircularProgress /></div>
+                    :
+                    <div className='flex flex-col justify-center items-center h-full absolute '>
+                        <h1 className='font-bold'>Signin to <span className='text-[25px] text-customBlue'>bureaudesk</span></h1>
+                        <form className='mt-6' onSubmit={formik.handleSubmit}>
+                            {!otpdisplay && <div>
+                                <label htmlFor="email">Email</label>
+                                <input type="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('email')} />
+                                {formik.touched.email && formik.errors.email && (
+                                    <div className="text-red-600">{formik.errors.email}</div>
+                                )}
+                            </div>}
+                            {otpdisplay && <div className='flex flex-col '>
+                                <label htmlFor="otp" className='text-center font-bold mb-3'>OTP</label>
+                                <div >
+                                    {[otp1, otp2, otp3, otp4].map((otp, index) => (
+                                        <input type="text" maxLength={1} className="shadow mx-1 font-bold appearance-none border rounded w-[70px] h-[70px] py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-center"
+                                            minLength={1}
+                                            required
+                                            ref={inputRefs[index]}
+                                            name={`otp-${index + 1}`}
+                                            id={`otp-${index + 1}`}
+                                            value={otp}
+                                            onFocus={() => setFocusedInput(index)}
+                                            onChange={(e) =>
+                                                handleOtpChange(index + 1, e.target.value)
+                                            }
+                                            onKeyDown={(e) =>
+                                                handleBackSpace(index + 1, e)
+                                            }
 
-                                    />
-                                ))}
-                            </div>
-                        </div>}
-                        {!otpdisplay && <div className='mt-9'>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('password')} />
-                            {formik.touched.password && formik.errors.password && (
-                                <div className="text-red-600">{formik.errors.password}</div>
-                            )}
-                        </div>}
-                        {!otpdisplay && <div>
-                            <label htmlFor="password">confirm Password</label>
-                            <input type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('confirm_password')} />
-                            {formik.touched.confirm_password && formik.errors.confirm_password && (
-                                <div className="text-red-600">{formik.errors.confirm_password}</div>
-                            )}
-                        </div>}
-                        {!otpdisplay && <div className="flex items-center justify-center mt-5">
-                            <button className="bg-blue-500 w-[200px] flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                <span>generate otp</span>
-                                <BsArrowRightShort className="ml-2" />
-                            </button>
+                                        />
+                                    ))}
+                                </div>
+                            </div>}
+                            {!otpdisplay && <div className='mt-9'>
+                                <label htmlFor="password">Password</label>
+                                <input type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('password')} />
+                                {formik.touched.password && formik.errors.password && (
+                                    <div className="text-red-600">{formik.errors.password}</div>
+                                )}
+                            </div>}
+                            {!otpdisplay && <div>
+                                <label htmlFor="password">confirm Password</label>
+                                <input type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  {...formik.getFieldProps('confirm_password')} />
+                                {formik.touched.confirm_password && formik.errors.confirm_password && (
+                                    <div className="text-red-600">{formik.errors.confirm_password}</div>
+                                )}
+                            </div>}
+                            {!otpdisplay && <div className="flex items-center justify-center mt-5">
+                                <button className="bg-blue-500 w-[200px] flex items-center justify-center hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                    <span>generate otp</span>
+                                    <BsArrowRightShort className="ml-2" />
+                                </button>
 
-                        </div>}
-                        {otpdisplay && <div>
-                            <button type="button" onClick={handleverifyotp} className="flex flex-row mt-9 items-center justify-center text-center w-full border rounded-xl outline-none py-3 bg-blue-500 hover:bg-red-950 border-none text-white text-sm shadow-sm" >
-                                Verify Account
-                            </button>
-                        </div>}
-                    </form>
-                </div>}
+                            </div>}
+                            {otpdisplay && <div>
+                                <button type="button" onClick={handleverifyotp} className="flex flex-row mt-9 items-center justify-center text-center w-full border rounded-xl outline-none py-3 bg-blue-500 hover:bg-red-950 border-none text-white text-sm shadow-sm" >
+                                    Verify Account
+                                </button>
+                            </div>}
+                        </form>
+                    </div>}
             </div>
         </div>
     )

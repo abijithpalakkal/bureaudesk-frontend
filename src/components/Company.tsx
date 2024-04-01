@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import Homenavbar from './Homenavbar'
 import { ImCross } from 'react-icons/im'
 import Createcompanymodal from './modals/Createcompanymodal'
+import { UseSelector, useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
 
 function Company() {
+    
     const [modaldisplay, setmodaldisplay] = useState(false)
-
     return (
-
         <div className='w-5/6 h-screen px-2 py-2'>
             <div className='h-full'>
                 <Homenavbar />
@@ -20,9 +21,8 @@ function Company() {
                         </button>
                     </div>
                 </div>
-
             </div>
-            {modaldisplay && <Createcompanymodal />}
+            {modaldisplay && <Createcompanymodal modalstatus={setmodaldisplay}/>}
         </div>
 
     )
