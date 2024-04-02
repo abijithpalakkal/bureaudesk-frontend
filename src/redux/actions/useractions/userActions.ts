@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { handleErrors } from "../../../utils/handleErrors";
+import fetchData from "../../../utils/fetchdata";
 
 interface IProps {
     otp?: string;
@@ -61,6 +62,20 @@ export const userLoginAction = createAsyncThunk(
 
 
         } catch (error) {
+            return rejectWithValue(handleErrors(error))
+        }
+    }
+)
+
+
+export const userauth = createAsyncThunk(
+    "user/userauth",
+    async (_, { rejectWithValue }) => {
+        try {
+           const response=await fetchData("/user/getuserforauth")
+          console.log(response,"hellpodnckn w nc ,")
+          return response.data
+        } catch(error) {
             return rejectWithValue(handleErrors(error))
         }
     }

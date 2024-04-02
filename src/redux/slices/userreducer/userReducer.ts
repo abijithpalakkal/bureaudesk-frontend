@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { userSignupAction } from '../../actions/useractions/userActions';
 import { userLoginAction } from '../../actions/useractions/userActions';
+import { userauth } from '../../actions/useractions/userActions';
 
 
 
@@ -77,6 +78,23 @@ const useReducer=createSlice({
         state.message = "loaded"
       })
       .addCase(userLoginAction.rejected, (state, action) => {
+        state.error = action.error as string;
+        state.message = "rejected";
+        state.loading = false;
+      })
+
+
+      .addCase(userauth.pending, (state, action) => {
+        state.loading = true;
+        state.message = "Loading";
+      })
+      .addCase(userauth.fulfilled, (state, action) => {
+        console.log(action.payload,"hererererereer")
+        state.loading = false;
+        state.user = action.payload as any;
+        state.message = "loaded"
+      })
+      .addCase(userauth.rejected, (state, action) => {
         state.error = action.error as string;
         state.message = "rejected";
         state.loading = false;

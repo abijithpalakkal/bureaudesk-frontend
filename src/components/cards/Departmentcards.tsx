@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useActionData } from 'react-router-dom'
 import fetchData from '../../utils/fetchdata'
 import { CircularProgress } from '@mui/material'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 interface iDepartment {
     Name?: string
@@ -41,8 +42,8 @@ function Departmentcards() {
                         <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
                             view employees
                         </button>
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
-                            Add Employee
+                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none flex justify-between items-center">
+                        <span> Add Employee</span> <span className='text-white ml-1'><AiOutlinePlus /></span>
                         </button>
                     </div>
                 </div>

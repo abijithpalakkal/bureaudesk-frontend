@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
 import { ImCross } from 'react-icons/im'
 import Createcompanymodal from './modals/Createcompanymodal'
-import { UseSelector, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 
 function Company() {
-    
+
     const [modaldisplay, setmodaldisplay] = useState(false)
+    const [companydetails, setcompanydetails] = useState(null as any)
+    const company = useSelector((state: RootState) => state.companydetails?.company?._id)
+    const companydetails1 = useSelector((state: RootState) => state.companydetails?.company)
+    useEffect(() => {
+
+        if (company != undefined) {
+            setcompanydetails(companydetails1)
+        }
+    }, [])
     return (
         <div className='w-5/6 h-screen px-2 py-2'>
             <div className='h-full'>
                 <Homenavbar />
-                <div className='h-4/5 w-full flex justify-center items-center'>
+                {companydetails == null && <div className='h-4/5 w-full flex justify-center items-center'>
                     <div className='flex flex-col '>
                         <ImCross className='text-red-700 text-3xl self-center mb-3' />
                         <p className='text-center mb-4 text-2xl font-bold'>company not created!</p>
@@ -20,9 +29,23 @@ function Company() {
                             <span >Create company</span>
                         </button>
                     </div>
-                </div>
+                </div>}
+                {companydetails && <div className=" bg-white shadow-md mt-8 rounded-md overflow-hidden">
+                    <div className="p-4">
+                        <img src={companydetails?.Companylogo} alt="" className="w-1/5 h-auto object-cover" />
+                    </div>
+                    <div className="p-4">
+                        <h2 className="text-xl font-semibold text-gray-800">{companydetails?.Name}</h2>
+                        <p className="text-gray-600">{companydetails?.Bussinesstype}</p>
+                    </div>
+                    <div className="px-4 pb-4">
+                        <p className="text-gray-700">{companydetails?.Description}</p>
+                    </div>
+                </div>}
             </div>
-            {modaldisplay && <Createcompanymodal modalstatus={setmodaldisplay}/>}
+
+            {modaldisplay && <Createcompanymodal modalstatus={setmodaldisplay} />}
+
         </div>
 
     )

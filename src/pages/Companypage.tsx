@@ -1,10 +1,7 @@
 
 import Homesidebar from "../components/Homesidebar"
-import { useDispatch } from "react-redux"
 import Company from '../components/Company'
-import { useEffect } from "react"
-import { getCompanyAction } from "../redux/actions/useractions/getCompanyAction"
-import { AppDispatch } from "../redux/store"
+
 
 function Companypage() {
     /*const dispatch=useDispatch<AppDispatch>()

@@ -13,12 +13,11 @@ export const getCompanyAction = createAsyncThunk(
                 },
                 withCredentials: true,
             });
-            if(response.data){
-                console.log(response.data,"🚀🚀🚀🚀🚀🚀🚀🚀🚀")
+            if (response.data) {
+                console.log(response.data, "🚀🚀🚀🚀🚀🚀🚀🚀🚀")
                 return response.data
             }
-           
-        } catch (error:any) {
+        } catch (error: any) {
             console.log("erroroor")
             return rejectWithValue(handleErrors(error));
         }

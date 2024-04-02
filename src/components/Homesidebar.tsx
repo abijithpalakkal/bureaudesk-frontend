@@ -17,8 +17,8 @@ function Homesidebar(props: HomesidebarProps) {
    const comapanyimage= useSelector((state:RootState)=>state.companydetails.company.Companylogo)
     const navigate=useNavigate()
     return (
-        <div className='py-2 px-3 w-1/6 h-full'>
-            <div className='bg-white h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between '>
+        <div className='py-2 px-3 w-1/6 h-full '>
+            <div className='bg-white h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between'>
                 <div className='flex flex-col'>
                     { comapanyimage && <div className='w-[100px] h-[100px self-center'><img src={comapanyimage} alt="" /></div>}
                     <div className='mt-5 flex flex-col gap-5'>
