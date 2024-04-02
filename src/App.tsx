@@ -1,6 +1,6 @@
 import Loginpage from "./pages/Loginpage"
 import Signinpage from "./pages/Signinpage"
-import Employee from "./pages/Employee"
+import Employee from "./pages/Department"
 import Companypage from "./pages/Companypage"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 

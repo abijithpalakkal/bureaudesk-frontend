@@ -1,13 +1,14 @@
 import Homesidebar from "../components/Homesidebar"
-import Employes from '../components/Employes'
+import Employes from '../components/Departments'
+import Departments from "../components/Departments"
 
-function Employee() {
+function Department() {
     return (
         <div className='bg-slate-100 h-screen flex'>
             <Homesidebar page="department"/>
-            <Employes/>
+            <Departments/>
         </div>
     )
 }
 
-export default Employee
+export default Department

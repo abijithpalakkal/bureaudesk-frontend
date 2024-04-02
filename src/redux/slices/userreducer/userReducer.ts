@@ -8,9 +8,26 @@ interface iError {
     message:string
 }
 
+interface iUser {
+  Description?: string;
+  Name?: string;
+  Dob?: Date;
+  companyid?:string;
+  Contactno?: string;
+  Location?: string;
+  Position?: string;
+  Createdby?: string;
+  password?: string;
+  email?: string;
+  Authorization?: string;
+  Department?: string;
+  Departmentid?: string;
+  Admin?: boolean;
+}
+
 const initialState= {
     loading: false,
-    user: {},
+    user: {} as iUser ,
     message: "",
     error: "",
   };

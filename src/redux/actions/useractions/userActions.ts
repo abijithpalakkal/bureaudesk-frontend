@@ -49,7 +49,7 @@ export const userLoginAction = createAsyncThunk(
             if (response.data.errorResponse) {
                 alert(response.data.errorResponse.message)
             } else {
-                const response1 = await axios.post("http://localhost:8000/user/getuserdetails", { id: response.data._id }, {
+                const response1 = await axios.post("http://localhost:8000/user/getuserdetailsforlogin", { id: response.data._id }, {
                     headers: {
                         "Content-Type": "application/json",
                     },
