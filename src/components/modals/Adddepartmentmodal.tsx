@@ -11,7 +11,7 @@ interface Props {
 
 
 function Adddepartmentmodal({ modalstatus }: Props) {
-  const companyid = useSelector((state: RootState) => state.userdetails.user.companyid);
+  const companyid = useSelector((state: RootState) => state.companydetails.company._id);
   const [departName, setdepartName] = useState('');
   const [logo, setLogo] = useState("");
 

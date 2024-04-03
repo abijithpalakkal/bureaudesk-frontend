@@ -11,7 +11,7 @@ import { AppDispatch } from '../redux/store'
 import { getCompanyAction } from '../redux/actions/useractions/getCompanyAction'
 
 const loginpage = () => {
-    const dispatch=useDispatch<AppDispatch>()
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
@@ -23,17 +23,21 @@ const loginpage = () => {
             password: Yup.string().required('Required'),
         }),
         onSubmit: async values => {
-            const email:string=values.email;
-            const password:string=values.password;
-            const data={
-                email,password
+            const email: string = values.email;
+            const password: string = values.password;
+            const data = {
+                email, password
             }
-           const data1=await dispatch(userLoginAction(data))
-           console.log(data1.payload,"hi😍")
-           if(data1.payload?.companyid){
-            await dispatch(getCompanyAction(data1.payload.companyid))
-           }
-           navigate("/employees")
+            const data1 = await dispatch(userLoginAction(data))
+            console.log(data1.payload, "hi😍")
+            if (data1.payload?.companyid) {
+                await dispatch(getCompanyAction(data1.payload.companyid))
+            }
+            console.log(data1, "duhcusvchusbkicn cnasin")
+            if (data1.meta.requestStatus != "rejected") {
+                navigate("/employees")
+            }
+
         },
     })
 

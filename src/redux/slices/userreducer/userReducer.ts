@@ -81,6 +81,7 @@ const useReducer=createSlice({
         state.error = action.error as string;
         state.message = "rejected";
         state.loading = false;
+        alert((action.payload as {message:string}).message)
       })
 
 

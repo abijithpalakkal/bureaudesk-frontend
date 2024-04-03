@@ -19,9 +19,13 @@ const fetchData = async(url: string) => {
       if (response?.data?.status) {
         console.log(response?.data?.payload,'data====...');
         return { data: response?.data?.payload, loading: false };
+      }else{
+        console.log(response.data)
+        throw new Error(response.data.errorResponse.message);
       }
-      throw new Error('Unsuccessful response');
+      
     } catch (error: any) {
+      console.log(error.message)
       throw new Error(error.message);
     }
   };

@@ -4,7 +4,6 @@ import Employee from "./pages/Department"
 import Companypage from "./pages/Companypage"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useEffect } from "react"
-import fetchData from "./utils/fetchdata"
 import { userauth } from "./redux/actions/useractions/userActions"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "./redux/store"

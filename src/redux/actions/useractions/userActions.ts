@@ -48,7 +48,7 @@ export const userLoginAction = createAsyncThunk(
             })
             console.log(response.data, "hiiieieieieieiiieieieieieieieie")
             if (response.data.errorResponse) {
-                alert(response.data.errorResponse.message)
+                throw new Error(response.data.errorResponse.message)
             } else {
                 const response1 = await axios.post("http://localhost:8000/user/getuserdetailsforlogin", { id: response.data._id }, {
                     headers: {
