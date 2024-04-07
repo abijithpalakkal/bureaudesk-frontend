@@ -10,15 +10,15 @@ const config = {
       withCredentials: true,
       credentials: "include"
   };
+  
 
 const fetchData = async(url: string) => {
     try {
       console.log(url,'------body');
-      
       const response = await commonRequest("get", url, config);
       if (response?.data?.status) {
         console.log(response?.data?.payload,'data====...');
-        return { data: response?.data?.payload, loading: false };
+        return { data: response?.data?.payload, loading: false,message:response?.data?.message };
       }else{
         console.log(response.data)
         throw new Error(response.data.errorResponse.message);

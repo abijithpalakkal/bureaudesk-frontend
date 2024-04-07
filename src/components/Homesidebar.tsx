@@ -20,11 +20,13 @@ function Homesidebar(props: HomesidebarProps) {
         <div className='py-2 px-3 w-1/6 h-full '>
             <div className='bg-white h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between'>
                 <div className='flex flex-col'>
+                    
                     { comapanyimage && <div className='w-[100px] h-[100px self-center'><img src={comapanyimage} alt="" /></div>}
                     <div className='mt-5 flex flex-col gap-5'>
                         <div className='flex items-center gap-2 text-slate-500 cursor-pointer'><RiDashboardLine /><p>dashboard</p></div>
                         <div className='flex items-center gap-2  text-slate-500 cursor-pointer'> <BsListTask /><p>project</p></div>
                         <div className='flex items-center gap-2  text-slate-500 cursor-pointer'> <BiCalendarEvent /><p>events</p></div>
+                       
                         {props.page === 'department' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
@@ -34,7 +36,14 @@ function Homesidebar(props: HomesidebarProps) {
                             </div>
                         ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer' onClick={()=>navigate("/employees")}>  <FcDepartment /><p>department</p></div>)}
                         <div className='flex items-center gap-2  text-slate-500 cursor-pointer'> <SiMessenger /><p>messages</p></div>
-                        <div className='flex items-center gap-2  text-slate-500 cursor-pointer'> <BsPersonSquare /><p>profile</p></div>
+                        {props.page === 'profile'?(
+                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
+                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                <BsPersonSquare />
+                                    <p>profile</p>
+                                </div>
+                            </div>
+                        ) :<div className='flex items-center gap-2  text-slate-500 cursor-pointer' onClick={()=>navigate("/viewprofile")}> <BsPersonSquare /><p>profile</p></div>}
                         {props.page === 'company' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>

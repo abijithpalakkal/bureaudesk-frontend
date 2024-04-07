@@ -133,7 +133,7 @@ const signinpage = () => {
         
         if (response.meta.requestStatus=="fulfilled") {
 
-            navigate('/employees')
+            navigate('/company')
         }
 
 

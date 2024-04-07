@@ -7,6 +7,7 @@ import Addemployees from '../modals/Addemployees'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Companypage from '../../pages/Companypage'
+import { useNavigate } from 'react-router-dom'
 
 interface iDepartment {
     _id?:string,
@@ -17,6 +18,7 @@ interface iDepartment {
 }
 
 function Departmentcards() {
+    const navigate=useNavigate()
     const [dptdata, setdptdata] = useState([])
     const [loading, setloading] = useState(true)
     const [displaymodal, setdisplaymodal] = useState(false)
@@ -43,7 +45,7 @@ function Departmentcards() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-5 ">
             {loading && <div><CircularProgress /></div>}
             {!loading && dptdata.map((item: iDepartment, index) => (
-                <div key={index} className="max-w-md bg-white shadow-md rounded-md overflow-hidden p-2 bg-pink-100 bg-opacity-30">
+                <div key={index} className="max-w-md bg-white shadow-md rounded-md overflow-hidden p-2 bg-pink-200 bg-opacity-20">
                     <div className='flex justify-between'>
                         <div className="p-4">
                             <h2 className="text-xl font-semibold text-gray-800">{item.Name}</h2>
@@ -54,7 +56,7 @@ function Departmentcards() {
                         <p className="text-sm text-gray-600">Manager: <span className="font-bold">not assigned</span> </p>
                     </div>
                     <div className="px-4 pb-4 flex justify-between">
-                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+                        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none" onClick={()=>navigate(`/listemployees/${item._id}`)}>
                             view employees
                         </button>
                         <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none flex justify-between items-center" onClick={()=>{setdptid(item._id as string);setdisplaymodal(true)}}>

@@ -16,7 +16,7 @@ function Company() {
         if (company != undefined) {
             setcompanydetails(companydetails1)
         }
-    }, [])
+    }, [company])
     return (
         <div className='w-5/6 h-screen px-2 py-2'>
             <div className='h-full'>

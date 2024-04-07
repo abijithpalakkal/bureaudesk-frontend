@@ -10,6 +10,7 @@ interface iError {
 }
 
 interface iUser {
+  _id?:string,
   Description?: string;
   Name?: string;
   Dob?: Date;
@@ -38,7 +39,11 @@ const initialState= {
 const useReducer=createSlice({
     name:'userReducer',
     initialState,
-    reducers:{},
+    reducers:{
+      userdetailslogout:(state)=>{
+        state.user={}
+      }
+    },
     extraReducers:(builder)=>{
        builder
        .addCase(userSignupAction.pending, (state, action) => {
@@ -103,3 +108,4 @@ const useReducer=createSlice({
     }
 })
 export default useReducer.reducer;
+export const {userdetailslogout} = useReducer.actions

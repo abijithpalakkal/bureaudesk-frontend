@@ -15,7 +15,7 @@ const config = {
       const response = await commonRequest("post", url, config, body);
       console.log(response,"😁💕😘❤️🚀😊👍😒😍🤣👌😂")
       if (response.data?.status) {
-        return { data: response.data.payload, loading: false };
+        return { data: response.data.payload, loading: false,message:response?.data?.message };
       }
       else{
         console.log(response.data,"chdjchjsckh cnk cknh sknc")

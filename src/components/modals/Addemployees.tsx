@@ -11,19 +11,23 @@ interface Props {
 
 function Addemployees({ modalstatus, dptid }: Props) {
   const [email, setemail] = useState("")
+  const [position,setposition]=useState("")
   const companyid = useSelector((state: RootState) => state.companydetails.company._id)
+
   const handlesubmit = async (e: SyntheticEvent) => {
     if (companyid != undefined) {
       e.preventDefault()
       console.log(email)
       console.log(dptid)
       console.log(companyid)
+
       const obj = {
         email: email,
+        position:position,
         Departmentid: dptid,
         companyid: companyid
       }
-      const response=await postData("/user/addemployee", obj)
+      const response = await postData("/user/addemployee", obj)
       modalstatus(response.loading)
     }
 
@@ -47,6 +51,17 @@ function Addemployees({ modalstatus, dptid }: Props) {
                 id="companyName"
                 value={email}
                 onChange={(e) => setemail(e.target.value)}
+                required
+                className="border border-blue-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400"
+              />
+            </div>
+            <div className='flex flex-col'>
+              <label htmlFor="companyName" className='mb-2'>Mention position <span className='text-gray-400 text-sm'>eg:junior staff,senior developer</span></label>
+              <input
+                type="text"
+                id="companyName"
+                value={position}
+                onChange={(e) => setposition(e.target.value)}
                 required
                 className="border border-blue-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400"
               />

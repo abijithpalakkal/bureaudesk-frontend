@@ -1,10 +1,37 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { BiCalendarEvent } from 'react-icons/bi'
 import { GrNotification } from 'react-icons/gr'
 import { BsListTask, BsPersonSquare } from 'react-icons/bs'
 import { AiOutlineDown, AiOutlinePlus } from 'react-icons/ai'
+import fetchData from '../utils/fetchdata'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../redux/store'
+import { userdetailslogout } from '../redux/slices/userreducer/userReducer'
+import { usercompanylogout } from '../redux/slices/companyreducer/companyReducer'
+import { useNavigate } from 'react-router-dom'
 
 function Homenavbar() {
+    const navigate=useNavigate()
+    const dispatch=useDispatch<AppDispatch>()
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+      };
+    
+      const handleProfileClick = () => {
+        // Logic to handle profile click
+        console.log('Profile clicked');
+      };
+    
+      const handleLogoutClick =async () => {
+        const data=await fetchData("/auth/logout")
+        dispatch(userdetailslogout())
+        dispatch(usercompanylogout())
+        navigate("/")
+        
+      };
+    
     return (
         <div className='flex justify-between'>
             <div className="relative">
@@ -22,11 +49,23 @@ function Homenavbar() {
             </div>
             <div className='flex gap-5'>
                 <div className='bg-white w-8 h-8 flex justify-center items-center rounded-md'><GrNotification /></div>
-                <div className='bg-white flex px-2 gap-2 justify-around items-center rounded-md'>
-                    <BsPersonSquare />
-                    <p>john dow</p>
-                    <AiOutlineDown />
-                </div>
+                <div className='relative'>
+      <div className='bg-white flex px-2 gap-2 justify-around items-center rounded-md cursor-pointer' onClick={toggleDropdown}>
+        <BsPersonSquare />
+        <p>john dow</p>
+        <AiOutlineDown />
+      </div>
+      { isOpen && (
+        <div className='absolute top-full right-0 mt-1 bg-white shadow-lg rounded-md'>
+          <button className='block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100' onClick={handleProfileClick}>
+            Profile
+          </button>
+          <button className='block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100' onClick={handleLogoutClick}>
+            Logout
+          </button>
+        </div>
+      )}
+    </div>
             </div>
         </div>
     )

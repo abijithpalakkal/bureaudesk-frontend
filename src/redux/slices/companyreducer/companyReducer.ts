@@ -20,7 +20,11 @@ const initialState = {
 const useReducer = createSlice({
   name: 'companyReducer',
   initialState,
-  reducers: {},
+  reducers: {
+    usercompanylogout:(state)=>{
+      state.company={}
+  }
+},
   extraReducers: (builder) => {
     builder
       .addCase(getCompanyAction.pending, (state, action) => {
@@ -41,3 +45,4 @@ const useReducer = createSlice({
   }
 })
 export default useReducer.reducer;
+export const {usercompanylogout} = useReducer.actions
