@@ -28,12 +28,11 @@ function Addemployees({ modalstatus, dptid }: Props) {
         companyid: companyid
       }
       const response = await postData("/user/addemployee", obj)
-      modalstatus(response.loading)
+      modalstatus(response?.loading as boolean)
     }
 
   }
   return (
-
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen h-screen">
         <div className=" inset-0 bg-black  opacity-50 relative h-full w-full"></div>

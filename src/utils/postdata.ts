@@ -24,7 +24,6 @@ const config = {
     } catch (error: any) {
       console.log(error.message)
       alert(error.message)
-      throw new Error(error.message);
     }
   };
 

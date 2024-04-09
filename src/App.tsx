@@ -12,6 +12,9 @@ import { useSelector } from "react-redux"
 import { useNavigate, Navigate } from "react-router-dom"
 import Listemployeepage from "./pages/Listemployeepage"
 import Viewprofilepage from "./pages/Viewprofilepage"
+import Viewteampage from "./pages/Viewteampage"
+import Post from "./config/Conteststore"
+
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -19,7 +22,7 @@ function App() {
   const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
   console.log(userid)
   useEffect(() => {
-    if(!userid){
+    if (!userid) {
       const auth = async () => {
         const response: any = await dispatch(userauth())
         if (response.payload?.companyid) {
@@ -29,19 +32,24 @@ function App() {
       }
       auth()
     }
-   
+
   }, [userid])
 
   return (
     <Router>
-      <Routes>
-        <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
-        <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
-        <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
-        <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
-        <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
-        <Route path="/viewprofile" element={userid ? <Viewprofilepage/> : <Navigate to={'/'} />} />
-      </Routes>
+      
+        <Routes>
+
+          <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
+          <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
+          <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
+          <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
+          <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
+          <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
+          <Route path="/viewteam/:id" element={userid ? <Viewteampage /> : <Navigate to={'/'} />} />
+
+        </Routes>
+      
     </Router>
   )
   /*if (role === null || role === undefined) {

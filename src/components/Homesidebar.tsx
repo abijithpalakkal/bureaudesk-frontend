@@ -21,7 +21,7 @@ function Homesidebar(props: HomesidebarProps) {
             <div className='bg-white h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between'>
                 <div className='flex flex-col'>
                     
-                    { comapanyimage && <div className='w-[100px] h-[100px self-center'><img src={comapanyimage} alt="" /></div>}
+                    { comapanyimage && <div className='w-[100px] h-[100px] self-center rounded-full overflow-hidden flex justify-center items-center bg-cover border-2 border-black'><img src={comapanyimage} alt=""  className='bg-cover '/></div>}
                     <div className='mt-5 flex flex-col gap-5'>
                         <div className='flex items-center gap-2 text-slate-500 cursor-pointer'><RiDashboardLine /><p>dashboard</p></div>
                         <div className='flex items-center gap-2  text-slate-500 cursor-pointer'> <BsListTask /><p>project</p></div>
