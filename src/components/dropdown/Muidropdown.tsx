@@ -8,9 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import postData from '../../utils/postdata';
 import { useContext } from 'react'
 import { Postcontext } from '../../config/Conteststore'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export default function Muidropdown({ displaymodal, position, id, dptid ,setrefresh,refresh}: any) {
   /*const[postdetails,setpostdetails ]=useContext<any>(Postcontext)*/
+  const Authorization=useSelector((state:RootState)=>state.userdetails.user.Authorization)
   const naviagte = useNavigate()
 console.log(id,dptid)
   const makemanager = async() => {
@@ -27,9 +30,9 @@ console.log(id,dptid)
       <MenuButton><p className='flex justify-center items-center'>action<AiFillCaretDown className='mt-1' /></p></MenuButton>
       <Menu>
         <MenuItem onClick={() => { displaymodal(true) }}>Profile</MenuItem>
-        <MenuItem onClick={makemanager}>make as manager</MenuItem>
-        <MenuItem onClick={() => { position(true) }}>edit position</MenuItem>
-        <MenuItem>Block</MenuItem>
+        {Authorization!="basic_node" && <MenuItem onClick={makemanager}>make as manager</MenuItem>}
+        {Authorization!="basic_node" && <MenuItem onClick={() => { position(true) }}>edit position</MenuItem>}
+        {Authorization!="basic_node" && <MenuItem>Block</MenuItem>}
       </Menu>
     </Dropdown>
   );

@@ -14,6 +14,10 @@ import Listemployeepage from "./pages/Listemployeepage"
 import Viewprofilepage from "./pages/Viewprofilepage"
 import Viewteampage from "./pages/Viewteampage"
 import Post from "./config/Conteststore"
+import ErrorPage from "./pages/Errorpage404"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Eventspage from "./pages/Eventspage"
 
 
 function App() {
@@ -35,7 +39,7 @@ function App() {
 
   }, [userid])
 
-  return (
+  /*return (
     <Router>
       
         <Routes>
@@ -51,27 +55,41 @@ function App() {
         </Routes>
       
     </Router>
-  )
-  /*if (role === null || role === undefined) {
+  )*/
+
+  if (role === null || role === undefined) {
 
     return (
       <Router>
+        <ToastContainer/>
+
         <Routes>
+        <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={<Signinpage />} />
           <Route path="/" element={<Loginpage />} />
         </Routes>
       </Router>
     )
   }
-  if (role === "root_node") {
+
+  if (role === "root_node" || role === "semi_node") {
     return (
       <Router>
+        <ToastContainer />
         <Routes>
-          <Route path="/signup" element={<Signinpage />} />
+        <Route path="*" element={<ErrorPage />} />
+          <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
+          <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
+          <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
+          <Route path="/viewteam/:id" element={userid ? <Viewteampage /> : <Navigate to={'/'} />} />
+          <Route path="/404error" element={userid ? <ErrorPage /> : <Navigate to={'/'} />} />
+          <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
+
         </Routes>
+
       </Router>
     )
   }
@@ -80,16 +98,22 @@ function App() {
   if (role === "basic_node") {
     return (
       <Router>
+        <ToastContainer />
         <Routes>
-          <Route path="/signup" element={<Signinpage />} />
+        <Route path="*" element={<ErrorPage/>} />
+          <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
+          <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
+          <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
+          <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
+
         </Routes>
       </Router>
 
 
     )
-  }*/
+  }
 
 }
 

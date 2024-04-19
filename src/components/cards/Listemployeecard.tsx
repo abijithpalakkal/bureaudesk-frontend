@@ -75,7 +75,7 @@ function Listemployeecard({ item,setrefresh,refresh,id}: any) {
                     </div>
                     <div className='flex justify-center '>
                         <button type="submit" className="bg-blue-500 mt-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            create and send email
+                            make changes
                         </button>
                     </div>
                 </form>

@@ -17,7 +17,7 @@ const initialState = {
   error: "",
 };
 
-const useReducer = createSlice({
+const useReducer:any = createSlice({
   name: 'companyReducer',
   initialState,
   reducers: {

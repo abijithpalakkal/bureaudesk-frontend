@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
 import { ImCross } from 'react-icons/im'
-import Createcompanymodal from './modals/Createcompanymodal'
+import Createcompanymodal from '../modals/Createcompanymodal'
 import { useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
+import { RootState } from '../../redux/store'
 
 function Company() {
 

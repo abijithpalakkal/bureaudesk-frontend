@@ -1,6 +1,6 @@
 
-import Homesidebar from "../components/Homesidebar"
-import Company from '../components/Company'
+import Homesidebar from "../components/maincomponents/Homesidebar"
+import Company from '../components/maincomponents/Company'
 
 
 function Companypage() {

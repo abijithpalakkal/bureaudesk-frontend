@@ -3,11 +3,11 @@ import { BiCalendarEvent } from 'react-icons/bi'
 import { GrNotification } from 'react-icons/gr'
 import { BsListTask, BsPersonSquare } from 'react-icons/bs'
 import { AiOutlineDown, AiOutlinePlus } from 'react-icons/ai'
-import fetchData from '../utils/fetchdata'
+import fetchData from '../../utils/fetchdata'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../redux/store'
-import { userdetailslogout } from '../redux/slices/userreducer/userReducer'
-import { usercompanylogout } from '../redux/slices/companyreducer/companyReducer'
+import { AppDispatch } from '../../redux/store'
+import { userdetailslogout } from '../../redux/slices/userreducer/userReducer'
+import { usercompanylogout } from '../../redux/slices/companyreducer/companyReducer'
 import { useNavigate } from 'react-router-dom'
 
 function Homenavbar() {
@@ -31,7 +31,10 @@ function Homenavbar() {
     navigate("/")
 
   };
-
+  const today = new Date();
+  const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const weekDayName = weekDays[today.getDay()];
+  const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(today);
   return (
     <div className='flex justify-between'>
       <div className="relative">
@@ -47,7 +50,8 @@ function Homenavbar() {
           </svg>
         </div>
       </div>
-      <div className='flex gap-5'>
+      <div className='flex gap-5 '>
+        <div className='bg-blue-100 py-1 px-3  rounded-lg '> {weekDayName}, {formattedDate}</div>
         <div className='bg-white w-8 h-8 flex justify-center items-center rounded-md'><GrNotification /></div>
         <div className='relative'>
           <div className='bg-white flex px-2 gap-2 justify-around items-center rounded-md cursor-pointer' onClick={toggleDropdown}>

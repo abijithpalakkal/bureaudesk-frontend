@@ -1,6 +1,6 @@
 import React from 'react'
-import Viewteam from '../components/Viewteam'
-import Homesidebar from '../components/Homesidebar'
+import Viewteam from '../components/maincomponents/Viewteam'
+import Homesidebar from '../components/maincomponents/Homesidebar'
 
 function Viewteampage() {
   return (

@@ -1,14 +1,14 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
-import Listemployeecard from './cards/Listemployeecard'
+import Listemployeecard from '../cards/Listemployeecard'
 import { AiOutlinePlus } from 'react-icons/ai'
 import logo from "../assets/dummy-profile-pic-300x300-1.png"
-import fetchData from '../utils/fetchdata'
-import Editprofilemodal from './modals/Editprofilemodal'
+import fetchData from '../../utils/fetchdata'
+import Editprofilemodal from '../modals/Editprofilemodal'
 import { Dispatch } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
-import Profilecard from './cards/Profilecard'
+import { RootState } from '../../redux/store'
+import Profilecard from '../cards/Profilecard'
 
 interface iprop {
   id: string

@@ -1,6 +1,6 @@
-import Homesidebar from "../components/Homesidebar"
-import Employes from '../components/Departments'
-import Departments from "../components/Departments"
+import Homesidebar from "../components/maincomponents/Homesidebar"
+import Employes from '../components/maincomponents/Departments'
+import Departments from "../components/maincomponents/Departments"
 
 function Department() {
     return (

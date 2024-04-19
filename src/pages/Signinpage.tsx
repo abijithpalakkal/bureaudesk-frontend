@@ -10,9 +10,13 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignupAction } from '../redux/actions/useractions/userActions'
 import { AppDispatch } from '../redux/store'
-import { ToastContainer } from 'react-toastify'
 import { RootState } from '../redux/store'
 import { CircularProgress } from '@mui/material'
+import Timer from "../components/helpers/Timer"
+import postData from '../utils/postdata'
+import { toast } from 'react-toastify';
+
+
 
 const signinpage = () => {
     const { message } = useSelector((state: RootState) => state.userdetails)
@@ -27,6 +31,9 @@ const signinpage = () => {
     const [otp3, setOtp3] = useState<string>("");
     const [otp4, setOtp4] = useState<string>("");
     const [focusedInput, setFocusedInput] = useState<number>(0)
+    const [refresh, setrefresh] = useState<boolean>(false)
+    const [minutes, setMinutes] = useState(2);
+    const [seconds, setSeconds] = useState(0);
 
     const inputRefs = [
         useRef<HTMLInputElement>(null),
@@ -60,6 +67,9 @@ const signinpage = () => {
                 email: values.email,
             }).then((data) => {
                 console.log(data, "hi hi hi")
+                if (!data.data.status) {
+                    toast.error(data.data?.message)
+                }
                 if (data.data.status) {
                     setpassword(values.password)
                     setemail(values.email)
@@ -70,6 +80,8 @@ const signinpage = () => {
 
         },
     });
+
+
 
     const handleOtpChange = (index: number, value: string) => {
         switch (index) {
@@ -125,13 +137,13 @@ const signinpage = () => {
     const handleverifyotp = async () => {
         const otp = "" + otp1 + otp2 + otp3 + otp4
         console.log(otp, '----------')
-         const response =await dispatch(userSignupAction({
+        const response = await dispatch(userSignupAction({
             otp,
             email,
             password
         }))
-        
-        if (response.meta.requestStatus=="fulfilled") {
+
+        if (response.meta.requestStatus == "fulfilled") {
 
             navigate('/company')
         }
@@ -139,10 +151,22 @@ const signinpage = () => {
 
     }
 
-    return (
-        <div className="flex">
+    const resendOtp = async () => {
+        const data = await postData("/auth/otpresend", { email: email })
+        if (data) {
+            setMinutes(2)
+            setSeconds(0)
+            toast.success("otp send successfully")
+        }
 
-            <div className="bg-gradient-to-t via-customBlue from-customBlue  w-1/4 h-screen">
+    }
+
+
+    return (
+
+        <div className="md:flex">
+              
+            <div className="bg-gradient-to-t via-customBlue from-customBlue  w-1/4 h-screen hidden md:block">
 
                 <div className='flex items-center justify-center mt-5'>
                     <img src={logo} alt="" className='w-[110px]' />
@@ -164,10 +188,9 @@ const signinpage = () => {
                     style={{ fontSize: '2em', display: 'inline-block' }}
                     repeat={Infinity}
                 /></h2>
-
             </div>
-            <div className="h-screen flex flex-col justify-items-center align items-center w-3/4 overflow-hidden">
-
+            <div className="h-screen flex flex-col  justify-items-center align items-center md:w-3/4 overflow-hidden">
+                <div className='w-screen h-10'> <img src={logo} alt="" className='h-full' />dsvsd</div>
                 <div className='w-full h-full relative blur bg-cover bg-center'>
                     <img src={office_desk} className='w-full h-full' />
                 </div>
@@ -206,6 +229,11 @@ const signinpage = () => {
                                         />
                                     ))}
                                 </div>
+                                <div className='flex justify-between items-center' onClick={resendOtp}>
+                                    <div><p className='text-blue-600 cursor-pointer hover:text-blue-900 mt-3'>resend otp</p></div>
+                                    <Timer minutes={minutes} setMinutes={setMinutes} seconds={seconds} setSeconds={setSeconds} />
+                                </div>
+
                             </div>}
                             {!otpdisplay && <div className='mt-9'>
                                 <label htmlFor="password">Password</label>
@@ -228,6 +256,7 @@ const signinpage = () => {
                                 </button>
 
                             </div>}
+
                             {otpdisplay && <div>
                                 <button type="button" onClick={handleverifyotp} className="flex flex-row mt-9 items-center justify-center text-center w-full border rounded-xl outline-none py-3 bg-blue-500 hover:bg-red-950 border-none text-white text-sm shadow-sm" >
                                     Verify Account

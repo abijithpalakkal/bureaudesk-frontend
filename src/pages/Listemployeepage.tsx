@@ -1,6 +1,6 @@
 import React from 'react'
-import Homesidebar from '../components/Homesidebar'
-import Listemployees from '../components/Listemployees'
+import Homesidebar from '../components/maincomponents/Homesidebar'
+import Listemployees from '../components/maincomponents/Listemployees'
 import { useLocation } from 'react-router-dom'
 
 function Listemployeepage() {
