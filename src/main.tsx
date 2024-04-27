@@ -6,7 +6,7 @@ import './index.css'
 import Post from "./config/Conteststore.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Provider store={store}>
+    <Provider store={store} >
         
             <App />
         

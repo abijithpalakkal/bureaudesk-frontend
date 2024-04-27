@@ -1,12 +1,13 @@
 .animated-button {
+      
     position: relative;
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 15px;
-    border: 4px solid;
+    padding: 2px 5px;
+    border: 1px solid;
     border-color: transparent;
-    font-size: 16px;
+    width: 110px;
     background-color: inherit;
     border-radius: 100px;
     font-weight: 600;
@@ -19,18 +20,18 @@
   
   .animated-button svg {
     position: absolute;
-    width: 24px;
+    width: 12px;
     fill: rgb(55, 115, 180);
     z-index: 9;
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
   
   .animated-button .arr-1 {
-    right: 2px;
+    right: 12px;
   }
   
   .animated-button .arr-2 {
-    left: -25%;
+    left: -50%;
   }
   
   .animated-button .circle {
@@ -38,8 +39,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background-color:rgb(55, 115, 180);
     border-radius: 50%;
     opacity: 0;
@@ -47,10 +48,11 @@
   }
   
   .animated-button .text {
+    text-align: center;
+    font-size:15px;
     position: relative;
     z-index: 1;
-    transform: translateX(-12px);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  
   }
   
   .animated-button:hover {
@@ -64,12 +66,10 @@
   }
   
   .animated-button:hover .arr-2 {
-    left: 16px;
+    left: 5px;
   }
   
-  .animated-button:hover .text {
-    transform: translateX(12px);
-  }
+  
   
   .animated-button:hover svg {
     fill: #212121;
@@ -81,8 +81,8 @@
   }
   
   .animated-button:hover .circle {
-    width: 220px;
-    height: 220px;
+    width: 110px;
+    height: 110px;
     opacity: 1;
   }
   

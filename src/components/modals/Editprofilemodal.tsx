@@ -37,7 +37,7 @@ function Editprofilemodal({ modal }: Props) {
     const handleSubmit = async (event: SyntheticEvent) => {
         event.preventDefault();
         // Here you can perform any validation or further processing before submitting the form
-        console.log('Form submitted:', { name, dob, age, location, profileImage });
+       
         // Reset form fields
         if (profileImage) {
             const formData = new FormData();
@@ -48,8 +48,7 @@ function Editprofilemodal({ modal }: Props) {
                 body: formData
             });
             const url = await response.json()
-            console.log(url)
-            console.log(url.secure_url)
+        
             await postData(`/user/updateuser/${userid}`, { Name:name, Dob:dob, age, Location:location,Contactno:Contact,profileImage: url.secure_url })
             modal(false)
         }else{

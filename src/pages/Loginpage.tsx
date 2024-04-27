@@ -33,11 +33,11 @@ const[blur,setblur]=useState(false)
                 email, password
             }
             const data1 = await dispatch(userLoginAction(data))
-            console.log(data1.payload, "hi😍")
+         
             if (data1.payload?.companyid) {
                 await dispatch(getCompanyAction(data1.payload.companyid))
             }
-            console.log(data1, "duhcusvchusbkicn cnasin")
+        
             if (data1.meta.requestStatus != "rejected") {
                 navigate("/employees")
             }

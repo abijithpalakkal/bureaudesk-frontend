@@ -22,12 +22,6 @@ function Createcompanymodal({ modalstatus }: Props) {
 
     const handleFormSubmit = async (e: any) => {
         e.preventDefault();
-        console.log({
-            Name: companyName,
-            Companylogo: logo,
-            Bussinesstype: businessType,
-            Description: description
-        });
         const formData = new FormData();
         formData.append('file', logo);
         formData.append('upload_preset', "ckoevhm7")
@@ -36,7 +30,6 @@ function Createcompanymodal({ modalstatus }: Props) {
             body: formData
         });
         const url = await response.json()
-        console.log(url.secure_url)
         await axios.post("http://localhost:8000/company/createcompany", {
             Name: companyName,
             Companylogo: url.secure_url,

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 function Listemployeepage() {
     const {state}=useLocation()
-    console.log(state)
+    
     return (
         <div className='bg-slate-100 h-screen flex'>
             <Homesidebar page="department"/>

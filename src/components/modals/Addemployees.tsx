@@ -17,9 +17,6 @@ function Addemployees({ modalstatus, dptid }: Props) {
   const handlesubmit = async (e: SyntheticEvent) => {
     if (companyid != undefined) {
       e.preventDefault()
-      console.log(email)
-      console.log(dptid)
-      console.log(companyid)
 
       const obj = {
         email: email,

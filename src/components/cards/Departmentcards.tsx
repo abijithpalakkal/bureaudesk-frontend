@@ -37,7 +37,6 @@ function Departmentcards() {
             const id = company._id
             if (Object.keys(company).length !== 0) {
                 const response = await fetchData(`/company/getdepartment/${id}`)
-                console.log(response, "🚀❤️😘💕😁")
                 setdptdata(response.data)
                 setloading(response.loading)
             } else {
@@ -82,7 +81,7 @@ function Departmentcards() {
             {loading && <div><CircularProgress /></div>}
             {!loading && dptdata.map((item: iDepartment, index: any) => (
                 <div key={index} className="max-w-md bg-white shadow-lg duration-300 cursor-pointer hover:scale-95 rounded-md overflow-hidden p-2">
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between max-h-20'>
                         <div className="p-4">
                             <h2 className="text-xl font-semibold text-gray-800">{item.Name}<span className='cursor-pointer'><BiEdit/></span></h2>
                         </div>
@@ -91,16 +90,15 @@ function Departmentcards() {
                     <div className="p-4 flex items-center justify-start">
 
                         <p className="text-sm text-gray-600 flex items-center justify-start"><span className='text-lg font-bold'>manager:</span>
-                            {manager[index]?.mangerImage != "not assigned" && <img src={manager[index]?.mangerImage} className='w-8 h-8 rounded-full mr-2 ml-2' />}
+                            {manager[index]?.mangerImage != "not assigned" && <img src={manager[index]?.mangerImage} className='w-5 h-5 rounded-full mr-2 ml-2' />}
                             <span className="font-bold">{manager[index]?.managerName}</span>
                         </p>
 
                     </div>
                     <div className="px-4 pb-4 flex justify-between">
                        
-                       <div onClick={() => navigate(`/listemployees/${item._id}`, { state: item?.Name })}> <Uibuttons btnname='view employees'/></div>
-                        {Authorization != "basic_node" && <div      onClick={() => { setdptid(item._id as string); setdisplaymodal(true) }}> <Uibuttons btnname='add employee'/></div>}
-                   
+                       <div onClick={() => navigate(`/listemployees/${item._id}`, { state: item?.Name })}> <Uibuttons btnname='view '/></div>
+                        {Authorization != "basic_node" && <div onClick={() => { setdptid(item._id as string); setdisplaymodal(true) }}> <Uibuttons btnname='add '/></div>}
                     </div>
                 </div>
             ))}

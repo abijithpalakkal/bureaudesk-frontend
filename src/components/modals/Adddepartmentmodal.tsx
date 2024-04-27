@@ -25,8 +25,6 @@ function Adddepartmentmodal({ modalstatus }: Props) {
       body: formData
     });
     const url = await response.json()
-    console.log(url)
-    console.log(url.secure_url)
     await postData("/company/createdepartment",{
       Name: departName,
       departmentlogo: url.secure_url,

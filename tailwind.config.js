@@ -11,6 +11,10 @@ export default {
           DEFAULT: '#3F8CFF', 
         },
       },
+      fontFamily:{
+        nunitosans:'Nunito Sans'
+        
+      }
     },
   },
   plugins: [],

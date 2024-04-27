@@ -20,7 +20,6 @@ function Viewprofile({ id }: iprop) {
   useEffect(() => {
     async function fetch() {
       const response = await fetchData(`/user/getuserbyid/${id}`)
-      console.log(response, "shciaicoaocn")
       setuser(response.data)
     }
     fetch()

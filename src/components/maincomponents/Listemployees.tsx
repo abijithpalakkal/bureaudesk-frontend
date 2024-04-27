@@ -8,6 +8,8 @@ import Createteammodal from '../modals/Createteammodal'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
+import Nearestcomponent from '../cards/Nearestcomponent'
+import Activitystream from '../cards/Activitystream'
 
 
 interface iprop {
@@ -27,7 +29,6 @@ function Listemployees({ department }: iprop) {
         async function getemployees() {
             try{
                 const response = await fetchData(`/user/getdepartmentemployee/${id}`)
-                console.log(response.data, "ygdcuaivbiabcjdnin")
                 setemployee(response.data)
             }catch(err){
                 navigate("/404error")
@@ -49,10 +50,16 @@ function Listemployees({ department }: iprop) {
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => navigate(`/viewteam/${id}`)}><span >view team</span> </button>
                         </div>}
                     </div>
-                    <div className='mt-6 '>
+                    <div className='mt-6 flex'>
+                        <div className='w-full pr-4'>
                         {employee.map((item, index) => (
                             <Listemployeecard key={index} item={item} refresh={refresh} setrefresh={setrefresh} id={id} />
                         ))}
+                        </div>
+                        <div className=''>
+                            <Nearestcomponent/>
+                            <Activitystream/>
+                        </div>
                     </div>
                 </div>
                 {displaymodal && <Createteammodal id={id as any} modal={setdisplaymodal as any} />}

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { BiCalendarEvent } from 'react-icons/bi'
+import  { useState } from 'react'
 import { GrNotification } from 'react-icons/gr'
-import { BsListTask, BsPersonSquare } from 'react-icons/bs'
-import { AiOutlineDown, AiOutlinePlus } from 'react-icons/ai'
+import { BsPersonSquare } from 'react-icons/bs'
+import { AiOutlineDown } from 'react-icons/ai'
 import fetchData from '../../utils/fetchdata'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
@@ -21,11 +20,10 @@ function Homenavbar() {
 
   const handleProfileClick = () => {
     // Logic to handle profile click
-    console.log('Profile clicked');
   };
 
   const handleLogoutClick = async () => {
-    const data = await fetchData("/auth/logout")
+     await fetchData("/auth/logout")
     dispatch(userdetailslogout())
     dispatch(usercompanylogout())
     navigate("/")

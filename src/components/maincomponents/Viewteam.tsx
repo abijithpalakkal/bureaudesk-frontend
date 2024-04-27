@@ -31,13 +31,13 @@ function Viewteam() {
     const[data,setdata]=useState(null as any)
     const [refresh,setrefresh]=useState<boolean>(true)
     useEffect(() => {
-        console.log(id)
+      
         async function getteam() {
             try{
                 const response = await fetchData(`/company/getteam/${id}`)
-                console.log(response.data)
+               
                 setdata(response.data)
-                console.log(data,"jscjabj")
+               
             }catch(err){
                navigate("/404error")
             }

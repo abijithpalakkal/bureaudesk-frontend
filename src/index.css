@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*body{
-  @apply overflow-x-hidden
-}*/
+p{
+ /* @apply overflow-x-hidden*/
+ font-family: 'Nurito Sans', sans-serif;
+}

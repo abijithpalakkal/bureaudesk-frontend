@@ -21,7 +21,6 @@ interface iprop {
 
 }
 function Viewteamcard({ items, setrefresh, refresh }: any) {
-    console.log(items, "hello")
     const [data, setdata] = useState<any[]>([])
     const Authorization = useSelector((state: RootState) => state.userdetails.user.Authorization)
     useEffect(() => {
@@ -29,11 +28,9 @@ function Viewteamcard({ items, setrefresh, refresh }: any) {
             const newData = [];
             for (let i = 0; i < items.members.length; i++) {
                 const response = await fetchData(`/user/getuserbyid/${items.members[i]}`);
-                console.log(response);
                 newData.push(response?.data);
             }
             setdata(newData);
-            console.log(data, "j");
         };
 
         fetchUser();

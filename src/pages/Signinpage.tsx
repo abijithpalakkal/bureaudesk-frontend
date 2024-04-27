@@ -61,12 +61,12 @@ const signinpage = () => {
 
         }),
         onSubmit: async (values) => {
-            console.log(values)
+        
             axios.post('http://localhost:8000/auth/otpsignup', {
                 // Request body/data
                 email: values.email,
             }).then((data) => {
-                console.log(data, "hi hi hi")
+              
                 if (!data.data.status) {
                     toast.error(data.data?.message)
                 }
@@ -109,7 +109,7 @@ const signinpage = () => {
 
         if (e.key === 'Backspace') {
             // If the current input has no value and is not the first input, move focus to the previous input
-            console.log(index)
+         
             switch (index) {
                 case 1:
                     setOtp1("");
@@ -126,8 +126,7 @@ const signinpage = () => {
                 default:
                     break;
             }
-            console.log(index)
-            console.log(otp1, otp2, otp3, otp4)
+          
             if (index > 0) {
                 inputRefs[index - 2].current?.focus();
             }
@@ -136,7 +135,7 @@ const signinpage = () => {
     }
     const handleverifyotp = async () => {
         const otp = "" + otp1 + otp2 + otp3 + otp4
-        console.log(otp, '----------')
+        
         const response = await dispatch(userSignupAction({
             otp,
             email,

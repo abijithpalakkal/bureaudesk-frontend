@@ -55,10 +55,6 @@ function Createteammodal({ id ,modal}: Props) {
     } else if (!selectedTeamLead) {
       alert('Please select a team lead');
     } else {
-
-
-      console.log('Selected Members:', selectedMembers);
-      console.log('Selected Team Lead:', selectedTeamLead);
       await postData('/company/createteam', {
         members: selectedMembers,
         teamlead: selectedTeamLead,

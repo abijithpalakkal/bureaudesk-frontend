@@ -15,14 +15,11 @@ export default function Muidropdown({ displaymodal, position, id, dptid ,setrefr
   /*const[postdetails,setpostdetails ]=useContext<any>(Postcontext)*/
   const Authorization=useSelector((state:RootState)=>state.userdetails.user.Authorization)
   const naviagte = useNavigate()
-console.log(id,dptid)
   const makemanager = async() => {
-    console.log(refresh,"jhdbvkhsBojv  djv k")
     await postData("user/setmanager/", {
       id:id,
       departmentid:dptid
     })
-    console.log(refresh,"jhdbvkhsBojv  djv k")
     setrefresh(!refresh)
   }
   return (

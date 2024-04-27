@@ -40,8 +40,6 @@ export default function AlertDialogSlide({id,refresh,setrefresh}:iprop) {
   const handleaction = async () => {
     const response=await fetchData(`/company/deleteteam/${id}`)
     if(response.data){
-        console.log(refresh,setrefresh)
-        console.log("yappie")
         setrefresh(!refresh)
         setOpen(false);
        
