@@ -56,8 +56,6 @@ function Departmentcards() {
                     Departmentid: dptdata[i]._id,
                     Authorization: "semi_node"
                 });
-
-
                 if (response?.data?.length > 0) {
 
                     const managerName: string = response?.data[0]?.Name || response?.data[0]?.email || "not assigned";
@@ -73,7 +71,7 @@ function Departmentcards() {
         };
 
         fetchdata();
-        console.log(manager, "🚀🚀🚀🚀🚀🚀🚀🚀🚀")
+     
     }, [dptdata]);
 
     return (

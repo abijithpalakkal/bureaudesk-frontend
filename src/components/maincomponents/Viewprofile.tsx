@@ -1,14 +1,20 @@
-import React, { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
-import Listemployeecard from '../cards/Listemployeecard'
+
 import { AiOutlinePlus } from 'react-icons/ai'
-import logo from "../assets/dummy-profile-pic-300x300-1.png"
+
 import fetchData from '../../utils/fetchdata'
 import Editprofilemodal from '../modals/Editprofilemodal'
-import { Dispatch } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
+
 import Profilecard from '../cards/Profilecard'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+
+
+
+
+
 
 interface iprop {
   id: string
@@ -35,8 +41,22 @@ function Viewprofile({ id }: iprop) {
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { setdisplaymodal(true) }}><span >edit profile</span> <span><AiOutlinePlus /></span></button>
           </div>
         </div>
-        <div>
-          <Profilecard user={user as any}/>
+        <div className='mt-2 flex'>
+          <Profilecard user={user as any} />
+          <div className='w-full'>
+            <div className='flex justify-center'>
+              <Tabs defaultValue="account" className="w-[400px]">
+                <TabsList>
+                  <TabsTrigger value="account">performace</TabsTrigger>
+                  <TabsTrigger value="password">team</TabsTrigger>
+                  <TabsTrigger value="task">task</TabsTrigger>
+                </TabsList>
+                <TabsContent value="account">Make changes to your account here.</TabsContent>
+                <TabsContent value="password">Change your password here.</TabsContent>
+                <TabsContent value="task">Change your password here.</TabsContent>
+              </Tabs>
+            </div>
+          </div>
         </div>
       </div>
       {displaymodal && <Editprofilemodal modal={setdisplaymodal as any} />}

@@ -32,7 +32,7 @@ const useReducer:any = createSlice({
         state.message = "Loading";
       })
       .addCase(getCompanyAction.fulfilled, (state, action) => {
-        console.log(action.payload, "❤️🚀😊😒🤣👌")
+       
         state.loading = false;
         state.company = action.payload as any;
         state.message = "loaded"

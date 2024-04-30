@@ -33,8 +33,8 @@ function Homesidebar(props: HomesidebarProps) {
       }
     const navigate = useNavigate()
     return (
-        <div className='py-2 px-3 w-1/6 h-full'>
-            <div className='h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between shadow-2xl bg-white'>
+        <div className='py-2 px-3 w-1/6 h-screen sticky top-0'>
+            <div className='h-full w-full rounded-3xl flex flex-col py-2 px-2 justify-between shadow-2xl bg-white  '>
                 <div className='flex flex-col'>
                     <div className='w-28 self-center'>
                         <img src={logo} alt="" className='w-full' />

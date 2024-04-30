@@ -33,7 +33,6 @@ function Listemployees({ department }: iprop) {
             }catch(err){
                 navigate("/404error")
             }
-           
         }
         getemployees()
     }, [refresh])

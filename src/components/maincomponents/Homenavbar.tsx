@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { GrNotification } from 'react-icons/gr'
 import { BsPersonSquare } from 'react-icons/bs'
 import { AiOutlineDown } from 'react-icons/ai'
@@ -13,6 +13,7 @@ function Homenavbar() {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -29,12 +30,31 @@ function Homenavbar() {
     navigate("/")
 
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isTop = window.scrollY < 100;
+      if (!isTop) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
   const today = new Date();
   const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const weekDayName = weekDays[today.getDay()];
   const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(today);
   return (
-    <div className='flex justify-between'>
+    <div className={`flex justify-between sticky top-0 ${isScrolled ? 'bg-blue-300 rounded-lg p-2'  : ''}`}>
       <div className="relative">
         <input
           type="text"

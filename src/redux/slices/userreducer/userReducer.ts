@@ -52,21 +52,21 @@ const useReducer=createSlice({
         state.message = "Loading";
       })
       .addCase(userSignupAction.fulfilled, (state, action) => {
-        console.log(action.payload,"hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+       
         state.loading = false;
         state.user = action.payload;
         state.message = "loaded"
-        console.log(state.user)
+       
       })
       .addCase(userSignupAction.rejected, (state, action) => {
-        console.log(action.payload,"yombe")
+      
         if((action.payload as iError ).message == 'Wrong OTP'){
             toast.error("Wrong otp")
         }
         if((action.payload as iError).message=="Error while signing up"){
             toast.error("Error while signing up")
         }
-        console.log(action.error,"yombe")
+       
         const mesg = (action.payload as { message: string }).message;
         state.error = action.error as string;
         state.message = "rejected";
@@ -78,7 +78,7 @@ const useReducer=createSlice({
         state.message = "Loading";
       })
       .addCase(userLoginAction.fulfilled, (state, action) => {
-        console.log(action.payload,"hererererereer")
+       
         state.loading = false;
         state.user = action.payload as any;
         state.message = "loaded"
@@ -96,7 +96,7 @@ const useReducer=createSlice({
         state.message = "Loading";
       })
       .addCase(userauth.fulfilled, (state, action) => {
-        console.log(action.payload,"hererererereer")
+     
         state.loading = false;
         state.user = action.payload as any;
         state.message = "loaded"

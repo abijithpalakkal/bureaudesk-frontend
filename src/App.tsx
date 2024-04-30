@@ -24,13 +24,13 @@ function App() {
   const dispatch = useDispatch<AppDispatch>()
   const userid = useSelector((state: RootState) => state.userdetails.user._id)
   const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
-  console.log(userid)
+ 
   useEffect(() => {
     if (!userid) {
       const auth = async () => {
         const response: any = await dispatch(userauth())
         if (response.payload?.companyid) {
-          console.log("i am herere")
+        
           await dispatch(getCompanyAction(response.payload.companyid))
         }
       }

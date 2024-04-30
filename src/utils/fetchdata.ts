@@ -26,7 +26,7 @@ const fetchData = async(url: string) => {
       }
       
     } catch (error: any) {
-      console.log(error.message)
+    
       throw new Error(error.message);
     }
   };

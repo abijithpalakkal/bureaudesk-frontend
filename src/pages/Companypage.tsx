@@ -9,7 +9,7 @@ function Companypage() {
         dispatch(getCompanyAction("6606b25a640c67908b913ab1"))
     },[])*/
     return (
-        <div className='bg-slate-100 h-screen flex'>
+        <div className='bg-slate-100  flex'>
             <Homesidebar page="company" />
             <Company />
             <div>

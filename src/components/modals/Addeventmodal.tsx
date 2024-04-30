@@ -25,12 +25,24 @@ function Addeventmodal({ closemodal }: IProp) {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+    
+        // Check if the selected date and time are in the past
+        const selectedDatetime = new Date(`${eventDate}T${eventTime}`);
+        const currentDatetime = new Date();
+        if (selectedDatetime < currentDatetime) {
+            // Display an error message or handle the case as needed
+            toast.error("Selected date and time cannot be in the past");
+            return;
+        }
+    
+        // Clear form fields
         setEventName('');
         setEventCategory('');
         setPriority('');
         setEventDate('');
         setEventTime('');
         setEventDescription('');
+    
         try {
             await postData("company/addevent", {
                 eventName,
@@ -40,13 +52,13 @@ function Addeventmodal({ closemodal }: IProp) {
                 eventTime,
                 eventDescription,
                 companyid
-            })
+            });
         } catch (err: any) {
-            toast.error(err.message)
+            toast.error(err.message);
         }
-        closemodal(false)
-
+        closemodal(false);
     };
+    
 
     return (
         <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -82,11 +94,12 @@ function Addeventmodal({ closemodal }: IProp) {
                                 required
                                 className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                             >
-                                <option value="">Select Category</option>
+                               <option value="others">others</option>
                                 <option value=">Meeting">Meeting</option>
                                 <option value="Seminar">Seminar</option>
                                 <option value="Inaguration">Inaguration</option>
                                 <option value="Birthday">Birthday</option>
+                               
                             </select>
                         </div>
 
@@ -99,8 +112,8 @@ function Addeventmodal({ closemodal }: IProp) {
                                 required
                                 className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                             >
-                                <option value="">Select Priority</option>
-                                <option value="low">Low</option>
+                             
+                                <option value="low" selected>Low</option>
                                 <option value="medium">Medium</option>
                                 <option value="high">High</option>
                             </select>

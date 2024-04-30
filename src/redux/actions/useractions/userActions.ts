@@ -23,7 +23,7 @@ export const userSignupAction = createAsyncThunk(
             });
 
             if (response.data?.status && response.data?.payload === "verified") {
-                console.log(response.data.data, "ajbdkajbhkcbajjavhavhcahdbvjksvhkabvhbjkhbvshb");
+              
                 return response.data.data;
             } else if (response.data?.status && response.data?.payload === "not verified") {
                 throw new Error("Wrong OTP");
@@ -46,7 +46,7 @@ export const userLoginAction = createAsyncThunk(
                 },
                 withCredentials: true,
             })
-            console.log(response.data, "hiiieieieieieiiieieieieieieieie")
+           
             if (response.data.errorResponse) {
                 throw new Error(response.data.errorResponse.message)
             } else {
@@ -56,7 +56,7 @@ export const userLoginAction = createAsyncThunk(
                     },
                     withCredentials: true,
                 })
-                console.log(response1.data, "rocketrocket")
+               
                 return response1.data
             }
 
@@ -73,7 +73,7 @@ export const userauth = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
            const response=await fetchData("/user/getuserforauth")
-          console.log(response,"hellpodnckn w nc ,")
+       
           return response.data
         } catch(error) {
             return rejectWithValue(handleErrors(error))

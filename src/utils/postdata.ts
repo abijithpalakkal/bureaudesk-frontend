@@ -20,7 +20,7 @@ const config = {
         throw new Error(response.data.errorResponse.message);
       }
     } catch (error: any) {
-      console.log(error.message)
+     
       throw new Error(error.message)
     }
   };
