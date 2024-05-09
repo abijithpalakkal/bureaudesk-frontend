@@ -56,7 +56,7 @@ function Listemployees({ department }: iprop) {
                         ))}
                         </div>
                         <div className=''>
-                            <Nearestcomponent/>
+                            <Nearestcomponent val={""}/>
                             <Activitystream/>
                         </div>
                     </div>

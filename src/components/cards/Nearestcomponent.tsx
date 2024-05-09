@@ -5,6 +5,7 @@ import fetchData from '../../utils/fetchdata'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { string } from 'yup'
+import postData from '@/utils/postdata'
 
 
 interface IEvents {
@@ -21,31 +22,32 @@ interface IEvents {
   __v?: number;
 }
 
+interface iprop{
+  val: any
+}
 
-function Nearestcomponent() {
+function Nearestcomponent({val}:iprop) {
   const companyid = useSelector((state: RootState) => state.companydetails.company._id)
   const [events, setevents] = useState<IEvents[]>([])
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const data = await fetchData(`/company/getevent/${companyid}`)
+        const data = await postData(`/company/getevent`,{companyid: companyid})
         console.log(data.data)
+        console.log("jacob swarg")
 
         data.data.sort((a: IEvents, b: IEvents) => {
           const datetimeA: any = new Date(`${a.eventDate}T${a.eventTime}`);
           const datetimeB: any = new Date(`${b.eventDate}T${b.eventTime}`);
           return datetimeA - datetimeB;
         });
-
-
-
         setevents(data.data)
       } catch (err) {
         console.log(err)
       }
     }
     getEvents()
-  }, [companyid])
+  }, [companyid,val])
 
 
   function convertTo12HourTime(militaryTime: string) {
@@ -120,7 +122,7 @@ function Nearestcomponent() {
         <div className={`border-l-2 ${getBorderColor(obj.eventCategory as string)} px-2 mt-5`}>
 
           <div className='flex justify-between mt-5'>
-            <p className='font-nunitosans font-semibold'>{obj.eventDescription}</p>
+            <p className='font-nunitosans font-semibold'>{obj.eventName}</p>
             <p className='text-green-500'><ImArrowUp2 /></p>
           </div>
           <div className='flex justify-between items-center mt-3 '>

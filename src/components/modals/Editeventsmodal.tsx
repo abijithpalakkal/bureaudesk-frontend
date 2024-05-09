@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState, Dispatch } from 'react';
+import React, { SetStateAction, useState, Dispatch, useEffect } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
 import Uibuttons from '../buttons/uibuttons/Uibuttons';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -12,11 +12,12 @@ import { toast } from 'react-toastify';
 
 interface IProp {
     closemodal: Dispatch<SetStateAction<boolean>>;
-    refresh:any
-    val:Boolean
+    id?:string
+    refresh?:any
+    val?:Boolean
 }
 
-function Addeventmodal({ closemodal,refresh,val }: IProp) {
+function Editeventsmodal({ closemodal,id,refresh,val}: IProp) {
     const companyid = useSelector((state: RootState) => state.companydetails.company._id)
     const [eventName, setEventName] = useState('');
     const [eventCategory, setEventCategory] = useState('');
@@ -24,6 +25,22 @@ function Addeventmodal({ closemodal,refresh,val }: IProp) {
     const [eventDate, setEventDate] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [eventDescription, setEventDescription] = useState('');
+
+    useEffect(()=>{
+        console.log(id,123)
+        const getevents= async ()=>{
+         const data= await postData(`/company/getevent/`,{_id:id})
+         const event=data.data[0]
+         setEventName(event.eventName);
+         setEventCategory(event.eventCategory);
+         setPriority(event.priority);
+         setEventDate(event.eventDate);
+         setEventTime(event.eventTime);
+         setEventDescription(event.eventDescription);
+        
+        }
+        getevents()
+    },[])
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,7 +63,7 @@ function Addeventmodal({ closemodal,refresh,val }: IProp) {
         setEventDescription('');
     
         try {
-            await postData("company/addevent", {
+            await postData(`company/updateevents/${id}`, {
                 eventName,
                 eventCategory,
                 priority,
@@ -60,6 +77,7 @@ function Addeventmodal({ closemodal,refresh,val }: IProp) {
         }
         refresh(!val)
         closemodal(false);
+
     };
     
 
@@ -165,4 +183,4 @@ function Addeventmodal({ closemodal,refresh,val }: IProp) {
     );
 }
 
-export default Addeventmodal;
+export default Editeventsmodal;

@@ -76,8 +76,6 @@ const signinpage = () => {
                     setotpdisplay(true)
                 }
             })
-
-
         },
     });
 
@@ -162,12 +160,10 @@ const signinpage = () => {
 
 
     return (
-
         <div className="md:flex">
-              
-            <div className="bg-gradient-to-t via-customBlue from-customBlue  w-1/4 h-screen hidden md:block">
+            <div className="bg-blue-400  w-1/4 h-screen hidden md:block"> 
 
-                <div className='flex items-center justify-center mt-5'>
+                <div className='flex items-center justify-center mt-5'> 
                     <img src={logo} alt="" className='w-[110px]' />
                 </div>
                 <h2 className='text-[40px] text-white mt-12'>   <TypeAnimation

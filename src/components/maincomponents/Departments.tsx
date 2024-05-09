@@ -36,7 +36,7 @@ function Departments() {
             <Departmentcards />
           </div>
           <div >
-            <Nearestcomponent />
+            <Nearestcomponent val={""} />
             <Activitystream/>
           </div>
         </div>

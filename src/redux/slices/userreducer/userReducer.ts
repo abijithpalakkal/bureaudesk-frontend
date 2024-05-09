@@ -26,6 +26,7 @@ interface iUser {
   Department?: string;
   Departmentid?: string;
   Admin?: boolean;
+  profileImage?:string
 }
 
 const initialState= {

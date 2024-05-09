@@ -41,51 +41,61 @@ function Homesidebar(props: HomesidebarProps) {
                         {/*<div className='h-2'><p className='text-[11px] text-center'>Create.plan.control</p></div>*/}
                     </div>
                     <div className='mt-5 flex flex-col gap-5'>
-                        <div className='flex items-center gap-2 text-slate-500 cursor-pointer  hover:ml-4 duration-300'><RiDashboardLine /><p className=''>dashboard</p></div>
-                        <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300'> <BsListTask /><p>project</p></div>
+                    {props.page === 'profile' ? (
+                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
+                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                    <BsPersonSquare />
+                                    <p>Profile</p>
+                                </div>
+                            </div>
+                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/viewprofile")}> <BsPersonSquare /><p>Profile</p></div>}
+                        <div className='flex items-center gap-2 text-slate-500 cursor-pointer  hover:ml-4 duration-300'><RiDashboardLine /><p className=''>Dashboard</p></div>
+                        
+                        {props.page === "projects" ? (
+                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
+                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                     <BsListTask />
+                                    <p>Projects</p>
+                                </div>
+                            </div>
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/projects")}> <BsListTask /><p>Projects</p></div>)}
+
 
                         {props.page === "events" ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
                                     <BiCalendarEvent />
-                                    <p>events</p>
+                                    <p>Events</p>
                                 </div>
                             </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/events")}> <BiCalendarEvent /><p>events</p></div>)}
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/events")}> <BiCalendarEvent /><p>Events</p></div>)}
 
 
                         {props.page === 'department' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 transition-transform duration-1000'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
                                     <FcDepartment />
-                                    <p>department</p>
+                                    <p>Department</p>
                                 </div>
                             </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/employees")}>  <FcDepartment /><p>department</p></div>)}
-                        <div className='flex items-center gap-2  text-slate-500 cursor-pointer  hover:ml-4 duration-300'> <SiMessenger /><p>messages</p></div>
-                        {props.page === 'profile' ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
-                                    <BsPersonSquare />
-                                    <p>profile</p>
-                                </div>
-                            </div>
-                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/viewprofile")}> <BsPersonSquare /><p>profile</p></div>}
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/employees")}>  <FcDepartment /><p>Department</p></div>)}
+                        <div className='flex items-center gap-2  text-slate-500 cursor-pointer  hover:ml-4 duration-300'> <SiMessenger /><p>Messages</p></div>
+                       
                         {props.page === 'company' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
                                     <ImOffice />
-                                    <p>company</p>
+                                    <p>Company</p>
                                 </div>
                             </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>company</p></div>)}
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>Company</p></div>)}
 
                     </div>
                 </div>
                 <div className='w-28 self-center mt-10 cursor-pointer hover:w-32 duration-100'>
                  <img src={support} alt=""  className='w-full'/>
                 </div>
-              <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300 mb-5' onClick={handleLogoutClick}> <BiLogOut/><p>logout</p></div>
+              <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300 mb-5' onClick={handleLogoutClick}> <BiLogOut/><p>Logout</p></div>
 
 
             </div>

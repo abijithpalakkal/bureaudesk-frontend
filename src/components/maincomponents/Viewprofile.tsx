@@ -38,11 +38,11 @@ function Viewprofile({ id }: iprop) {
         <div className='flex justify-between mt-11'>
           <h1 className='font-bold text-3xl'>profile</h1>
           <div className='flex justify-between gap-2 items-center'>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { setdisplaymodal(true) }}><span >edit profile</span> <span><AiOutlinePlus /></span></button>
+            
           </div>
         </div>
         <div className='mt-2 flex'>
-          <Profilecard user={user as any} />
+          <Profilecard user={user as any} displaymodal={displaymodal} setdisplaymodal={setdisplaymodal} />
           <div className='w-full'>
             <div className='flex justify-center'>
               <Tabs defaultValue="account" className="w-[400px]">

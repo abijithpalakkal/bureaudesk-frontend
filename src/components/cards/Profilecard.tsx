@@ -2,7 +2,7 @@ import React from 'react'
 import logo from "../../assets/dummy-profile-pic-300x300-1.png"
 import editicon from "../../assets/edit icon.png"
 
-function Profilecard({ user }: any) {
+function Profilecard({ user,displaymodal,setdisplaymodal }: any) {
   function convertISOToNormalDate(isoDateString:string) {
     const date = new Date(isoDateString);
   
@@ -15,10 +15,10 @@ function Profilecard({ user }: any) {
     <div className='bg-white w-64 rounded-xl p-4'>
 
       <div className=' flex justify-between items-center'>
-        {user?.profileImage && <img src={user.profileImage} alt="" className='w-20 h-20 rounded-full' />}
+        {user?.profileImage && <img src={user.profileImage} alt="" className='w-20 h-20 rounded-full'/>}
         {!user?.profileImage && <img src={logo} alt="" className='w-32 h-32' />}
-        <div className='cursor-pointer w-6 hover:w-8 duration-300'>
-        <img src={editicon} alt="" className=' w-full'/>
+        <div className='cursor-pointer w-6 hover:w-8 duration-300' onClick={()=>setdisplaymodal(true)}>
+        <img src={editicon} alt="" className=' w-full' />
         </div>
         
       </div>

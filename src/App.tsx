@@ -18,6 +18,8 @@ import ErrorPage from "./pages/Errorpage404"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Eventspage from "./pages/Eventspage"
+import Projectpage from "./pages/Projectpage"
+import Assigntaskpage from "./pages/Assigntaskpage"
 
 
 function App() {
@@ -87,9 +89,9 @@ function App() {
           <Route path="/viewteam/:id" element={userid ? <Viewteampage /> : <Navigate to={'/'} />} />
           <Route path="/404error" element={userid ? <ErrorPage /> : <Navigate to={'/'} />} />
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
-
+          <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+          <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
         </Routes>
-
       </Router>
     )
   }
@@ -107,6 +109,8 @@ function App() {
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
           <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
           <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
+          <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
+          <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
 
         </Routes>
       </Router>

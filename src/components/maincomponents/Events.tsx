@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Nearestcomponent from '../cards/Nearestcomponent'
 import Activitystream from '../cards/Activitystream'
+import postData from '@/utils/postdata'
 
 interface IEvents {
     _id?: string;
@@ -25,18 +26,20 @@ interface IEvents {
 
 function Events() {
     const companyid = useSelector((state: RootState) => state.companydetails.company._id)
+    const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
     const [events, setevents] = useState<IEvents[]>([])
+    const [refresh,setrefresh]=useState<boolean>(false)
     useEffect(() => {
         const getEvents = async () => {
             try {
-                const data = await fetchData(`/company/getevent/${companyid}`)
+                const data = await postData("/company/getevent",{companyid: companyid })
                 setevents(data.data)
             } catch (err) {
                 console.log(err)
             }
         }
         getEvents()
-    }, [companyid])
+    }, [companyid, role,refresh])
 
     const [displaymodal, setdisplaymodal] = useState<boolean>(false)
     return (
@@ -45,19 +48,20 @@ function Events() {
                 <Homenavbar />
                 <div className='flex justify-between mt-11'>
                     <h1 className='font-bold text-3xl'>EVENTS</h1>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { setdisplaymodal(true) }}><span >add events</span> <span><AiOutlinePlus /></span></button>
+                    {role == "root_node" && <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { setdisplaymodal(true) }}><span >add events</span> <span><AiOutlinePlus /></span></button>}
                 </div>
                 <div className='flex justify-between '>
-                    <div className='w-full mr-5'>
-                    <Eventcard events={events as IEvents[]} />
+                    <div className='w-full mr-5 '>
+                        <Eventcard events={events as IEvents[]} refresh={setrefresh} val={refresh}/>
                     </div>
-            
-                <div >
-                   <Nearestcomponent/>
-                    <Activitystream />   
+
+                    <div className=''>
+                        <Nearestcomponent val={refresh}/>
+                        <Activitystream />
+                    </div>
                 </div>
-                </div>
-                {displaymodal && <Addeventmodal closemodal={setdisplaymodal} />}
+                {displaymodal && <Addeventmodal closemodal={setdisplaymodal} refresh={setrefresh} val={refresh}/>}
+                
 
             </div>
 
