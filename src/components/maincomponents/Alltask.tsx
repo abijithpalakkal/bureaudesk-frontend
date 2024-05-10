@@ -35,7 +35,7 @@ const Alltask = () => {
     return (
         <div className='flex'>
             <Departmentsidebar setdpt={changedpt} />
-            <Employeetaskcard data={taskdata} />
+            <Employeetaskcard data={taskdata} assigned='all'/>
         </div>
     )
 }

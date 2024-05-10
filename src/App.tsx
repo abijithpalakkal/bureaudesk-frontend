@@ -111,6 +111,7 @@ function App() {
           <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
           <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+          <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
 
         </Routes>
       </Router>

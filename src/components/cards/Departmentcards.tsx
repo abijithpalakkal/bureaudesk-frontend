@@ -96,7 +96,7 @@ function Departmentcards() {
                     <div className="px-4 pb-4 flex justify-between">
                        
                        <div onClick={() => navigate(`/listemployees/${item._id}`, { state: item?.Name })}> <Uibuttons btnname='view '/></div>
-                        {Authorization != "basic_node" && <div onClick={() => { setdptid(item._id as string); setdisplaymodal(true) }}> <Uibuttons btnname='add '/></div>}
+                        {Authorization != "basic_node" && Authorization !== "semi_node" && <div onClick={() => { setdptid(item._id as string); setdisplaymodal(true) }}> <Uibuttons btnname='add '/></div>}
                     </div>
                 </div>
             ))}

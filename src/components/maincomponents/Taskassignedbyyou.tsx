@@ -34,7 +34,7 @@ const Taskassignedbyyou = () => {
 
   return (
     <div>
-      <Employeetaskcard data={taskdata}/>
+      <Employeetaskcard data={taskdata} assigned={"byYou"}/>
     </div>
   )
 }

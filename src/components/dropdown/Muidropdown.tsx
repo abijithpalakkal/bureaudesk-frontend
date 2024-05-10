@@ -27,7 +27,7 @@ export default function Muidropdown({ displaymodal, position, id, dptid ,setrefr
       <MenuButton><p className='flex justify-center items-center'>action<AiFillCaretDown className='mt-1' /></p></MenuButton>
       <Menu>
         <MenuItem onClick={() => { displaymodal(true) }}>Profile</MenuItem>
-        {Authorization!="basic_node" && <MenuItem onClick={makemanager}>make as manager</MenuItem>}
+        {Authorization!="basic_node" && Authorization !== "semi_node" && <MenuItem onClick={makemanager}>make as manager</MenuItem>}
         {Authorization!="basic_node" && <MenuItem onClick={() => { position(true) }}>edit position</MenuItem>}
         {Authorization!="basic_node" && <MenuItem>Block</MenuItem>}
       </Menu>

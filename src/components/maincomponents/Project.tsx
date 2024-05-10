@@ -7,9 +7,12 @@ import Departmentsidebar from './Departmentsidebar'
 import Alltask from './Alltask'
 import Taskassignedbyyou from './Taskassignedbyyou'
 import Taskassignedtoyou from './Taskassignedtoyou'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 
 const Project = () => {
+    const userRole=useSelector((state:RootState)=>state.userdetails.user.Authorization)
     const navigate=useNavigate();
     return (
         <div className='w-5/6 px-2 py-2 h-screen'>
@@ -23,14 +26,15 @@ const Project = () => {
                     
                     <div className='w-full'>
                         <div className='flex '> 
-                            <Tabs defaultValue="all" className="w-full">
+                        <Tabs defaultValue={userRole === "root_node" ? "all" : "assigned to you"} className="w-full">
+
                                 <TabsList className='flex w-96 m-auto'>
-                                    <TabsTrigger value="all">all</TabsTrigger>
-                                    <TabsTrigger value="assigned to you">assigned to you</TabsTrigger>
-                                    <TabsTrigger value="assigned by you">assigned by you</TabsTrigger>
+                                    {userRole=="root_node" && <TabsTrigger value="all">All Task</TabsTrigger>}
+                                    {userRole!=="root_node" && <TabsTrigger value="assigned to you">Assigned To You</TabsTrigger>}
+                                    <TabsTrigger value="assigned by you">Assigned By You</TabsTrigger>
                                 </TabsList>
-                                <TabsContent value="all" className=''><Alltask/></TabsContent>
-                                <TabsContent value="assigned to you"><Taskassignedtoyou/></TabsContent>
+                                {userRole=="root_node" && <TabsContent value="all" className=''><Alltask/></TabsContent>}
+                               {userRole!=="root_node" && <TabsContent value="assigned to you"><Taskassignedtoyou/></TabsContent>}
                                 <TabsContent value="assigned by you"><Taskassignedbyyou/></TabsContent>
                             </Tabs>
                         </div>

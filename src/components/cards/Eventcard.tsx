@@ -11,6 +11,8 @@ import { boolean } from "yup";
 import { useState } from "react";
 import Editeventsmodal from "../modals/Editeventsmodal";
 import Eventclosemodal from "../modals/Eventclosemodal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 
 interface IEvents {
@@ -43,6 +45,7 @@ function Eventcard({ events,refresh,val }: IEventProp) {
     const [id,setid]=useState<string>("")
     const [eventdeletemodal,seteventdeletemodal]=useState<Boolean>(false)
     const [eventId,setEventId]=useState<string>("")
+    const userRole=useSelector((state:RootState)=>state.userdetails.user.Authorization)
 
     function date(timestamp: string | undefined) {
         if (!timestamp) {
@@ -98,16 +101,18 @@ function Eventcard({ events,refresh,val }: IEventProp) {
                     </div>
                 </div>
                 <div className='p-2 border-l-2 border-slate-400 w-full'>
+                 
                     <div className="flex justify-between items-center">
                         <div></div>
-                        <div className="flex justify-center items-center gap-3">
+                        { userRole=="root_node" && <div className="flex justify-center items-center gap-3">
                         <img src={editicon} alt="" className="cursor-pointer" onClick={()=>{openEditModal(obj._id as string)}}/>
                         
                         <AiOutlineDelete className="w-6 h-6  hover:text-red-500 duration-75"  onClick={()=>{setEventId(obj._id as string);seteventdeletemodal(true)}}/>
-                        </div>
+                        </div>}
                        
                     </div>
-                    <p>{obj.eventDescription}</p>
+                    <p className="font-semibold">Description:</p>
+                    <p className="text-slate-600">{obj.eventDescription}</p>
                 </div>
             </div>))}
             {eventdeletemodal && <Eventclosemodal closemodal={seteventdeletemodal} refresh={refresh} val={val} id={eventId}/>}
