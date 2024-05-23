@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { AiOutlineClose } from 'react-icons/ai'
@@ -53,6 +53,7 @@ const Addtaskmodal = ({ display,empid ,dptid}: IProp) => {
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', "ckoevhm7");
+                formData.append('public_id', file.name)
     
                 try {
                 
@@ -119,10 +120,15 @@ const Addtaskmodal = ({ display,empid ,dptid}: IProp) => {
     };
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        setVisible(true);
+    }, []);
+
 
     return (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen h-screen">
+<div className={`fixed z-10 inset-0 overflow-y-auto transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}>            <div className="flex items-center justify-center min-h-screen h-screen">
                 <div className="inset-0 bg-black opacity-50 relative h-full w-full"></div>
                 <div className="bg-white rounded-lg shadow-2xl p-12 absolute">
                     <div className='flex justify-between'>
@@ -204,7 +210,7 @@ const Addtaskmodal = ({ display,empid ,dptid}: IProp) => {
                                     ref={fileInputRef}
                                     onChange={handleFileChange}
                                     className="hidden"
-                                    multiple
+                                    
                                 />
                                 <img src={addfile} alt="" className='w-8 hover:w-full hover:h-full duration-150' onClick={handleImageClick} />
                             </div>

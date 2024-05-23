@@ -13,7 +13,6 @@ function Profilecard({ user,displaymodal,setdisplaymodal }: any) {
   }
   return (
     <div className='bg-white w-64 rounded-xl p-4'>
-
       <div className=' flex justify-between items-center'>
         {user?.profileImage && <img src={user.profileImage} alt="" className='w-20 h-20 rounded-full'/>}
         {!user?.profileImage && <img src={logo} alt="" className='w-32 h-32' />}

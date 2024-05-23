@@ -4,12 +4,15 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import fetchData from '@/utils/fetchdata'
+import Taskinfocard from '../cards/Taskinfocard'
 
 const Taskassignedbyyou = () => {
 
     const companyid=useSelector((state:RootState)=>state.companydetails.company._id)
     const userid=useSelector((state:RootState)=>state.userdetails.user._id)
     const [taskdata,settaskdata]=useState([])
+    const [taskInfoData, setTaskInfoData] = useState(null)
+
 
     useEffect(()=>{
         async function userdata() {
@@ -28,13 +31,20 @@ const Taskassignedbyyou = () => {
             }
 
             settaskdata(data);
+            setTaskInfoData(data[0])
         }
         userdata()
     },[companyid, userid])
 
+
+    function getTaskInfo(data: any) {
+      setTaskInfoData(data)
+    }
+
   return (
-    <div>
-      <Employeetaskcard data={taskdata} assigned={"byYou"}/>
+    <div className='flex'>
+      <Employeetaskcard data={taskdata} assigned={"byYou"}  getTaskInfo={getTaskInfo}/>
+      <Taskinfocard taskInfo={taskInfoData} />
     </div>
   )
 }

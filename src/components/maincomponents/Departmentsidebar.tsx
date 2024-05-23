@@ -28,7 +28,7 @@ const Departmentsidebar = ({ setdpt }: { setdpt: any }) => {
         const fetch = async () => {
             const id = company._id
             if (Object.keys(company).length !== 0) {
-                const response = await fetchData(`/company/getdepartment/${id}`)
+                const response = await fetchData(`/company/getdepartment/${id}`);
                 setdptdata([{ Name: "all", _id: companyId }, ...response.data]);
                 setloading(response.loading)
                 console.log(dptdata, "🚀🚀🚀")
@@ -43,27 +43,22 @@ const Departmentsidebar = ({ setdpt }: { setdpt: any }) => {
     }, [company])
 
     return (
-        <div className='w-52 bg-white rounded-xl min-h-96'>
+        <div className='w-52 bg-white rounded-xl min-h-96 '>
             <div className='border-b-2'>
                 <div className='p-4'>
-                    <p className='flex items-center font-semibold'>Current Projects <span><AiOutlineDown /></span></p>
+                    <p className='flex items-center font-semibold text-sm'>Departments <span><AiOutlineDown /></span></p>
                 </div>
             </div>
             {
                 dptdata.map((item: any, index: number) => (
                     <div className={`p-1  mt-1 ${style === index ? 'border-blue-500 border-l-2 pr-0' : ''}`}>
-
-                        <div className={`p-2 bg-blue-50 rounded-xl mt-1 cursor-pointer hover:bg-blue-100 duration-0 ${style === index ? 'rounded-r-none' : ''}`} onClick={item.Name === "all" ? () => handleClick({companyid:item._id}, index) :() => handleClick({Departmentid:item._id},index) }>
-                            <p className='font-semibold'>{item.Name}</p>
-                            <p className='flex items-center gap-1 text-blue-400 hover:ml-1 duration-100 w-28'>Views details<span className=''><AiOutlineRight /></span></p>
+                        <div className={`p-2 bg-slate-100 rounded-xl mt-1 cursor-pointer hover:bg-blue-100 duration-0 ${style === index ? 'rounded-r-none' : ''}`} onClick={item.Name === "all" ? () => handleClick({companyid:item._id}, index) :() => handleClick({Departmentid:item._id},index) }>
+                            <p className='font-semibold text-sm'>{item.Name}</p>
+                            <p className='flex items-center gap-1 text-blue-400 hover:ml-1 duration-100 w-28 text-sm'>Views details<span className=''><AiOutlineRight /></span></p>
                         </div>
-
-
-
                     </div>
                 ))
             }
-
         </div>
     )
 }

@@ -79,7 +79,7 @@ function App() {
       <Router>
         <ToastContainer />
         <Routes>
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage />}  />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />

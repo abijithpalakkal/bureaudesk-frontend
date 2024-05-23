@@ -3,10 +3,13 @@ import Departmentsidebar from './Departmentsidebar'
 import Employeetaskcard from '../cards/Employeetaskcard'
 import postData from '@/utils/postdata'
 import fetchData from '@/utils/fetchdata'
+import Taskinfocard from '../cards/Taskinfocard'
 
 const Alltask = () => {
     const [dpt, setdpt] = useState(null)
     const [taskdata, settaskdata] = useState([])
+    const [taskInfoData, setTaskInfoData] = useState(null)
+
     console.log(dpt, "sadca")
 
     function changedpt(data: any) {
@@ -26,16 +29,28 @@ const Alltask = () => {
             }
 
             settaskdata(data);
+            setTaskInfoData(data[0])
+
         };
 
         fetchtaskuser();
     }, [dpt]);
 
+    
+  function getTaskInfo(data: any) {
+    setTaskInfoData(data)
+  }
+
+
 
     return (
         <div className='flex'>
             <Departmentsidebar setdpt={changedpt} />
-            <Employeetaskcard data={taskdata} assigned='all'/>
+            <div className='ml-4 w-full'>
+            <Employeetaskcard data={taskdata} assigned='all' refresh={false} setrefresh={()=>{} }  getTaskInfo={getTaskInfo} />
+            </div>
+            <Taskinfocard taskInfo={taskInfoData}/>
+          
         </div>
     )
 }

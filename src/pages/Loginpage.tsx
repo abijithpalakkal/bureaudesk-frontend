@@ -13,11 +13,12 @@ import cityphoto from "../assets/beautiful-architecture-office.avif"
 import team from "../assets/office_desk.png"
 import Particles from 'react-tsparticles'
 import { loadSlim } from 'tsparticles-slim'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 
 const loginpage = () => {
     const [blur, setblur] = useState(false)
-
+    const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const formik = useFormik({
@@ -185,18 +186,27 @@ const loginpage = () => {
                                 ) : null}
                             </div>
 
-                            <div className="mb-6">
-                                <label className="block  text-sm font-bold mb-2 text-slate-500 " htmlFor="password">
+                            <div className="mb-6 ">
+                                <label className="block text-sm font-bold mb-2 text-slate-500 " htmlFor="password">
                                     Password
                                 </label>
                                 <input
-                                    className=" appearance-none text-lg w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline border-none"
+                                    className=" relative appearance-none text-lg w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline border-none"
                                     id="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     {...formik.getFieldProps('password')}
                                 />
-                                <hr className=' border-1 rounded-lg border-slate-500 mb-3'></hr>
+                                <button
+                                    type="button"
+                                    className="absolute mt-3"
+                                    onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                                >
+                                    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />} {/* Show eye icon based on password visibility */}
+                                </button>
+
+                                <hr className=' border-1 rounded-lg border-slate-500 mb-3 '></hr>
+
                                 {formik.touched.password && formik.errors.password ? (
                                     <div className='text-red-600'>{formik.errors.password}</div>
                                 ) : null}
