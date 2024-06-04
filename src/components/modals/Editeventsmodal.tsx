@@ -25,6 +25,7 @@ function Editeventsmodal({ closemodal,id,refresh,val}: IProp) {
     const [eventDate, setEventDate] = useState('');
     const [eventTime, setEventTime] = useState('');
     const [eventDescription, setEventDescription] = useState('');
+   
 
     useEffect(()=>{
         console.log(id,123)

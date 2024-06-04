@@ -7,7 +7,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import postData from '../../utils/postdata';
 import { useContext } from 'react'
-import { Postcontext } from '../../config/Conteststore'
+import { Postcontext } from '../../context/Conteststore'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 

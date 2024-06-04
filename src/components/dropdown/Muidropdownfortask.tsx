@@ -6,6 +6,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import postData from '../../utils/postdata';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Tasksubmitmodal from '../modals/Tasksubmitmodal';
 
 
 interface IProp {
@@ -16,21 +17,24 @@ interface IProp {
 }
 
 const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
+  
+  const [displayModal,setdisplayModal]=useState(false)
+
 
   const handleSelect = async (clicked: string) => {
 
     console.log(clicked);
     try{
-      await postData(`/company/updatetask/${id}`, {
+      await postData(`/company/updatetask/${id}`, {  
         status: clicked
       })
       setrefresh(!refresh)
     }catch(err:any){
       toast.error(err?.message)
     }
-   
   }
   return (
+    <>
     <Dropdown>
     {defaults === "Assigned" && (
       <MenuButton>
@@ -46,12 +50,11 @@ const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
         )}
         {defaults === "in-Progress" && (
           <MenuButton>
-            <p className='flex justify-center items-center text-blue-500  bg-blue-200 px-3 py-1 rounded-lg'>{defaults}<AiFillCaretDown className='mt-1' /></p>
+            <p className='flex justify-center items-center text-blue-500  bg-blue-200 px-1 py-1 rounded-lg text-[11px]'>{defaults}<AiFillCaretDown className='mt-1' /></p>
           </MenuButton>
         )}
         {defaults === "Done" && (
-         
-            <p className='flex justify-center items-center text-green-500  bg-green-200 px-5 py-1 rounded-lg'>{defaults}</p>
+            <p className='flex justify-center items-center text-purple-500  bg-purple-200 px-5 py-1 rounded-lg'>in-review</p>
         
         )}
       </>
@@ -66,7 +69,8 @@ const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
           <MenuItem onClick={() => handleSelect('in-Progress')}>
             <div className='text-blue-500  bg-blue-200 px-3 py-1 rounded-lg'>in-Progress</div>
           </MenuItem>
-          <MenuItem onClick={() => handleSelect('Done')}>
+          {/* <MenuItem onClick={() => handleSelect('Done')}> */}
+          <MenuItem onClick={()=>{setdisplayModal(true)}}>
             <div className='text-green-500  bg-green-200 px-8 py-1 rounded-lg'>Done</div>
           </MenuItem>
         </>
@@ -82,13 +86,17 @@ const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
         </MenuItem>
       )}
       {(defaults !== "Assigned" && defaults !== "Done") && (
-        <MenuItem onClick={() => handleSelect('Done')}>
+        // <MenuItem onClick={() => handleSelect('Done')}>
+        <MenuItem onClick={()=>{setdisplayModal(true)}}>
           <div className='text-green-500  bg-green-200 px-8 py-1 rounded-lg'>Done</div>
         </MenuItem>
       )}
     </Menu>
   </Dropdown>
-  
+  {displayModal && <Tasksubmitmodal display={displayModal} setdisplayModal={setdisplayModal}  id={id}  handleSelect={handleSelect}/>}
+
+  </> 
+
   )
 }
 

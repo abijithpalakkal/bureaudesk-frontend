@@ -5,6 +5,8 @@ import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import fetchData from '@/utils/fetchdata'
 import Taskinfocard from '../cards/Taskinfocard'
+import { useContext } from 'react'
+import { AppContext } from '../maincomponents/Project'
 
 
 const Taskassignedtoyou = () => {
@@ -14,6 +16,9 @@ const Taskassignedtoyou = () => {
   const [taskInfoData, setTaskInfoData] = useState(null)
   const [refresh, setrefresh] = useState(false);
 
+  const context = useContext(AppContext);
+    const { apiRefresh, setApiRefresh } = context;
+
   useEffect(() => {
     async function userdata() {
       const response = await postData("/company/gettask", {
@@ -22,7 +27,6 @@ const Taskassignedtoyou = () => {
       })
       console.log(response, "dskafcik");
       const data = response.data;
-
       for (let i = 0; i < data.length; i++) {
         data[i].assignedBy = await fetchData(`/user/getuserbyid/${data[i].assignedBy}`);
         data[i].assignedTo = await fetchData(`/user/getuserbyid/${data[i].assignedTo}`);
@@ -32,7 +36,7 @@ const Taskassignedtoyou = () => {
 
     }
     userdata()
-  }, [companyid, userid, refresh])
+  }, [companyid, userid, refresh,apiRefresh])
 
 
 

@@ -13,13 +13,15 @@ import { useNavigate, Navigate } from "react-router-dom"
 import Listemployeepage from "./pages/Listemployeepage"
 import Viewprofilepage from "./pages/Viewprofilepage"
 import Viewteampage from "./pages/Viewteampage"
-import Post from "./config/Conteststore"
+import Post from "./context/Conteststore"
 import ErrorPage from "./pages/Errorpage404"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Eventspage from "./pages/Eventspage"
 import Projectpage from "./pages/Projectpage"
 import Assigntaskpage from "./pages/Assigntaskpage"
+import Messagerpage from "./pages/Messagerpage"
+import Dashboard from "./pages/Dashboard"
 
 
 function App() {
@@ -91,6 +93,8 @@ function App() {
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
           <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
+          <Route path="/messenger" element={userid ? <Messagerpage/> : <Navigate to={'/'} />} />
+          <Route path="/dashboard" element={userid ? <Dashboard/> : <Navigate to={'/'} />} />
         </Routes>
       </Router>
     )
@@ -112,7 +116,8 @@ function App() {
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
           <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
-
+          <Route path="/messenger" element={userid ? <Messagerpage/> : <Navigate to={'/'} />} />
+          <Route path="/dashboard" element={userid ? <Dashboard/> : <Navigate to={'/'} />} />
         </Routes>
       </Router>
 

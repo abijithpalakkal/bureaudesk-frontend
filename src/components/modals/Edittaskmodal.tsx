@@ -1,45 +1,59 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
-import Uibuttons from '../buttons/uibuttons/Uibuttons'
-import { AiOutlineClose } from 'react-icons/ai'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
+import { AiOutlineClose } from 'react-icons/ai'
 import addlink from "../../assets/Add Link.png"
 import addfile from "../../assets/Add Attachments.png"
-import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
+import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import postData from '@/utils/postdata'
 import { toast } from 'react-toastify'
-import { Root } from '@radix-ui/react-tabs'
+import { useContext } from 'react'
+import { AppContext } from '../maincomponents/Project'
 
 interface IProp {
-    display: Dispatch<SetStateAction<boolean>>
-    empid?: string
-    dptid?: string
+    displayModal?:boolean
+    setDisplayModal: Dispatch<SetStateAction<boolean>>
+    taskInfo:any
 }
 
-const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
-    console.log(empid, dptid)
-    const companyId = useSelector((state: RootState) => state.companydetails.company._id)
-    const userid = useSelector((state: RootState) => state.userdetails.user._id)
+const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
+    const context = useContext(AppContext);
+    const { apiRefresh, setApiRefresh } = context;
 
-    const [taskName, setTaskName] = useState("");
-    const [priority, setPriority] = useState("low");
-    const [deadline, setDeadline] = useState("");
-    const [estimate, setEstimate] = useState("");
-    const [description, setDescription] = useState("");
+    console.log(apiRefresh,123458)
+   
+    const[taskName,setTaskName] = useState("")
+    const[description,setDescription] = useState("")
+    const[priority,setPriority] = useState("")
+    const [TaskDate, setTaskDate] = useState('');
+    const [TaskTime, setTaskTime] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [visible, setVisible] = useState(false);
     const [cloudfiles, setcloudfiles] = useState<string[]>([])
 
-    const handleImageClick = () => {
+    
+    useEffect(()=>{
 
-        fileInputRef.current?.click();
-    };
+    setTaskName(taskInfo.taskName)
+    setDescription(taskInfo.taskDescription)
+    setPriority(taskInfo.priority)
+    setTaskDate(taskInfo.deadLine)
+    setTaskTime(taskInfo.estimate)
+
+    },[])
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         setSelectedFiles(event.target.files);
     };
     const uploadedFileUrls: string[] = [];
+
+    const handleImageClick = () => {
+
+        fileInputRef.current?.click();
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -68,10 +82,12 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                         const url = data.secure_url;
                         uploadedFileUrls.push(url);
                     } else {
-                        console.error('Failed to upload file:', file.name);
+                        toast.error('Failed to upload file:', file.name as any);
+                        return 1
                     }
                 } catch (error) {
-                    console.error('Error uploading file:', error);
+                    toast.error('Error uploading file:', error as any);
+                    return 1
                 }
             }
 
@@ -81,71 +97,73 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
         } else {
             console.log('No files selected');
         }
-        // Create an object to hold form data
-        const Data = {
-            companyid: companyId,
+      let data;
+      if(uploadedFileUrls.length ==0 || null ||""){
+        data = {
+           
             taskName,
             priority,
-            deadLine: deadline,
-            estimate,
-            Departmentid: dptid,
+            deadLine: TaskDate,
+            estimate:TaskTime,
+            taskDescription: description,
+          
+        };
+      }else{
+        data = {
+           
+            taskName,
+            priority,
+            deadLine: TaskDate,
+            estimate:TaskTime,
             taskDescription: description,
             files: uploadedFileUrls,
-            assignedBy: userid,
-            assignedTo: empid
+          
         };
+      }
 
         // Log form data
-        console.log(Data);
+   
         try {
-            await postData("/company/addtask", Data)
+             await postData(`/company/updatetask/${taskInfo._id}`, data)
+            console.log(data,123456789)
         } catch (err: any) {
             console.log(err.message)
             toast.error(err?.message)
         }
 
-
-
-
-        // Clear form fields
         setTaskName("");
-        setPriority("low");
-        setDeadline("");
-        setEstimate("");
+        setPriority("");
+        setTaskDate("");
+        setTaskTime("");
         setDescription("");
         setSelectedFiles(null);
 
+         setApiRefresh(!apiRefresh)
         // Close the modal
-        display(false);
+        setDisplayModal(false);
     };
-
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        setVisible(true);
-    }, []);
-
-
+    
+   
     return (
-        <div className={`fixed z-10 inset-0 overflow-y-auto transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}>            <div className="flex items-center justify-center min-h-screen h-screen">
-            <div className="inset-0 bg-black opacity-50 relative h-full w-full"></div>
-            <div className="bg-white rounded-lg shadow-2xl p-12 absolute">
-                <div className='flex justify-between'>
-                    <div className='w-12'>
-                        <img src={logo} alt="" />
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen h-screen">
+                <div className="inset-0 bg-black opacity-50 relative h-full w-full"></div>
+                <div className="bg-white rounded-lg shadow-2xl p-12 absolute">
+                    <div className='flex justify-between'>
+                        <div className='w-12 '>
+                            <img src={logo} alt="" />
+                        </div>
+                        <div className='bg-blue-100 w-6 h-6 rounded-md flex justify-center items-center  hover:bg-blue-500  duration-500' onClick={()=>{setDisplayModal(false)}}><AiOutlineClose /></div>
                     </div>
-                    <div className='bg-blue-100 w-6 h-6 rounded-md flex justify-center items-center  hover:bg-blue-500  duration-500' onClick={() => { display(false) }}><AiOutlineClose /></div>
-                </div>
-                <form className='font-nunitosans mt-7' onSubmit={handleSubmit}>
-                    <p className='font-nunitosans font-semibold text-xl'>Add Tasks</p>
+                    <form className='font-nunitosans mt-7' onSubmit={handleSubmit}>
+                    <p className='font-nunitosans font-semibold text-xl'>Edit Tasks</p>
                     <div className='flex flex-col mt-3'>
                         <label htmlFor="task-name" className='text-slate-400'>Task Name</label>
                         <input
                             type="text"
                             id="task-name"
-                            value={taskName}
-                            onChange={(e) => setTaskName(e.target.value)}
+                             value={taskName}
+                             onChange={(e) => setTaskName(e.target.value)}
                             required
                             className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                         />
@@ -155,8 +173,8 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                         <label htmlFor="priority" className='text-slate-400'>Priority:</label>
                         <select
                             id="priority"
-                            value={priority}
-                            onChange={(e) => setPriority(e.target.value)}
+                             value={priority}
+                             onChange={(e) => setPriority(e.target.value)}
                             required
                             className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                         >
@@ -172,8 +190,8 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                             <input
                                 type="date"
                                 id="deadline"
-                                value={deadline}
-                                onChange={(e) => setDeadline(e.target.value)}
+                                value={TaskDate}
+                                 onChange={(e) => setTaskDate(e.target.value)}
                                 required
                                 className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                             />
@@ -184,8 +202,8 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                             <input
                                 type="time"
                                 id="estimate"
-                                value={estimate}
-                                onChange={(e) => setEstimate(e.target.value)}
+                                 value={TaskTime}
+                                 onChange={(e) => setTaskTime(e.target.value)}
                                 required
                                 className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                             />
@@ -196,8 +214,8 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                         <label htmlFor="description" className='text-slate-400'>Task Description:</label>
                         <textarea
                             id="description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                             value={description}
+                             onChange={(e) => setDescription(e.target.value)}
                             required
                             className='rounded-lg p-1 border border-slate-400 mt-2 text-slate-400'
                         ></textarea>
@@ -208,18 +226,18 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                             <input
                                 type="file"
                                 ref={fileInputRef}
-                                onChange={handleFileChange}
+                                 onChange={handleFileChange}
                                 className="hidden"
 
                             />
-                            <img src={addfile} alt="" className='w-8 hover:w-full hover:h-full duration-150' onClick={handleImageClick} />
+                            <img src={addfile} alt="" className='w-8 hover:w-full hover:h-full duration-150'   onClick={handleImageClick}/>
                         </div>
                         <div className='w-10 h-10 flex justify-center items-center'>
                             <img src={addlink} alt="" className='w-8 hover:w-full hover:h-full duration-150' />
                         </div>
                     </div>
 
-                    {selectedFiles && (
+                     {selectedFiles && (
                         <div className="text-slate-400">
                             Selected files:
                             <ul>
@@ -228,16 +246,17 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                                 ))}
                             </ul>
                         </div>
-                    )}
+                    )} 
 
                     <div className='flex justify-center items-center'>
                         <Uibuttons btnname="submit" />
                     </div>
                 </form>
+
+                </div>
             </div>
-        </div>
         </div>
     )
 }
 
-export default Addtaskmodal
+export default Edittaskmodal

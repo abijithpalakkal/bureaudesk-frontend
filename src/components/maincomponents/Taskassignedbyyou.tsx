@@ -5,6 +5,8 @@ import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import fetchData from '@/utils/fetchdata'
 import Taskinfocard from '../cards/Taskinfocard'
+import { useContext } from 'react'
+import { AppContext } from '../maincomponents/Project'
 
 const Taskassignedbyyou = () => {
 
@@ -12,6 +14,9 @@ const Taskassignedbyyou = () => {
     const userid=useSelector((state:RootState)=>state.userdetails.user._id)
     const [taskdata,settaskdata]=useState([])
     const [taskInfoData, setTaskInfoData] = useState(null)
+
+    const context = useContext(AppContext);
+    const { apiRefresh, setApiRefresh } = context;
 
 
     useEffect(()=>{
@@ -34,7 +39,7 @@ const Taskassignedbyyou = () => {
             setTaskInfoData(data[0])
         }
         userdata()
-    },[companyid, userid])
+    },[companyid, userid,apiRefresh])
 
 
     function getTaskInfo(data: any) {
