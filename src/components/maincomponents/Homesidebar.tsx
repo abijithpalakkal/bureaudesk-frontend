@@ -14,6 +14,11 @@ import { usercompanylogout } from '../../redux/slices/companyreducer/companyRedu
 import fetchData from '../../utils/fetchdata'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
+import {useSocketContext } from "../../context/SocketContext";
+
+
+
+ 
 
 interface HomesidebarProps {
     page: string;
@@ -23,9 +28,14 @@ function Homesidebar(props: HomesidebarProps) {
     const dispatch = useDispatch<AppDispatch>()
     const comapanyimage = useSelector((state: RootState) => state.companydetails.company.Companylogo)
     const comapanyName = useSelector((state: RootState) => state.companydetails.company.Name)
+    const {socket} = useSocketContext()
+ const user = useSelector((state: any) => state.userdetails.user._id)
 
     const handleLogoutClick = async () => {
         const data = await fetchData("/auth/logout")
+        console.log("its here")
+        socket.emit("disconnec",user)
+        socket.close()
         dispatch(userdetailslogout())
         dispatch(usercompanylogout())
         navigate("/")
@@ -61,12 +71,7 @@ function Homesidebar(props: HomesidebarProps) {
                                     <p>Home</p>
                                 </div>
                             </div>
-                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/dashboard")}> <BsPersonSquare /><p>Home</p></div>}
-
-
-
-                    
-
+                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/dashboard")}> <RiDashboardLine /><p>Home</p></div>}
 
 
 
@@ -125,7 +130,6 @@ function Homesidebar(props: HomesidebarProps) {
                     <img src={support} alt="" className='w-full' />
                 </div>
                 <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300 mb-5' onClick={handleLogoutClick}> <BiLogOut /><p>Logout</p></div>
-
 
             </div>
         </div>

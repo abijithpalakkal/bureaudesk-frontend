@@ -5,7 +5,6 @@ import { userauth } from '../../actions/useractions/userActions';
 import { toast } from 'react-toastify';
 
 
-
 interface iError {
     message:string
 }
@@ -43,7 +42,9 @@ const useReducer=createSlice({
     initialState,
     reducers:{
       userdetailslogout:(state)=>{
+        
         state.user={}
+     
       }
     },
     extraReducers:(builder)=>{

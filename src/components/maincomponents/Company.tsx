@@ -4,6 +4,7 @@ import { ImCross } from 'react-icons/im'
 import Createcompanymodal from '../modals/Createcompanymodal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
+import Zegocloud from '../helpers/Zegocloud'
 
 function Company() {
 
@@ -45,8 +46,10 @@ function Company() {
             </div>
 
             {modaldisplay && <Createcompanymodal modalstatus={setmodaldisplay} />}
+           
 
         </div>
+                                          
 
     )
 }

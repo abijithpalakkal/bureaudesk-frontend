@@ -22,6 +22,7 @@ import Projectpage from "./pages/Projectpage"
 import Assigntaskpage from "./pages/Assigntaskpage"
 import Messagerpage from "./pages/Messagerpage"
 import Dashboard from "./pages/Dashboard"
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
     return (
       <Router>
         <ToastContainer/>
-
+        <Toaster />
         <Routes>
         <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={<Signinpage />} />
@@ -80,6 +81,7 @@ function App() {
     return (
       <Router>
         <ToastContainer />
+        <Toaster />
         <Routes>
         <Route path="*" element={<ErrorPage />}  />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
@@ -105,6 +107,7 @@ function App() {
     return (
       <Router>
         <ToastContainer />
+        <Toaster />
         <Routes>
         <Route path="*" element={<ErrorPage/>} />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />

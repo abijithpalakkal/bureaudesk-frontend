@@ -22,9 +22,11 @@
     "@reduxjs/toolkit": "^2.2.2",
     "@tsparticles/all": "^3.3.0",
     "@tsparticles/react": "^3.0.0",
+    "@zegocloud/zego-uikit-prebuilt": "^2.5.0",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "daisyui": "^4.11.1",
     "formik": "^2.4.5",
     "lucide-react": "^0.376.0",
     "react": "^18.2.0",
@@ -41,7 +43,8 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tsparticles-slim": "^2.12.0",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zego-express-engine-webrtc": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
@@ -52,7 +55,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.18",
-    "daisyui": "^4.11.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
