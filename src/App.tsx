@@ -29,13 +29,13 @@ function App() {
   const dispatch = useDispatch<AppDispatch>()
   const userid = useSelector((state: RootState) => state.userdetails.user._id)
   const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
- 
+
   useEffect(() => {
     if (!userid) {
       const auth = async () => {
         const response: any = await dispatch(userauth())
         if (response.payload?.companyid) {
-        
+
           await dispatch(getCompanyAction(response.payload.companyid))
         }
       }
@@ -66,10 +66,10 @@ function App() {
 
     return (
       <Router>
-        <ToastContainer/>
+        <ToastContainer />
         <Toaster />
         <Routes>
-        <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={<Signinpage />} />
           <Route path="/" element={<Loginpage />} />
         </Routes>
@@ -83,9 +83,10 @@ function App() {
         <ToastContainer />
         <Toaster />
         <Routes>
-        <Route path="*" element={<ErrorPage />}  />
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
+          <Route path="/"  element={userid ? <Employee /> : <Navigate to={'/'} />} >
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
           <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
@@ -95,8 +96,9 @@ function App() {
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
           <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
-          <Route path="/messenger" element={userid ? <Messagerpage/> : <Navigate to={'/'} />} />
-          <Route path="/dashboard" element={userid ? <Dashboard/> : <Navigate to={'/'} />} />
+          <Route path="/messenger" element={userid ? <Messagerpage /> : <Navigate to={'/'} />} />
+          <Route path="/dashboard" element={userid ? <Dashboard /> : <Navigate to={'/'} />} />
+          </Route>
         </Routes>
       </Router>
     )
@@ -109,7 +111,7 @@ function App() {
         <ToastContainer />
         <Toaster />
         <Routes>
-        <Route path="*" element={<ErrorPage/>} />
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
@@ -119,8 +121,8 @@ function App() {
           <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
           <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
-          <Route path="/messenger" element={userid ? <Messagerpage/> : <Navigate to={'/'} />} />
-          <Route path="/dashboard" element={userid ? <Dashboard/> : <Navigate to={'/'} />} />
+          <Route path="/messenger" element={userid ? <Messagerpage /> : <Navigate to={'/'} />} />
+          <Route path="/dashboard" element={userid ? <Dashboard /> : <Navigate to={'/'} />} />
         </Routes>
       </Router>
 

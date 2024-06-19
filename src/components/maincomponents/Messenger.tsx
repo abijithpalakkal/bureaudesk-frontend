@@ -14,10 +14,9 @@ import addfile from "../../assets/attach.png"
 import companylogo from "../../assets/logo_2-removebg-preview (4).png"
 import { Socket } from 'socket.io-client'
 import { useSocketContext } from "../../context/SocketContext"
-import Zegocloud from '@/components/helpers/Zegocloud'
 
 
-const Messenger = ({setZeegooCloud,url}:any) => {
+const Messenger = ({setZeegooCloud,url,setData}:any) => {
     const user = useSelector((state: RootState) => state.userdetails.user)
     const [displayUserCard, setDisplayUserCard] = useState(false)
     const [availableChat, setAvailableChat] = useState([])
@@ -161,8 +160,10 @@ const Messenger = ({setZeegooCloud,url}:any) => {
 
     const handleVideoCall = () => {
         if (onlineUsers.includes(userId)) {
-            socket.emit("videoCall", { userId ,userName:user.Name,url})
-            setZeegooCloud(true)
+            setData({ userId ,userName:user.Name})
+              setZeegooCloud(true)
+              console.log(url,2589)
+          
 
         } else {
             toast.error("user not online")

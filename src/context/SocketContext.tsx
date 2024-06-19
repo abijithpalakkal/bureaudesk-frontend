@@ -55,8 +55,8 @@ const SocketContext = ({ children }: any) => {
                 hotToast(
                     (t) => (<div className='bg-green-100 h-10 flex justify-center items-center rounded-md gap-3'>
                         <BiPhoneCall className='h-8 w-8 text-green-500 '/>
-                        <p className='font-medium'>   from abijith</p>
-                        <p className='text-blue-500'><a href='/'>join now</a></p>
+                        <p className='font-medium'>   from {data?.userName}</p>
+                        <p className='text-blue-500'><a href={data?.url}>join now</a></p>
                     </div>),
                     {
                         duration: 10000, // Display the toast for 10 seconds
