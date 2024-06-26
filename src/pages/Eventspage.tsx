@@ -5,11 +5,9 @@ import Events from '../components/maincomponents/Events'
 
 function Eventspage() {
     return (
-        <div className='bg-slate-100 flex'>
-           
-            <Homesidebar page="events" />
-            <Events/>
-        </div>
+       
+            <Events />
+       
     )
 }
 

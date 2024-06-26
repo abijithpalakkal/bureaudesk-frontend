@@ -314,7 +314,7 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                                                 value={chat}
                                                 onChange={(e) => setChat(e.target.value)}
                                                 placeholder='Type your message here..'
-                                                className='rounded-lg p-1  h-full w-full border-none outline-none focus:ring-0 bg-white'
+                                                className='rounded-lg p-1  h-full w-full border-none outline-none focus:ring-0 '
                                             />
                                             <button className='w-7 h-7 bg-blue-400 rounded-lg flex justify-center items-center mt-1'>
                                                 <BiSend className='w-6 h-6' />

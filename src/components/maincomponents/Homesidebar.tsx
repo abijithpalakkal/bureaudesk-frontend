@@ -15,16 +15,23 @@ import fetchData from '../../utils/fetchdata'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import {useSocketContext } from "../../context/SocketContext";
+import { useEffect } from 'react'
 
 
 
  
 
 interface HomesidebarProps {
-    page: string;
+    page?: string;
 }
 
 function Homesidebar(props: HomesidebarProps) {
+
+    useEffect(()=>{
+        return()=>{
+            console.log("sidebar Unmounted")
+        }
+    },[])
     const dispatch = useDispatch<AppDispatch>()
     const comapanyimage = useSelector((state: RootState) => state.companydetails.company.Companylogo)
     const comapanyName = useSelector((state: RootState) => state.companydetails.company.Name)
@@ -33,7 +40,6 @@ function Homesidebar(props: HomesidebarProps) {
 
     const handleLogoutClick = async () => {
         const data = await fetchData("/auth/logout")
-        console.log("its here")
         socket.emit("disconnec",user)
         socket.close()
         dispatch(userdetailslogout())
@@ -115,14 +121,14 @@ function Homesidebar(props: HomesidebarProps) {
                         ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer  hover:ml-4 duration-300' onClick={() => navigate("/messenger")}> <SiMessenger /><p>Messages</p></div>
                         }
 
-                        {props.page === 'company' ? (
+                         {props.page === 'company' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
                                     <ImOffice />
                                     <p>Company</p>
                                 </div>
                             </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>Company</p></div>)}
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>Company</p></div>)} 
 
                     </div>
                 </div>

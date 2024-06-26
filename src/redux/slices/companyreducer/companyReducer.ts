@@ -35,7 +35,7 @@ const useReducer:any = createSlice({
        
         state.loading = false;
         state.company = action.payload as any;
-        state.message = "loaded"
+        state.message = "loaded";
       })
       .addCase(getCompanyAction.rejected, (state, action) => {
         state.error = action.error as string;

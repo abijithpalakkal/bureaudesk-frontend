@@ -26,12 +26,13 @@ const Project = () => {
     const userRole = useSelector((state: RootState) => state.userdetails.user.Authorization)
     const navigate = useNavigate();
     return (
-        <div className='w-5/6 px-2 py-2 h-screen'>
-            <div className='h-full'>
-                <Homenavbar />
+       <>
                 <div className='flex justify-between mt-11 '>
                     <h1 className='font-bold text-3xl'>PROJECTS</h1>
+                    <div className='flex gap-4'>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/assigntask") }}><span >assign task</span></button>
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/projects/addproject") }}><span >add Project</span><span className='text-black'><AiOutlinePlus/></span></button>
+                    </div>
                 </div>
                 <div className='mt-3'>
                     <div className='w-full'>
@@ -53,11 +54,7 @@ const Project = () => {
                     </div>
                 </div>
 
-
-            </div>
-
-
-        </div>
+                </>
     )
 }
 

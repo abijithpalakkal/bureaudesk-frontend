@@ -13,12 +13,15 @@ interface SocketContextType {
     socket: any | null;
     messages: any[];
     onlineUsers: any[];
+    globalChat: any[]
 }
 
 const socketContext = createContext<SocketContextType>({
     socket: null,
     messages: [],
     onlineUsers: [],
+    globalChat: []
+
 });
 
 export const useSocketContext = (): SocketContextType => {
@@ -28,33 +31,38 @@ export const useSocketContext = (): SocketContextType => {
 const SocketContext = ({ children }: any) => {
     const [socket, setSocket] = useState<any | null>(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
+    const [globalChat, setGlobalChat] = useState<any>([])
 
     const userid = useSelector((state: RootState) => state.userdetails.user._id)
 
     useEffect(() => {
-        
+
         if (userid) {
-            console.log("this is socket",SOCKET_URL)
+            console.log("this is socket", SOCKET_URL)
             const newSocket = io(SOCKET_URL, {
                 query: {
                     userId: userid
                 }
             })
-            
+
             setSocket(newSocket)
-            console.log(socket,12356)
+            console.log(socket, 12356)
 
-            newSocket.on("getOnlineUsers", (users:any) => {
+            newSocket.on("getOnlineUsers", (users: any) => {
                 setOnlineUsers(users)
-                console.log(users,152)
-              })
+                console.log(users, 152)
+            })
 
-              newSocket.on('incomingCall', (data:any) => {
+            newSocket.on("getGlobalChat", (data: any) => {
+                setGlobalChat((prevChat:any) => [...prevChat, data]);
+            })
+
+            newSocket.on('incomingCall', (data: any) => {
                 console.log('Incoming call from:', data);
 
                 hotToast(
                     (t) => (<div className='bg-green-100 h-10 flex justify-center items-center rounded-md gap-3'>
-                        <BiPhoneCall className='h-8 w-8 text-green-500 '/>
+                        <BiPhoneCall className='h-8 w-8 text-green-500 ' />
                         <p className='font-medium'>   from {data?.userName}</p>
                         <p className='text-blue-500'><a href={data?.url}>join now</a></p>
                     </div>),
@@ -63,33 +71,33 @@ const SocketContext = ({ children }: any) => {
                         position: 'top-center',
                     }
                 )
-              });
+            });
 
             //   return () => {
             //     console.log("socket close")
             //     newSocket.close()
             // };
-        }   
+        }
         // } else {
         //     if(socket) {
         //         socket.close()
         //     }
         //     setSocket(null)
         //   }
-    },[userid])
+    }, [userid])
 
 
     const contextValue: SocketContextType = {
-        socket, onlineUsers,
+        socket, onlineUsers, globalChat,
         messages: []
-      };
+    };
 
 
     return (
         <socketContext.Provider value={contextValue}>
-            
-        {children}
-      </socketContext.Provider>
+
+            {children}
+        </socketContext.Provider>
     )
 }
 

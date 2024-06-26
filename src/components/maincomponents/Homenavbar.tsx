@@ -8,6 +8,11 @@ import { AppDispatch, RootState } from '../../redux/store'
 import { userdetailslogout } from '../../redux/slices/userreducer/userReducer'
 import { usercompanylogout } from '../../redux/slices/companyreducer/companyReducer'
 import { useNavigate } from 'react-router-dom'
+import Notificationmodal from '../modals/Notificationmodal'
+import { setNotificationTrue } from '@/redux/slices/notificationreducer/notificationReducer'
+
+
+
 
 function Homenavbar() {
   const navigate = useNavigate()
@@ -15,6 +20,8 @@ function Homenavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const user=useSelector((state:RootState)=>state.userdetails.user)
+  const notification = useSelector((state:RootState) => state.notification);
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -31,6 +38,9 @@ function Homenavbar() {
     navigate("/")
 
   };
+  const handleNotificationClick=()=>{
+    dispatch(setNotificationTrue());
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +65,7 @@ function Homenavbar() {
   const weekDayName = weekDays[today.getDay()];
   const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(today);
   return (
+    <>
     <div className={`flex justify-between sticky top-0 ${isScrolled ? 'bg-blue-300 rounded-lg p-2'  : ''}`}>
        <div className="relative text-gray-600">
                 <input type="search" name="search" placeholder="Search" className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none w-full" />
@@ -66,7 +77,7 @@ function Homenavbar() {
             </div>
       <div className='flex gap-5 items-center'>
         <div className='bg-blue-100 py-1 px-3  rounded-lg '> {weekDayName}, {formattedDate}</div>
-        <div className='bg-white w-8 h-8 flex justify-center items-center rounded-md'><GrNotification /></div>
+        <div className='bg-white w-8 h-8 flex justify-center items-center rounded-md' onClick={handleNotificationClick}><GrNotification /></div>
         <div className='relative'>
           <div className='bg-white flex px-2 py-1 gap-2 justify-around items-center rounded-md cursor-pointer' onClick={toggleDropdown}>
             { user.profileImage ? <img src={ user.profileImage} alt="" className='w-6 h-6 rounded-full'/> : <BsPersonSquare />}
@@ -86,6 +97,9 @@ function Homenavbar() {
         </div>
       </div>
     </div>
+    {notification && <Notificationmodal/>}
+    </>
+
   )
 }
 

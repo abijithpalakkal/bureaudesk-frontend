@@ -14,9 +14,10 @@ interface IProp {
   id?: string
   refresh?:boolean
   setrefresh?:any
+  deadline?:any
 }
 
-const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
+const Muidropdownfortask = ({ defaults, id , setrefresh,refresh,deadline}: IProp) => {
   
   const [displayModal,setdisplayModal]=useState(false)
 
@@ -57,6 +58,10 @@ const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
             <p className='flex justify-center items-center text-purple-500  bg-purple-200 px-5 py-1 rounded-lg'>in-review</p>
         
         )}
+         {defaults === "Approved" && (
+            <p className='flex justify-center items-center text-green-400 px-5 py-1 rounded-lg'>Approved✅</p>
+        
+        )}
       </>
     )}
   
@@ -93,7 +98,7 @@ const Muidropdownfortask = ({ defaults, id , setrefresh,refresh}: IProp) => {
       )}
     </Menu>
   </Dropdown>
-  {displayModal && <Tasksubmitmodal display={displayModal} setdisplayModal={setdisplayModal}  id={id}  handleSelect={handleSelect}/>}
+  {displayModal && <Tasksubmitmodal display={displayModal} setdisplayModal={setdisplayModal}  id={id}  handleSelect={handleSelect} deadline={deadline}/>}
 
   </> 
 

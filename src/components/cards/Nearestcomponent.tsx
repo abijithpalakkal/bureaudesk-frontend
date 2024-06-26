@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { string } from 'yup'
 import postData from '@/utils/postdata'
+import duumyimage from "../../assets/no-event-bg.png"
 
 
 interface IEvents {
@@ -22,17 +23,17 @@ interface IEvents {
   __v?: number;
 }
 
-interface iprop{
+interface iprop {
   val: any
 }
 
-function Nearestcomponent({val}:iprop) {
+function Nearestcomponent({ val }: iprop) {
   const companyid = useSelector((state: RootState) => state.companydetails.company._id)
   const [events, setevents] = useState<IEvents[]>([])
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const data = await postData(`/company/getevent`,{companyid: companyid})
+        const data = await postData(`/company/getevent`, { companyid: companyid })
         console.log(data.data)
         console.log("jacob swarg")
 
@@ -47,7 +48,7 @@ function Nearestcomponent({val}:iprop) {
       }
     }
     getEvents()
-  }, [companyid,val])
+  }, [companyid, val])
 
 
   function convertTo12HourTime(militaryTime: string) {
@@ -118,30 +119,35 @@ function Nearestcomponent({val}:iprop) {
         <p className='text-xl font-semibold'>Nearest Events</p>
         <p className='text-blue-500 font-nunitosans flex justify-between items-center'><span>view all</span> <AiOutlineRight /></p>
       </div>
-      {events.map((obj, index) => (
-        <div className={`border-l-2 ${getBorderColor(obj.eventCategory as string)} px-2 mt-5`}>
 
-          <div className='flex justify-between mt-5'>
-            <p className='font-nunitosans font-semibold'>{obj.eventName}</p>
-            <p className='text-green-500'><ImArrowUp2 /></p>
-          </div>
-          <div className='flex justify-between items-center mt-3 '>
-            <p className='text-slate-500 truncate'>
-              <span className='mr-1'>{getDayOfWeek(obj.eventDate as string)}</span>
-              <span className='mr-1'>|</span>
-              <span className={`mr-1 ${getFontSize(obj)}`}>{convertTo12HourTime(obj?.eventTime as string)}</span>
-            </p>
-            <div className='bg-blue-100 rounded-md text-slate-600'>
-              <p className='flex justify-between px-2  items-center'> <span className='mr-1'><AiFillClockCircle /></span>{leftTime(obj)}<span>h</span></p>
+      {events.length > 0 ? (
+        events.map((obj, index) => (
+          <div key={index} className={`border-l-2 ${getBorderColor(obj.eventCategory as string)} px-2 mt-5`}>
+            <div className='flex justify-between mt-5'>
+              <p className='font-nunitosans font-semibold'>{obj.eventName}</p>
+              <p className='text-green-500'><ImArrowUp2 /></p>
+            </div>
+            <div className='flex justify-between items-center mt-3 '>
+              <p className='text-slate-500 truncate'>
+                <span className='mr-1'>{getDayOfWeek(obj.eventDate as string)}</span>
+                <span className='mr-1'>|</span>
+                <span className={`mr-1 ${getFontSize(obj)}`}>{convertTo12HourTime(obj?.eventTime as string)}</span>
+              </p>
+              <div className='bg-blue-100 rounded-md text-slate-600'>
+                <p className='flex justify-between px-2  items-center'>
+                  <span className='mr-1'><AiFillClockCircle /></span>
+                  {leftTime(obj)}
+                  <span>h</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>))}
-
-
-
-
-
-
+        ))
+      ) : (
+        <div className="flex justify-center items-center h-full opacity-55 ">
+          <img src={duumyimage} alt="No events available" className="mb-5" />
+        </div>
+      )}
     </div>
   )
 }

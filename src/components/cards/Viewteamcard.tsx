@@ -27,8 +27,10 @@ function Viewteamcard({ items, setrefresh, refresh }: any) {
         const fetchUser = async () => {
             const newData = [];
             for (let i = 0; i < items.members.length; i++) {
+
                 const response = await fetchData(`/user/getuserbyid/${items.members[i]}`);
                 newData.push(response?.data);
+
             }
             setdata(newData);
         };

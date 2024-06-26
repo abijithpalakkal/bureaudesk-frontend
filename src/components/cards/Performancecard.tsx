@@ -10,27 +10,47 @@ const Performancecard = () => {
     const [totalEmployes, setTotalEmplpoyees] = useState()
     const [totalTask, setTotalTask] = useState()
     const [doneTask, setDoneTask] = useState()
+    const [approvedTask,setApprovedTask] = useState()
+    const [submittedTask,setsubmmittedtask]  =useState()
+    const [yettosubmitt,setyettosubmit] = useState()
     const companyId = useSelector((state: RootState) => state.companydetails.company._id);
     useEffect(() => {
         const getData = async () => {
-            const getdata1 = await postData("/user/getuserdetails", {
+            const totalEmployes = await postData("/user/getuserdetails", {
                 companyid: companyId
             })
-            setTotalEmplpoyees(getdata1.data.length)
+            setTotalEmplpoyees(totalEmployes.data.length)
 
-            const getdata2 = await postData("/company/gettask", {
+            const totaltask = await postData("/company/gettask", {
 
                 companyid: companyId
             })
-            setTotalTask(getdata2.data.length)
+            setTotalTask(totaltask.data.length)
 
-            const getdata3 = await postData("/company/gettask", {
+            const approvedTask = await postData("/company/gettask", {
 
                 companyid: companyId,
-                status:"Done"
+                status: "Approved"
             })
-            setDoneTask(getdata3.data.length)
+            setDoneTask(approvedTask.data.length)
+          
+            const submittedTask = await postData("/company/gettask", {
 
+                companyid: companyId,
+                status:  ["Done", "Approved","Rejected"]
+            })
+            setsubmmittedtask(submittedTask.data.length)
+
+            
+            const yettosubmittedTask = await postData("/company/gettask", {
+
+                companyid: companyId,
+                status:  ["Assigned","Started","in-progress"]
+            })
+            setyettosubmit(yettosubmittedTask.data.length)
+           
+
+        
 
         }
         getData()
@@ -39,7 +59,7 @@ const Performancecard = () => {
 
     return (
         <div className='mt-5 flex justify-between pr-5'>
-            <div className='bg-white w-64 h-40 rounded-2xl border shadow-xl p-8'>
+            <div className='bg-white w-52 h-32 rounded-2xl border shadow-xl p-8'>
                 <div className='flex justify-between items-center'>
                     <p className='text-4xl '>{totalEmployes}</p>
                     <div className='bg-blue-200 rounded-full p-1'>
@@ -47,11 +67,11 @@ const Performancecard = () => {
                     </div>
 
                 </div>
-                <p className='text-xl font-medium mt-3'>total employees</p>
+                <p className='text-lg font-medium mt-3'>total employees</p>
 
             </div>
 
-            <div className='bg-white w-64 h-40 rounded-2xl border shadow-xl p-8'>
+            <div className='bg-white w-52 h-32  rounded-2xl border shadow-xl p-8'>
                 <div className='flex justify-between items-center'>
                     <p className='text-4xl '>{totalTask}</p>
                     <div className='bg-blue-200 rounded-full p-1'>
@@ -59,11 +79,25 @@ const Performancecard = () => {
                     </div>
 
                 </div>
-                <p className='text-xl font-medium mt-3'>ongoing task</p>
+                <p className='text-xl font-medium mt-3'>total task</p>
 
             </div>
 
-            <div className='bg-white w-64 h-40 rounded-2xl border shadow-xl p-8'>
+            <div className='bg-white  w-52 h-32  rounded-2xl border shadow-xl p-8'>
+                <div className='flex justify-between items-center'>
+                    <p className='text-4xl '>{submittedTask}</p>
+                    <div className='bg-blue-200 rounded-full p-1'>
+                        <AiOutlineUsergroupDelete className='w-8 h-8' />
+                    </div>
+
+                </div>
+                <p className='text-xl font-medium mt-3'>submitted task</p>
+
+            </div>
+
+
+
+            <div className='bg-white  w-52 h-32  rounded-2xl border shadow-xl p-8'>
                 <div className='flex justify-between items-center'>
                     <p className='text-4xl '>{doneTask}</p>
                     <div className='bg-blue-200 rounded-full p-1'>
@@ -71,9 +105,14 @@ const Performancecard = () => {
                     </div>
 
                 </div>
-                <p className='text-xl font-medium mt-3'>completed task</p>
+                <p className='text-xl font-medium mt-3'>Approved task</p>
 
             </div>
+
+           
+
+
+
 
         </div>
     )

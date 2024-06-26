@@ -21,7 +21,7 @@ const instance = axios.create({
     try {
   
       const response = await instance({...requestConfig});
-      return response;asnjvnjoawsnvsvjasaonm
+      return response;
     } catch (error: any) {
       return error
     }

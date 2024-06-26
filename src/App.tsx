@@ -23,6 +23,8 @@ import Assigntaskpage from "./pages/Assigntaskpage"
 import Messagerpage from "./pages/Messagerpage"
 import Dashboard from "./pages/Dashboard"
 import { Toaster } from 'react-hot-toast';
+import Layout from "./pages/Layout"
+import AddProject from "./components/maincomponents/AddProject"
 
 
 function App() {
@@ -86,19 +88,20 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
-          <Route path="/"  element={userid ? <Employee /> : <Navigate to={'/'} />} >
+          <Route path="/" element={userid ? <Layout/> : <Navigate to={'/'} />} >
+            <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
+            <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+            <Route path="/projects/addproject" element={userid ? <AddProject /> : <Navigate to={'/'} />} />
+          </Route>
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
           <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
           <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
           <Route path="/viewteam/:id" element={userid ? <Viewteampage /> : <Navigate to={'/'} />} />
           <Route path="/404error" element={userid ? <ErrorPage /> : <Navigate to={'/'} />} />
-          <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
-          <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
           <Route path="/messenger" element={userid ? <Messagerpage /> : <Navigate to={'/'} />} />
           <Route path="/dashboard" element={userid ? <Dashboard /> : <Navigate to={'/'} />} />
-          </Route>
         </Routes>
       </Router>
     )
@@ -118,8 +121,10 @@ function App() {
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
           <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
           <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
-          <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
-          <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+          <Route path="/" element={userid ? <Layout/> : <Navigate to={'/'} />} >
+            <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
+            <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+          </Route>
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
           <Route path="/messenger" element={userid ? <Messagerpage /> : <Navigate to={'/'} />} />
           <Route path="/dashboard" element={userid ? <Dashboard /> : <Navigate to={'/'} />} />

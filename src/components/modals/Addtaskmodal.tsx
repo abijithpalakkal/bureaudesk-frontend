@@ -43,12 +43,21 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const selectedDatetime = new Date(`${deadline}T${estimate}`);
+        const currentDatetime = new Date();
+        if (selectedDatetime < currentDatetime) {
+            // Display an error message or handle the case as needed
+            toast.error("Selected date and time cannot be in the past");
+            return;
+        }
+
         if (selectedFiles && selectedFiles.length > 0) {
 
 
 
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
+                console.log(file,"files",896)
 
                 const formData = new FormData();
                 formData.append('file', file);

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
 import fetchData from '../../utils/fetchdata';
 import postData from '../../utils/postdata';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 interface Employee {
   _id: string;
@@ -22,6 +24,9 @@ function Createteammodal({ id ,modal}: Props) {
   const [selectedTeamLead, setSelectedTeamLead] = useState<string | null>(null);
   const [teamname, setTeamname] = useState('');
   const [description, setDescription] = useState('');
+
+  const companyid = useSelector((state: any) => state?.companydetails?.company._id)
+
 
   useEffect(() => {
     async function getEmployees() {
@@ -55,13 +60,19 @@ function Createteammodal({ id ,modal}: Props) {
     } else if (!selectedTeamLead) {
       alert('Please select a team lead');
     } else {
-      await postData('/company/createteam', {
-        members: selectedMembers,
-        teamlead: selectedTeamLead,
-        name: teamname,
-        description: description,
-        departmentid:id
-      });
+      if(companyid){
+        await postData('/company/createteam', {
+          companyId:companyid,
+          members: selectedMembers,
+          teamlead: selectedTeamLead,
+          name: teamname,
+          description: description,
+          departmentid:id
+        });
+      }else{
+        toast.error("team cannot be created without a company")
+      }
+      
     modal(false)
     }
   };

@@ -12,15 +12,37 @@ interface IProp {
     setdisplayModal: any
     id?:string
     handleSelect?:any
+    deadline?:any
 }
 
-const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect}: IProp) => {
+const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: IProp) => {
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [cloudfiles, setcloudfiles] = useState<string[]>([])
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const checkAndUpdateTask = async (id:any, deadline:any) => {
+        const deadlineDate = new Date(deadline);
+        const currentDate = new Date();
+    
+        // Check if the current date is past the deadline
+        if (currentDate > deadlineDate) {
+            try {
+                await postData(`/company/updatetask/${id}`, {  
+                    lateSubmission: true
+                });
+                console.log("Task updated with late submission.");
+            } catch (error) {
+                console.error("Error updating task:", error);
+            }
+        } else {
+            console.log("Current date has not passed the deadline.");
+        }
+    };
+
+
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -96,6 +118,10 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect}: IProp) => 
             await postData("/company/submittask",
                data
             )
+            const deadlone=deadline
+            const currentdate= new Date()
+
+            checkAndUpdateTask(id,deadline)
             console.log(data,id,123456789)
         } catch (err: any) {
             console.log(err.message)
