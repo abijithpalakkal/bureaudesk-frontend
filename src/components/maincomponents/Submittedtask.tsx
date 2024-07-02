@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import addfile from "../../assets/Add Attachments.png"
 import postData from '@/utils/postdata';
+import { useNavigate } from 'react-router-dom';
 
 interface TaskInfo {
     _id: string;
@@ -17,6 +18,7 @@ const Submittedtask = ({ taskInfo }: {
     taskInfo: any
 
 }) => {
+    const navigate=useNavigate()
 
     function getFileNameFromUrl(url: any) {
         if (url || url == "") {
@@ -72,6 +74,11 @@ const Submittedtask = ({ taskInfo }: {
                     </a>
                 </div>
             </div>
+            <div>
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold mt-3 py-1 px-2 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate(`/projects/taskdetails/${taskInfo._id}`) }}><span className='text-sm' >more details</span></button>
+
+            </div>
+
         </div>
     )
 }

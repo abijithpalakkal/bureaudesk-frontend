@@ -23,8 +23,10 @@ export default function Activitystream() {
 
   useEffect(() => {
     if (messagesEndRef.current) {
+      
       console.log("i am here")
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+
     }
   }, [globalChat]);
 

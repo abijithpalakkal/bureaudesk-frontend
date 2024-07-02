@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { commonRequest } from "../config/api";
 
 
@@ -20,7 +21,7 @@ const config = {
         throw new Error(response.data.errorResponse.message);
       }
     } catch (error: any) {
-     
+     toast.error(error.message)
       throw new Error(error.message)
     }
   };

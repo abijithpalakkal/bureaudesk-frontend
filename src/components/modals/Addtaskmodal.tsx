@@ -10,6 +10,7 @@ import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import { toast } from 'react-toastify'
 import { Root } from '@radix-ui/react-tabs'
+import fetchData from '@/utils/fetchdata'
 
 interface IProp {
     display: Dispatch<SetStateAction<boolean>>
@@ -27,8 +28,22 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
     const [deadline, setDeadline] = useState("");
     const [estimate, setEstimate] = useState("");
     const [description, setDescription] = useState("");
+    const [selectProject, SetSelectProject] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [cloudfiles, setcloudfiles] = useState<string[]>([])
+    const [projects, setprojects] = useState<any>(null)
+    const companyid = useSelector((state: any) => state?.companydetails?.company._id);
+
+
+    useEffect(() => {
+        const getdata = async () => {
+            const { data } = await fetchData(`/company/getprojects/${companyid}`)
+
+            setprojects(data)
+        }
+        getdata()
+    }, [])
+
 
     const handleImageClick = () => {
 
@@ -57,7 +72,7 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
 
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
-                console.log(file,"files",896)
+                console.log(file, "files", 896)
 
                 const formData = new FormData();
                 formData.append('file', file);
@@ -91,18 +106,38 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
             console.log('No files selected');
         }
         // Create an object to hold form data
-        const Data = {
-            companyid: companyId,
-            taskName,
-            priority,
-            deadLine: deadline,
-            estimate,
-            Departmentid: dptid,
-            taskDescription: description,
-            files: uploadedFileUrls,
-            assignedBy: userid,
-            assignedTo: empid
-        };
+        let Data;
+        console.log(selectProject,"selectprojects")
+        if (selectProject != "" && selectProject != "a") {
+            Data = {
+                companyid: companyId,
+                taskName,
+                priority,
+                deadLine: deadline,
+                estimate,
+                Departmentid: dptid,
+                taskDescription: description,
+                files: uploadedFileUrls,
+                assignedBy: userid,
+                assignedTo: empid,
+                projectId: selectProject
+            };
+        } else {
+            Data = {
+                companyid: companyId,
+                taskName,
+                priority,
+                deadLine: deadline,
+                estimate,
+                Departmentid: dptid,
+                taskDescription: description,
+                files: uploadedFileUrls,
+                assignedBy: userid,
+                assignedTo: empid,
+              
+            };
+        }
+
 
         // Log form data
         console.log(Data);
@@ -174,6 +209,29 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
                             <option value="high">High</option>
                         </select>
                     </div>
+
+
+                    <div className='flex flex-col mt-1'>
+                        <label htmlFor="event-category" className='text-slate-400'>Project</label>
+                        <select
+                            id="event-category"
+                            value={selectProject}
+                            onChange={(e) => {
+                                SetSelectProject(e.target.value)
+                            }}
+                            required
+                            className='rounded-lg p-1 border border-slate-400 mt-1 text-slate-400'
+                        >
+                            <option value="a">Stand Alone</option>
+                            {projects?.map((obj: any, index: number) => (
+                                <option key={index} value={obj?._id}>{obj.projectName}</option>
+                            ))}
+
+                        </select>
+                    </div>
+
+
+
 
                     <div className='flex gap-10 mt-3'>
                         <div className='flex flex-col'>

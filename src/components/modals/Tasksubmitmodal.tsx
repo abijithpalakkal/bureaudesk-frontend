@@ -102,7 +102,8 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: I
       let data;
       if(uploadedFileUrls.length ==0 || null ||""){
         data = {
-            taskDescription
+            taskId:id,
+            taskNote:taskDescription,
         };
       }else{
         data = {

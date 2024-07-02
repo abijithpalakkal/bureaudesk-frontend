@@ -18,6 +18,7 @@ interface IPropData {
 const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInfo }: IPropData) => {
     const [selector, setSelector] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [guageValue, setGaugeValue] = useState(0)
     const itemsPerPage = 5;
 
     const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -32,10 +33,23 @@ const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInf
         getTaskInfo(data[startIndex]); // Update task info with the first item of the new page
     };
 
-    const settings = {
-        width: 50,
-        height: 50,
-        value: 60,
+    const getGaugeValue = (status: any) => {
+        switch (status) {
+            case "Assigned":
+                return 0;
+            case "Started":
+                return 25;
+            case "in-Progress":
+                return 50;
+            case "Done":
+                return 80;
+            case "Approved":
+                return 100;
+            case "Rejected":
+                return 0;
+            default:
+                return 0;
+        }
     };
 
     const displayedData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -170,8 +184,11 @@ const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInf
                         </div>
                     )}
                     <div className='w-8 h-8'>
+
                         <Gauge
-                            {...settings}
+                            width={50}
+                            height={50}
+                            value={getGaugeValue(item.status)}
                             cornerRadius="50%"
                             sx={(theme) => ({
                                 [`& .${gaugeClasses.valueText}`]: {

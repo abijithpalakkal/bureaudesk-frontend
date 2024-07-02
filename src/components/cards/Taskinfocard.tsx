@@ -31,7 +31,7 @@ const Taskinfocard = ({ taskInfo }: {
 
 
     return (
-        <div className='bg-white w-60 rounded-2xl p-4 py-2 mt-3 h-[470px]'>
+        <div className='bg-white w-60 rounded-2xl p-4 py-2 mt-3 min-h-[470px]'>
            <Tabs value={activeTab} onValueChange={setActiveTab}>
                 <TabsList className='flex w-52 m-auto h-6 bg-green-100'>
                     <TabsTrigger value="Task info" className='text-[12px] h-4 '>Task info</TabsTrigger>

@@ -59,7 +59,7 @@ const Taskassignedtoyou = () => {
   return (
     <div className='flex'>
       {!skeleton && <Employeetaskcard data={taskdata} assigned={"toYou"} refresh={refresh} setrefresh={setrefresh} getTaskInfo={getTaskInfo} />}
-      {skeleton && <EmployeeCardSkeleton/>}
+      {skeleton && <EmployeeCardSkeleton />}
       <Taskinfocard taskInfo={taskInfoData} />
     </div>
 

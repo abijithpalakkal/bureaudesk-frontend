@@ -10,12 +10,15 @@ const AddProject = () => {
     const [projectDescription, setProjectDescription] = useState('');
     const [selectTeam, SetSelectTeam] = useState('');
     const [team, setTeam] = useState<any>([]);
+    const [teamId, setTeamId] = useState<any>("");
     const [cardData, setCardData] = useState<any | null>(null);
     const [priority, setPriority] = useState("low");
     const [deadline, setDeadline] = useState("");
     const [populatedData, setPopulatedData] = useState<any>(null);
     const [attachments, setAttachments] = useState<any>([]); // State to hold selected files with name and URL
     const [fileInputKey, setFileInputKey] = useState<number>(0); // Key to reset file input
+    const [showAttachments,setShowAttachments] = useState<any>([]) 
+
 
     const companyid = useSelector((state: any) => state?.companydetails?.company._id);
 
@@ -28,14 +31,17 @@ const AddProject = () => {
         console.log('Project Description:', projectDescription);
         console.log('Attachments:', attachments); // Log selected files for debugging
         console.log('selectTeam', selectTeam); // Log selected files for debugging
+        console.log(teamId,"teamid")
 
         for (var i = 0; i < attachments.length; i++) {
-            console.log(attachments[i][0],attachments[i]?.name, "obj")
+            console.log(attachments[i].originalFile[0],attachments[i]?.name, "obj")
             console.log(attachments.length)
             const formData = new FormData();
-            formData.append('file', attachments[i][0]);
+            formData.append('file', attachments[i].originalFile);
             formData.append('upload_preset', "ckoevhm7");
-            formData.append('public_id', attachments[i][0]?.name)
+            formData.append('public_id', attachments[i].originalFile.name)
+            console.log(attachments[i].file.name,"attachments[i].originalFile[0]?.name")
+           
 
             try {
 
@@ -61,14 +67,29 @@ const AddProject = () => {
             console.log(cloudinary, "cloudinary")
         }
 
-
-        const { data } = await postData("/company/addproject", {
+       if(teamId!=""){
+        let { data } = await postData("/company/addproject", {
             projectName: projectName,
             projectDescription: projectDescription,
             priority: priority,
             deadLine: deadline,
-            attachments: cloudinary
+            attachments: cloudinary,
+            companyId:companyid,
+            teamId
         })
+       }else{
+        let { data } = await postData("/company/addproject", {
+            projectName: projectName,
+            projectDescription: projectDescription,
+            priority: priority,
+            deadLine: deadline,
+            attachments: cloudinary,
+            companyId:companyid,
+            
+        })
+
+       }
+      
 
         // Reset form fields and attachments
         setProjectName('');
@@ -110,20 +131,34 @@ const AddProject = () => {
             console.error('Error populating data:', error);
         }
     };
-
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            console.log(e.target.files, "e.target.files")
-            const filesArray = Array.from(e.target.files);
-            setAttachments((prev: any) => [...prev, e.target.files]);
-
-            // for (const file of filesArray) {
-            //     // const fileUrl = URL.createObjectURL(file);
-
-            // }
+            const filesArray = Array.from(e.target.files).map(file => ({
+                file,
+                url: URL.createObjectURL(file), // Create a local URL for preview
+                name: file.name,
+                originalFile: file // Store the original file
+            }));
+            setAttachments((prev: any) => [...prev, ...filesArray]);
         }
-        console.log(attachments, "attachments")
+      
+        console.log(attachments, "attachments");
     };
+    
+
+    // const handleFileChangetosubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files) {
+    //         console.log(e.target.files, "e.target.files")
+    //         const filesArray = Array.from(e.target.files);
+    //         setAttachments((prev: any) => [...prev, e.target.files]);
+
+    //         // for (const file of filesArray) {
+    //         //     // const fileUrl = URL.createObjectURL(file);
+
+    //         // }
+    //     }
+    //     console.log(attachments, "attachments")
+    // };
 
     const handleDeleteAttachment = (index: number) => {
         const newAttachments = [...attachments];
@@ -159,9 +194,15 @@ const AddProject = () => {
                             value={selectTeam}
                             onChange={(e) => {
                                 const selectedId = e.target.value;
+                                if(selectedId=="null"){
+                                    setTeamId("")
+                                }else{
+                                    setTeamId(selectedId)
+                                }
                                 SetSelectTeam(selectedId);
                                 const selectedTeamMember = team.find((member: any) => member._id === selectedId);
                                 teamSelect(selectedTeamMember);
+                                
                             }}
                             required
                             className='rounded-lg p-1 border border-slate-400 mt-1 text-slate-400'

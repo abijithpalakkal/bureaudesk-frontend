@@ -16,11 +16,12 @@ import { Socket } from 'socket.io-client'
 import { useSocketContext } from "../../context/SocketContext"
 
 
-const Messenger = ({setZeegooCloud,url,setData}:any) => {
+const Messenger = ({ setZeegooCloud, url, setData }: any) => {
     const user = useSelector((state: RootState) => state.userdetails.user)
     const [displayUserCard, setDisplayUserCard] = useState(false)
-    const [availableChat, setAvailableChat] = useState([])
+    const [availableChat, setAvailableChat] = useState<any>([])
     const [chatUserId, setChatUserId] = useState<any>([])
+    const  [chatSelect,setChatSelect] = useState<any>(null) 
     const [refresh, setRefresh] = useState(true)
     const [chat, setChat] = useState("")
     const [userId, setUserId] = useState("")
@@ -78,6 +79,24 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
         getData()
 
     }, [refresh])
+
+     useEffect(() => {
+        if(availableChat.length>0){
+            roomSelect(availableChat[0]?._id);
+            setUserId(availableChat[0]?.participants[0].data._id);
+            setMarker(availableChat[0]?._id);
+            setChatSelect({
+                id:availableChat[0].participants[0].data._id,
+                img:availableChat[0].participants[0].data.profileImage,
+                name:availableChat[0].participants[0].data.Name,
+                email:availableChat[0].participants[0].data.email,
+                position:availableChat[0].participants[0].data.position
+
+
+            })
+        }
+     
+     }, [availableChat])
 
     const submitChat = async (e: any) => {
 
@@ -160,10 +179,10 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
 
     const handleVideoCall = () => {
         if (onlineUsers.includes(userId)) {
-            setData({ userId ,userName:user.Name})
-              setZeegooCloud(true)
-              console.log(url,2589)
-          
+            setData({ userId, userName: user.Name })
+            setZeegooCloud(true)
+            console.log(url, 2589)
+
 
         } else {
             toast.error("user not online")
@@ -174,7 +193,7 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
 
     return (
         <>
-           <div className='w-5/6 px-2 py-2 h-screen'>
+            <div className='w-5/6 px-2 py-2 h-screen'>
                 <div className='h-full flex-col flex'>
                     <Homenavbar />
                     <div className='flex justify-between mt-11 h-10'>
@@ -209,6 +228,15 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                                                             roomSelect(item._id);
                                                             setUserId(item.participants[0].data._id);
                                                             setMarker(item._id);
+                                                            setChatSelect({
+                                                                id:item.participants[0].data._id,
+                                                                img:item.participants[0].data.profileImage,
+                                                                name:item.participants[0].data.Name,
+                                                                email:item.participants[0].data.email,
+                                                                position:item.participants[0].data.position
+                                                                
+                        
+                                                            })
                                                         }}>
                                                         {onlineUsers.includes(item.participants[0].data._id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1 mt-2'></div>}
                                                         <div className='w-8 h-8 border rounded-full flex justify-center items-center overflow-hidden'>
@@ -227,6 +255,15 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                                                             roomSelect(item._id);
                                                             setUserId(item.participants[0].data._id);
                                                             setMarker(item._id);
+                                                            setChatSelect({
+                                                                id:item.participants[0].data._id,
+                                                                img:item.participants[0].data.profileImage,
+                                                                name:item.participants[0].data.Name,
+                                                                email:item.participants[0].data.email,
+                                                                position:item.participants[0].data.position
+
+                        
+                                                            })
                                                         }}>
                                                         {onlineUsers.includes(item.participants[0].data._id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1 mt-2'></div>}
                                                         <div className='w-8 h-8 border rounded-full flex justify-center items-center overflow-hidden'>
@@ -251,13 +288,13 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                             <div className='w-3/4 flex flex-col h-full'>
                                 <div className='flex justify-between items-center p-1 px-3 border-b border-b-slate-300 h-16'>
                                     <div className='flex gap-3 items-center relative'>
-                                        <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1'></div>
+                                    {onlineUsers.includes(chatSelect?.id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1'></div>}
                                         <div className='w-8 h-8 border rounded-full flex justify-center items-center overflow-hidden relative'>
-                                            <img src={user?.profileImage} alt="" className='w-8 h-8' />
+                                            <img src={chatSelect?.img} alt="" className='w-8 h-8' />
                                         </div>
                                         <div>
-                                            <p className='font-semibold'>{user.Name ? user.Name : user.email}</p>
-                                            <p className='text-slate-300'>{user.position}</p>
+                                            <p className='font-semibold'>{chatSelect?.name ? chatSelect?.name : chatSelect?.email}</p>
+                                            <p className='text-slate-300'>{chatSelect?.position}</p>
                                         </div>
                                     </div>
                                     <div className='flex gap-5 justify-center items-center'>
@@ -304,6 +341,7 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className='border border-black rounded-lg w-full h-9 px-3  z-30'>
 
                                         <form className='flex justify-between items-center' onSubmit={submitChat}>
@@ -328,7 +366,7 @@ const Messenger = ({setZeegooCloud,url,setData}:any) => {
                     </div>
                 </div>
             </div>
-          
+
         </>
     )
 }

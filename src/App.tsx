@@ -25,6 +25,9 @@ import Dashboard from "./pages/Dashboard"
 import { Toaster } from 'react-hot-toast';
 import Layout from "./pages/Layout"
 import AddProject from "./components/maincomponents/AddProject"
+import ViewProjects from "./components/maincomponents/ViewProjects"
+import ProjectDetails from "./components/maincomponents/ProjectDetails"
+import TaskDetails from "./components/maincomponents/TaskDetails"
 
 
 function App() {
@@ -92,6 +95,10 @@ function App() {
             <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
             <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
             <Route path="/projects/addproject" element={userid ? <AddProject /> : <Navigate to={'/'} />} />
+            <Route path="/projects/viewproject" element={userid ? <ViewProjects /> : <Navigate to={'/'} />} />
+            <Route path="/projects/projectdetails/:id" element={userid ? <ProjectDetails /> : <Navigate to={'/'} />} />
+            <Route path="/projects/taskdetails/:id" element={userid ? <TaskDetails /> : <Navigate to={'/'} />} />
+
           </Route>
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
