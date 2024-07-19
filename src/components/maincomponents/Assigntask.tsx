@@ -42,11 +42,11 @@ const Assigntask = () => {
 
     const changedpt = async (id: any) => {
 
-        console.log(id, "hello7841")
+    
         try {
             const data = await postData("/user/getuserdetails", id)
             setuserdetails(data.data)
-            console.log(data.data)
+            
         } catch (err: any) {
             toast.error(err.message);
         }

@@ -41,9 +41,10 @@ const loginpage = () => {
             if (data1.payload?.companyid) {
                 await dispatch(getCompanyAction(data1.payload.companyid))
             }
-
+             console.log(data1.meta.requestStatus,"data1.meta.requestStatus")
             if (data1.meta.requestStatus != "rejected") {
                 navigate("/employees")
+              
             }
 
         },

@@ -28,7 +28,6 @@ function Editeventsmodal({ closemodal,id,refresh,val}: IProp) {
    
 
     useEffect(()=>{
-        console.log(id,123)
         const getevents= async ()=>{
          const data= await postData(`/company/getevent/`,{_id:id})
          const event=data.data[0]

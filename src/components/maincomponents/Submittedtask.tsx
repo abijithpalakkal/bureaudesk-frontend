@@ -36,7 +36,7 @@ const Submittedtask = ({ taskInfo }: {
 
                 taskId: taskInfo._id
             })
-            console.log(data)
+            
             setSubmittedTaskInfo(data.data[0] as TaskInfo)
 
         }

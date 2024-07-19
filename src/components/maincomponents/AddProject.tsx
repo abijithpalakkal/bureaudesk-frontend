@@ -4,6 +4,7 @@ import fetchData from '@/utils/fetchdata'; // Adjust the path based on your proj
 import { useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import postData from '@/utils/postdata';
+import { toast } from 'react-toastify';
 
 const AddProject = () => {
     const [projectName, setProjectName] = useState('');
@@ -22,25 +23,42 @@ const AddProject = () => {
 
     const companyid = useSelector((state: any) => state?.companydetails?.company._id);
 
+
+
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const trimmedProjectName = projectName.trim();
+        const trimmedProjectDescription = projectDescription.trim();
+        
+        // Validation checks
+        if (trimmedProjectName === "") {
+            toast.error('Project name cannot be empty or just spaces');
+            return;
+        }
+        if (trimmedProjectDescription === "") {
+            toast.error('Project description cannot be empty or just spaces');
+            return;
+        }
+
+        const selectedDeadline = new Date(deadline);
+        const currentDate = new Date();
+        if (selectedDeadline <= currentDate) {
+            toast.error('Deadline must be a future date');
+            return;
+        }
+
         var cloudinary: string[] = [];
-        // Handle form submission logic here
-        console.log('Project Name:', projectName);
-        console.log('Project Description:', projectDescription);
-        console.log('Attachments:', attachments); // Log selected files for debugging
-        console.log('selectTeam', selectTeam); // Log selected files for debugging
-        console.log(teamId,"teamid")
+       
 
         for (var i = 0; i < attachments.length; i++) {
-            console.log(attachments[i].originalFile[0],attachments[i]?.name, "obj")
-            console.log(attachments.length)
+          
             const formData = new FormData();
             formData.append('file', attachments[i].originalFile);
             formData.append('upload_preset', "ckoevhm7");
             formData.append('public_id', attachments[i].originalFile.name)
-            console.log(attachments[i].file.name,"attachments[i].originalFile[0]?.name")
            
 
             try {
@@ -64,7 +82,6 @@ const AddProject = () => {
 
 
 
-            console.log(cloudinary, "cloudinary")
         }
 
        if(teamId!=""){
@@ -98,11 +115,15 @@ const AddProject = () => {
         setFileInputKey((prevKey) => prevKey + 1); // Reset file input
     };
 
+
+
+
+
     useEffect(() => {
         const fetchTeam = async () => {
             if (companyid) {
                 const { data } = await fetchData(`/company/getteam/${companyid}`);
-                console.log(data);
+                
                 setTeam(data);
             }
         };
@@ -125,7 +146,7 @@ const AddProject = () => {
                 const { data } = await fetchData(`/user/getuserbyid/${arr[i]}`);
                 arr1.push(data);
             }
-            console.log(arr1, "arr1");
+            
             setPopulatedData([...arr1]);
         } catch (error) {
             console.error('Error populating data:', error);
@@ -142,7 +163,7 @@ const AddProject = () => {
             setAttachments((prev: any) => [...prev, ...filesArray]);
         }
       
-        console.log(attachments, "attachments");
+        
     };
     
 
@@ -164,7 +185,7 @@ const AddProject = () => {
         const newAttachments = [...attachments];
         newAttachments.splice(index, 1);
         setAttachments(newAttachments);
-        console.log(attachments, "attachments")
+    
 
     };
 

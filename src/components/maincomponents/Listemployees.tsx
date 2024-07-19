@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Nearestcomponent from '../cards/Nearestcomponent'
 import Activitystream from '../cards/Activitystream'
+import { Player } from "@lottiefiles/react-lottie-player";
 
 
 interface iprop {
@@ -22,15 +23,20 @@ function Listemployees({ department }: iprop) {
     const [employee, setemployee] = useState([])
     const [displaymodal, setdisplaymodal] = useState(false)
     const [refresh, setrefresh] = useState(false)
+    const [lottieFiles, setLottieFiles] = useState(false)
     const Authorization = useSelector((state: RootState) => state.userdetails.user.Authorization)
 
     useEffect(() => {
 
         async function getemployees() {
-            try{
+            try {
+                setLottieFiles(false)
                 const response = await fetchData(`/user/getdepartmentemployee/${id}`)
+                if (response.data.length == 0) {
+                    setLottieFiles(true)
+                }
                 setemployee(response.data)
-            }catch(err){
+            } catch (err) {
                 navigate("/404error")
             }
         }
@@ -51,13 +57,25 @@ function Listemployees({ department }: iprop) {
                     </div>
                     <div className='mt-6 flex'>
                         <div className='w-full pr-4'>
-                        {employee.map((item, index) => (
-                            <Listemployeecard key={index} item={item} refresh={refresh} setrefresh={setrefresh} id={id} />
-                        ))}
+                            {lottieFiles ? (
+                               <Player
+                               autoplay
+                               loop
+                               src="https://lottie.host/bddb1fb7-5bc1-45a0-ab4c-d1f328ba714f/43VLmeXx7Y.json"
+                               style={{ height: "400px", width: "400px" }}
+                             />
+                            ) : (
+                                <>
+                                    {employee.map((item, index) => (
+                                        <Listemployeecard key={index} item={item} refresh={refresh} setrefresh={setrefresh} id={id} />
+                                    ))}
+                                </>
+                            )}
+
                         </div>
                         <div className=''>
-                            <Nearestcomponent val={""}/>
-                            <Activitystream/>
+                            <Nearestcomponent val={""} />
+                            <Activitystream />
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,6 @@ const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
     const context = useContext(AppContext);
     const { apiRefresh, setApiRefresh } = context;
 
-    console.log(apiRefresh,123458)
    
     const[taskName,setTaskName] = useState("")
     const[description,setDescription] = useState("")
@@ -92,10 +91,9 @@ const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
             }
 
             // Log the URLs of uploaded files
-            console.log('Uploaded file URLs:', uploadedFileUrls);
             setcloudfiles(uploadedFileUrls)
         } else {
-            console.log('No files selected');
+            toast.error('No files selected');
         }
       let data;
       if(uploadedFileUrls.length ==0 || null ||""){
@@ -125,9 +123,7 @@ const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
    
         try {
              await postData(`/company/updatetask/${taskInfo._id}`, data)
-            console.log(data,123456789)
         } catch (err: any) {
-            console.log(err.message)
             toast.error(err?.message)
         }
 

@@ -16,7 +16,7 @@ const Messengeremployees = ({ setDisplayUserCard, refresh, setRefresh,chatUserId
     const [companyUsers, setCompanyUsers] = useState([])
     const [addStatus, setAddedStatus] = useState<any>([])
 
-    console.log(chatUserId,1596357)
+    
    
     const companyId = useSelector((state: RootState) => state.companydetails.company._id)
     const userId = useSelector((state: RootState) => state.userdetails.user._id)

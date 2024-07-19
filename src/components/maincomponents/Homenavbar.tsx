@@ -10,6 +10,8 @@ import { usercompanylogout } from '../../redux/slices/companyreducer/companyRedu
 import { useNavigate } from 'react-router-dom'
 import Notificationmodal from '../modals/Notificationmodal'
 import { setNotificationTrue } from '@/redux/slices/notificationreducer/notificationReducer'
+import {useSocketContext } from "../../context/SocketContext";
+
 
 
 
@@ -21,6 +23,8 @@ function Homenavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const user = useSelector((state: RootState) => state.userdetails.user)
   const notification = useSelector((state: RootState) => state.notification);
+  const {socket} = useSocketContext()
+
 
 
   const toggleDropdown = () => {
@@ -32,10 +36,14 @@ function Homenavbar() {
   };
 
   const handleLogoutClick = async () => {
-    await fetchData("/auth/logout")
-    dispatch(userdetailslogout())
-    dispatch(usercompanylogout())
-    navigate("/")
+    const data = await fetchData("/auth/logout")
+      socket.emit("disconnec",user)
+      socket.close()
+      dispatch(userdetailslogout())
+      dispatch(usercompanylogout())
+      navigate("/")
+
+   
 
   };
   const handleNotificationClick = () => {

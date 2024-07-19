@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import { BiSend } from 'react-icons/bi'
-import { Socket } from 'socket.io-client'
 import { useSocketContext } from "../../context/SocketContext"
-import { UseSelector, useSelector } from 'react-redux'
-import logo from "../../assets/logo_without_writing-removebg-preview.png"
+import { useSelector } from 'react-redux'
 import dummy from "../../assets/dummy-profile-pic-300x300-1.png"
 import messenger from '../../assets/messenger.webp'
 
@@ -24,7 +22,7 @@ export default function Activitystream() {
   useEffect(() => {
     if (messagesEndRef.current) {
       
-      console.log("i am here")
+      
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
 
     }
@@ -49,7 +47,7 @@ export default function Activitystream() {
           <div className='mt-4 opacity-55'>
             <img src={messenger} alt="" />
           </div>
-          {globalChat.map((obj, index) => (<div className='flex gap-1' >
+          {globalChat.map((obj) => (<div className='flex gap-1' >
             <div className='w-7 h-7 rounded-full flex justify-center items-center overflow-hidden '>
               {obj.userProfile ? <img src={obj.userProfile} alt="" className='' /> : <img src={dummy} alt="" className='' />}
             </div>

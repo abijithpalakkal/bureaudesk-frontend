@@ -33,12 +33,12 @@ const SocketContext = ({ children }: any) => {
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [globalChat, setGlobalChat] = useState<any>([])
 
-    const userid = useSelector((state: RootState) => state.userdetails.user._id)
+    const userid = useSelector((state: RootState) => state.userdetails.user?._id)
+    const userrole = useSelector((state: RootState) => state.userdetails.user?.Authorization)
 
     useEffect(() => {
 
-        if (userid) {
-            console.log("this is socket", SOCKET_URL)
+        if (userid && userrole!="admin") {
             const newSocket = io(SOCKET_URL, {
                 query: {
                     userId: userid
@@ -46,11 +46,9 @@ const SocketContext = ({ children }: any) => {
             })
 
             setSocket(newSocket)
-            console.log(socket, 12356)
 
             newSocket.on("getOnlineUsers", (users: any) => {
                 setOnlineUsers(users)
-                console.log(users, 152)
             })
 
             newSocket.on("getGlobalChat", (data: any) => {
@@ -58,7 +56,6 @@ const SocketContext = ({ children }: any) => {
             })
 
             newSocket.on('incomingCall', (data: any) => {
-                console.log('Incoming call from:', data);
 
                 hotToast(
                     (t) => (<div className='bg-green-100 h-10 flex justify-center items-center rounded-md gap-3'>

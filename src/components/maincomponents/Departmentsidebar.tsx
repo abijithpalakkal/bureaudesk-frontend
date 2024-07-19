@@ -16,9 +16,9 @@ const Departmentsidebar = ({ setdpt }: { setdpt: any }) => {
 
 
 
-    console.log("hello")
+    
     const handleClick = (data:any, index: number) => {
-        console.log(data,789456)
+        
         setstyle(index)
         setdpt(data)
     }
@@ -31,7 +31,7 @@ const Departmentsidebar = ({ setdpt }: { setdpt: any }) => {
                 const response = await fetchData(`/company/getdepartment/${id}`);
                 setdptdata([{ Name: "all", _id: companyId }, ...response.data]);
                 setloading(response.loading)
-                console.log(dptdata, "🚀🚀🚀")
+                
             } else {
                 setloading(false)
             }

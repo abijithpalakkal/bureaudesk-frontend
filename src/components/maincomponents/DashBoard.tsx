@@ -9,15 +9,15 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import postData from '@/utils/postdata'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import { LineChart } from '@mui/x-charts/LineChart';
+import { motion } from 'framer-motion';
+
+
 
 const DashBoard = () => {
-  const settings = {
-    width: 250,
-    height: 250,
-    value: 60,
-  };
 
-  console.log("hello home")
+
+
 
   const [totalEmployes, setTotalEmplpoyees] = useState()
   const [totalTask, setTotalTask] = useState()
@@ -25,8 +25,8 @@ const DashBoard = () => {
   const [approvedTask, setApprovedTask] = useState()
   const [submittedTask, setsubmmittedtask] = useState()
   const [yettosubmitt, setyettosubmit] = useState()
-  const [rejectedTask,setRejectedTask] = useState([])
-  const [latesubmission,setlatesubmission] = useState()
+  const [rejectedTask, setRejectedTask] = useState()
+  const [latesubmission, setlatesubmission] = useState()
   const companyId = useSelector((state: RootState) => state.companydetails.company._id);
   useEffect(() => {
     const getData = async () => {
@@ -64,18 +64,18 @@ const DashBoard = () => {
       setyettosubmit(yettosubmittedTask.data.length)
 
 
-      
+
       const rejectedTask = await postData("/company/gettask", {
 
         companyid: companyId,
-        status:"Rejected"
+        status: "Rejected"
       })
       setRejectedTask(rejectedTask.data.length)
 
       const lateSubmissions = await postData("/company/gettask", {
 
         companyid: companyId,
-        lateSubmission:true
+        lateSubmission: true
       })
       setlatesubmission(lateSubmissions.data.length)
 
@@ -86,35 +86,40 @@ const DashBoard = () => {
     }
     getData()
 
-    function rateEmployeePerformance(totalTasks: number, submittedTasks: number, lateSubmissions: number, approvedTasks: number, rejectedTasks: number): number {
-      if (totalTasks === 0) return 0; // Avoid division by zero
-  
-      // Calculate submission rate score (3 points)
-      const submissionRate = submittedTasks / totalTasks;
-      const submissionRateScore = submissionRate * 3;
-  
-      // Calculate late submission rate score (2 points)
-      const lateSubmissionRate = lateSubmissions / submittedTasks;
-      const lateSubmissionRateScore = (1 - lateSubmissionRate) * 2;
-  
-      // Calculate approval rate score (3 points)
-      const approvalRate = approvedTasks / submittedTasks;
-      const approvalRateScore = approvalRate * 3;
-  
-      // Calculate rejection rate score (2 points)
-      const rejectionRate = rejectedTasks / submittedTasks;
-      const rejectionRateScore = (1 - rejectionRate) * 2;
-  
-      // Calculate the final score out of 10
-      const finalScore = submissionRateScore + lateSubmissionRateScore + approvalRateScore + rejectionRateScore;
-  
-      return finalScore;
-  }
-  
+
 
   }, [])
+
+  function rateEmployeePerformance(totalTasks: number, submittedTasks: number, lateSubmissions: number, approvedTasks: number, rejectedTasks: number): number {
+    if (totalTasks === 0) return 0; // Avoid division by zero
+
+    // Calculate submission rate score (30 points)
+    const submissionRate = submittedTasks / totalTasks;
+    const submissionRateScore = submissionRate * 30;
+
+    // Calculate late submission rate score (20 points)
+    const lateSubmissionRate = lateSubmissions / submittedTasks;
+    const lateSubmissionRateScore = (1 - lateSubmissionRate) * 20;
+
+    // Calculate approval rate score (30 points)
+    const approvalRate = approvedTasks / submittedTasks;
+    const approvalRateScore = approvalRate * 30;
+
+    // Calculate rejection rate score (20 points)
+    const rejectionRate = rejectedTasks / submittedTasks;
+    const rejectionRateScore = (1 - rejectionRate) * 20;
+
+    // Calculate the final score out of 100
+    const finalScore = submissionRateScore + lateSubmissionRateScore + approvalRateScore + rejectionRateScore;
+
+    return finalScore;
+  }
+
+  const performanceScore = rateEmployeePerformance(totalTask || 0, submittedTask || 0, latesubmission || 0, approvedTask || 0, rejectedTask || 0);
+
   return (
     <div className='w-5/6 h-screen px-2 py-2'>
+
       <div>
         <Homenavbar />
         <div className='flex justify-between mt-11'>
@@ -124,7 +129,11 @@ const DashBoard = () => {
           <div className='w-full'>
             <Performancecard />
             <div className='mt-8 flex justify-start items-start gap-5'>
-              <div className=''>
+              <motion.div
+                initial={{ x: -100 }} // Start position (left)
+                animate={{ x: 0 }} // End position (center)
+                transition={{ duration: 0.5 }} // Animation duration
+                className=''>
                 <BarChart
                   series={[
                     { data: [totalTask as any], color: 'violet' }, // Customize the color for the first series
@@ -138,7 +147,7 @@ const DashBoard = () => {
                 >
 
                 </BarChart>
-              </div>
+              </motion.div>
               <div>
                 <div>
                   <div className='flex  items-center gap-2'>
@@ -158,17 +167,23 @@ const DashBoard = () => {
                 </div>
                 <div className='mt-10'>
                   <p className='text-xl font-bold '>performance report</p>
-                  
-                 {rejectedTask?.length!=0 &&  <p className='font-medium '><span className='text-2xl text-center'>.</span> {rejectedTask} Rejected task</p>}
+
+                  {rejectedTask == 0 && <p className='font-medium '><span className='text-2xl text-center'>.</span> {rejectedTask} Rejected task</p>}
                   <p className='font-medium '><span className='text-2xl'>.</span> {yettosubmitt} unsubmitted task</p>
                   <p className='font-medium '><span className='text-2xl'>.</span> {latesubmission} late submission</p>
                 </div>
 
               </div>
-              <div className='flex justify-center items-center ml-4'>
+              <motion.div
+                initial={{ x: 100 }} // Start position (left)
+                animate={{ x: 0 }} // End position (center)
+                transition={{ duration: 0.5 }} // Animation duration 
+                className='flex justify-center items-center ml-4'>
 
                 <Gauge
-                  {...settings}
+                  width={250}
+                  height={250}
+                  value={performanceScore}
                   cornerRadius="50%"
                   sx={(theme) => ({
                     [`& .${gaugeClasses.valueText}`]: {
@@ -183,8 +198,10 @@ const DashBoard = () => {
                   })}
                 />
 
-              </div>
+              </motion.div>
             </div>
+
+
 
 
 

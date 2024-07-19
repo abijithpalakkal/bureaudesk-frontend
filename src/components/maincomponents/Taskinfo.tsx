@@ -43,7 +43,6 @@ const Taskinfo = ({ taskInfo }: {
 
     const inputDate = "2024-05-09T06:34:30.142Z";
     const formattedDate = formatDateString(inputDate);
-    console.log(formattedDate);
 
     function formatDateString2(dateString: any) {
         const date = new Date(dateString);

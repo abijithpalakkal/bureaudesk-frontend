@@ -46,7 +46,7 @@ export const userLoginAction = createAsyncThunk(
                 },
                 withCredentials: true,
             })
-           
+           console.log(response.data,"response.data")
             if (response.data.errorResponse) {
                 throw new Error(response.data.errorResponse.message)
             } else {

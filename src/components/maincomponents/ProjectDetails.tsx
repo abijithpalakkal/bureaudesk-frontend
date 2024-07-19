@@ -4,40 +4,51 @@ import { GrAttachment } from 'react-icons/gr';
 import { useParams } from 'react-router-dom';
 import progress from "../../assets/progress.png"
 import { AiFillCalendar } from 'react-icons/ai';
+import updateData from '@/utils/updatedata';
+import { toast } from 'react-toastify';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
+import Muiconfirmationmodalforproject from '../modals/Muiconfirmationmodalforproject';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 
 const ProjectDetails = () => {
     const [project, setproject] = useState<any>([])
     const { id } = useParams();
-    const [team,setTeam] = useState<any>(null)
+    const [team, setTeam] = useState<any>(null)
     const [populatedData, setPopulatedData] = useState<any>(null);
+    const { width, height } = useWindowSize()
+    const [refresh,setRefresh] = useState<boolean>(false)
+    const [confetti,setConfetti]= useState<boolean>(false)
+    const userRole=useSelector((state:RootState)=>state.userdetails.user.Authorization)
+
+
+
 
 
     useEffect(() => {
         const getdata = async () => {
             const { data } = await fetchData(`/company/getprojects/${id}`)
-            console.log(data, "hui")
             setproject(data)
         }
         getdata()
-    }, [id])
+    }, [id,refresh])
 
     useEffect(() => {
         const getteamdata = async () => {
-            console.log(project[0].teamId, "teamdata547")
             if (project[0].teamId) {
                 const { data } = await fetchData(`/company/getteam/${project[0].teamId}`)
-                if(data.length>0){
+                if (data.length > 0) {
                     setTeam(data[0])
                     populateData(data[0]?.members)
 
                 }
-                console.log(data, "teamdata547")
             }
 
         }
         getteamdata()
-    }, [project])
+    }, [project,refresh])
 
     const populateData = async (arr: string[]) => {
         try {
@@ -46,10 +57,9 @@ const ProjectDetails = () => {
                 const { data } = await fetchData(`/user/getuserbyid/${arr[i]}`);
                 arr1.push(data);
             }
-            console.log(arr1, "arr1");
             setPopulatedData([...arr1]);
-        } catch (error) {
-            console.error('Error populating data:', error);
+        } catch (error:any) {
+            toast.error('Error populating data:', error);
         }
     };
 
@@ -103,10 +113,18 @@ const ProjectDetails = () => {
 
     return (
         <div className='flex justify-around'>
+           {confetti && <Confetti
+                width={width}
+                height={height}
+            />}
             <div className='mt-6 bg-white p-5 rounded-xl w-2/3'>
-
-                <p className='font-semibold text-2xl'>{project[0]?.projectName}</p>
-                <p className='text-gray-400 text-lg mt-6'>{project[0]?.projectDescription}</p>
+                <div className='flex justify-between'>
+                    <p className='font-semibold text-2xl'>{project[0]?.projectName}</p>
+                    {project[0]?.completed &&  <p className='font-medium p-2 bg-blue-400 rounded-xl'>Completed✅</p>
+                }
+                  { !project[0]?.completed && userRole=="root_node" && <Muiconfirmationmodalforproject id={id} refresh={refresh} setrefresh={setRefresh} confetti={setConfetti}/>}
+                </div>
+                <p className='text-gray-400 text-lg mt-2'>{project[0]?.projectDescription}</p>
                 <div className='mt-5'>
                     <p className='font-semibold text-xl'>task attachments({project[0]?.attachments.length})</p>
                     {project[0]?.attachments && <div className='grid grid-cols-5'>
@@ -166,33 +184,33 @@ const ProjectDetails = () => {
                 </div>
             </div>
 
-          
+
             <div className='w-80 0 mt-10 rounded-xl overflow-hidden'>
                 <div className='p-4 bg-blue-100 min-h-96'>
                     <p className='font-medium text-2xl'>Team Details</p>
                     {team ? (
-                    <>
-                        <p className='text-lg font-medium mt-2'>{team.name}({team?.departmentid})</p>
-                        <p>{team?.description}</p>
-                        <p className='mt-2 font-medium'>Members:</p>
-                        {populatedData && populatedData.length > 0 ? (
-                            populatedData.map((userData: any, id: number) => (
-                                <div key={id} className='flex justify-between mt-3 border border-blue-500 p-1 rounded-md items-center'>
-                                    <img src={userData.profileImage} alt={userData?.name} className='h-10 w-10 rounded-full' />
-                                    <p>{userData?.Name}</p>
-                                    <p>{userData?.position}</p>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No members found.</p>
-                        )}
-                    </> ):
+                        <>
+                            <p className='text-lg font-medium mt-2'>{team.name}({team?.departmentid})</p>
+                            <p>{team?.description}</p>
+                            <p className='mt-2 font-medium'>Members:</p>
+                            {populatedData && populatedData.length > 0 ? (
+                                populatedData.map((userData: any, id: number) => (
+                                    <div key={id} className='flex justify-between mt-3 border border-blue-500 p-1 rounded-md items-center'>
+                                        <img src={userData.profileImage} alt={userData?.name} className='h-10 w-10 rounded-full' />
+                                        <p>{userData?.Name}</p>
+                                        <p>{userData?.position}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No members found.</p>
+                            )}
+                        </>) :
 
-                   (
-                        <div className='w-full h-full flex justify-center items-center'>
-                            <p className='text-2xl font-medium text-center'>Stand Alone</p>
-                        </div>
-                    )} 
+                        (
+                            <div className='w-full h-full flex justify-center items-center'>
+                                <p className='text-2xl font-medium text-center'>Stand Alone</p>
+                            </div>
+                        )}
                 </div>
 
             </div>

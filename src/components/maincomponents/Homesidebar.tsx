@@ -14,12 +14,12 @@ import { usercompanylogout } from '../../redux/slices/companyreducer/companyRedu
 import fetchData from '../../utils/fetchdata'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import {useSocketContext } from "../../context/SocketContext";
+import { useSocketContext } from "../../context/SocketContext";
 import { useEffect } from 'react'
 
 
 
- 
+
 
 interface HomesidebarProps {
     page?: string;
@@ -27,26 +27,28 @@ interface HomesidebarProps {
 
 function Homesidebar(props: HomesidebarProps) {
 
-    useEffect(()=>{
-        return()=>{
+    useEffect(() => {
+        return () => {
             console.log("sidebar Unmounted")
         }
-    },[])
+    }, [])
     const dispatch = useDispatch<AppDispatch>()
     const comapanyimage = useSelector((state: RootState) => state.companydetails.company.Companylogo)
-    const comapanyName = useSelector((state: RootState) => state.companydetails.company.Name)
-    const {socket} = useSocketContext()
- const user = useSelector((state: any) => state.userdetails.user._id)
+    const company = useSelector((state: RootState) => state.companydetails.company)
+    const { socket } = useSocketContext()
+    const user = useSelector((state: any) => state.userdetails.user._id)
 
     const handleLogoutClick = async () => {
         const data = await fetchData("/auth/logout")
-        socket.emit("disconnec",user)
+        socket.emit("disconnec", user)
         socket.close()
         dispatch(userdetailslogout())
         dispatch(usercompanylogout())
         navigate("/")
 
     }
+
+    const isEmpty = (obj: any) => JSON.stringify(obj) === '{}'
     const navigate = useNavigate()
     return (
         <div className='py-2 px-3 w-1/6 h-screen sticky top-0'>
@@ -70,65 +72,121 @@ function Homesidebar(props: HomesidebarProps) {
 
 
 
-                        {props.page === 'dashboard' ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                        {
+                            props.page === 'dashboard' ? (
+                                <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
+                                    <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                        <RiDashboardLine />
+                                        <p>Home</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className={`flex items-center gap-2 cursor-pointer duration-300 ${!isEmpty(company) ? 'text-slate-500 hover:ml-4' : 'text-slate-100'}`}
+                                    onClick={!isEmpty(company) ? () => navigate("/dashboard") : undefined}
+                                >
                                     <RiDashboardLine />
                                     <p>Home</p>
                                 </div>
-                            </div>
-                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/dashboard")}> <RiDashboardLine /><p>Home</p></div>}
+                            )
+                        }
 
 
 
-                        {props.page === "projects" ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+
+
+                        {
+                            props.page === "projects" ? (
+                                <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
+                                    <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                        <BsListTask />
+                                        <p>Projects</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className={`flex items-center gap-2 cursor-pointer duration-300 ${!isEmpty(company) ? 'text-slate-500 hover:ml-4' : 'text-slate-100'}`}
+                                    onClick={!isEmpty(company) ? () => navigate("/projects") : undefined}
+                                >
                                     <BsListTask />
                                     <p>Projects</p>
                                 </div>
-                            </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/projects")}> <BsListTask /><p>Projects</p></div>)}
+                            )
+                        }
 
 
-                        {props.page === "events" ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+
+                        {
+                            props.page === "events" ? (
+                                <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 duration-1000'>
+                                    <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                        <BiCalendarEvent />
+                                        <p>Events</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className={`flex items-center gap-2 cursor-pointer duration-300 ${!isEmpty(company) ? 'text-slate-500 hover:ml-4' : 'text-slate-100'}`}
+                                    onClick={!isEmpty(company) ? () => navigate("/events") : undefined}
+                                >
                                     <BiCalendarEvent />
                                     <p>Events</p>
                                 </div>
-                            </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/events")}> <BiCalendarEvent /><p>Events</p></div>)}
+                            )
+                        }
 
 
-                        {props.page === 'department' ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 transition-transform duration-1000'>
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+
+                        {
+                            props.page === 'department' ? (
+                                <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500 transition-transform duration-1000'>
+                                    <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                        <FcDepartment />
+                                        <p>Department</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className={`flex items-center gap-2 cursor-pointer duration-300 ${!isEmpty(company) ? 'text-slate-500 hover:ml-4' : 'text-slate-100'}`}
+                                    onClick={!isEmpty(company) ? () => navigate("/employees") : undefined}
+                                >
                                     <FcDepartment />
                                     <p>Department</p>
                                 </div>
-                            </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/employees")}>  <FcDepartment /><p>Department</p></div>)}
+                            )
+                        }
 
 
-                        {props.page === 'messenger' ? (
-                            <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500' >
-                                <div className='flex items-center gap-2 text-blue-500 font-bold'>
+
+                        {
+                            props.page === 'messenger' ? (
+                                <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
+                                    <div className='flex items-center gap-2 text-blue-500 font-bold'>
+                                        <SiMessenger />
+                                        <p>Messages</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className={`flex items-center gap-2 cursor-pointer duration-300 ${!isEmpty(company) ? 'text-slate-500 hover:ml-4' : 'text-slate-100'}`}
+                                    onClick={!isEmpty(company) ? () => navigate("/messenger") : undefined}
+                                >
                                     <SiMessenger />
                                     <p>Messages</p>
                                 </div>
-                            </div>
-                        ) : <div className='flex items-center gap-2  text-slate-500 cursor-pointer  hover:ml-4 duration-300' onClick={() => navigate("/messenger")}> <SiMessenger /><p>Messages</p></div>
+                            )
                         }
 
-                         {props.page === 'company' ? (
+
+
+                        {props.page === 'company' ? (
                             <div className='bg-slate-200 h-9 flex items-center px-3 rounded-md border-r-4 border-blue-500'>
                                 <div className='flex items-center gap-2 text-blue-500 font-bold'>
                                     <ImOffice />
                                     <p>Company</p>
                                 </div>
                             </div>
-                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>Company</p></div>)} 
+                        ) : (<div className='flex items-center gap-2  text-slate-500 cursor-pointer hover:ml-4 duration-300' onClick={() => navigate("/company")}>  <ImOffice /> <p>Company</p></div>)}
 
                     </div>
                 </div>

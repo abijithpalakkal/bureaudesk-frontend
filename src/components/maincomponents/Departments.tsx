@@ -29,21 +29,21 @@ function Departments() {
         <Homenavbar />
         <div className='flex justify-between mt-11'>
           <h1 className='font-bold text-3xl'>DEPARTMENTS</h1>
-          {Authorization !== "basic_node" && Authorization !== "semi_node" &&<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2"><span onClick={adddepartment}>add department</span> <span><AiOutlinePlus /></span></button>}
+          {Authorization !== "basic_node" && Authorization !== "semi_node" && <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2"><span onClick={adddepartment}>add department</span> <span><AiOutlinePlus /></span></button>}
         </div>
         <div className='flex '>
-          <div>
+          <div className='w-full'>
             <Departmentcards />
           </div>
           <div >
             <Nearestcomponent val={""} />
-            <Activitystream/>
+            <Activitystream />
           </div>
         </div>
       </div>}
       {displaymodal && <div>
         <Adddepartmentmodal modalstatus={setdisplaymodal} />
-        </div>}
+      </div>}
     </div>
   )
 }

@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Dropdown from '@mui/joy/Dropdown';
 import MenuButton from '@mui/joy/MenuButton';
 import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
 import { AiFillCaretDown } from 'react-icons/ai';
 import postData from '@/utils/postdata';
+import { TaskStatusContext } from '@/context/TaskStatusContext';
 
-const Muidropdownforapprove = ({id,refresh,setrefresh}:any) => {
-    const submitApprove=async(e:string)=>{
-        await postData(`/company/updatetask/${id as any}`, {  
-            status: e
-          })
-          setrefresh(!refresh)
-    }
+const Muidropdownforapprove = ({ id, refresh, setrefresh, index }: any) => {
+
+  const context = useContext(TaskStatusContext)
+  const { statusDetails, setStatusDetails } = context as any
+  const submitApprove = async (e: string) => {
+    setStatusDetails({
+      index: index,
+      status: e
+    })
+    await postData(`/company/updatetask/${id as any}`, {
+      status: e
+    })
+    setrefresh(!refresh)
+  }
   return (
     <div>
       <Dropdown>
@@ -22,8 +30,8 @@ const Muidropdownforapprove = ({id,refresh,setrefresh}:any) => {
           </p>
         </MenuButton>
         <Menu>
-          <MenuItem onClick={()=>{submitApprove("Approved")}}><p className='text-green-500'>Approved</p></MenuItem>
-          <MenuItem onClick={()=>{submitApprove("Rejected")}}><p className='text-red-500'>Rejected</p></MenuItem>
+          <MenuItem onClick={() => { submitApprove("Approved") }}><p className='text-green-500'>Approved</p></MenuItem>
+          <MenuItem onClick={() => { submitApprove("Rejected") }}><p className='text-red-500'>Rejected</p></MenuItem>
         </Menu>
       </Dropdown>
     </div>

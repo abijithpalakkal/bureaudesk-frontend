@@ -21,6 +21,8 @@ interface IEvents {
     eventCategory?: string;
     priority?: string;
     eventDate?: string;
+    eventEndDate?: string;
+    eventEndTime?: string;
     eventTime?: string;
     eventDescription?: string;
     companyid?: string;
@@ -31,21 +33,21 @@ interface IEvents {
 
 interface IEventProp {
     events?: IEvents[]
-    refresh?:any
-    val?:Boolean
+    refresh?: any
+    val?: Boolean
 }
 interface IDateProp {
     year?: string
     month?: string
     day?: string
 }
-function Eventcard({ events,refresh,val }: IEventProp) {
+function Eventcard({ events, refresh, val }: IEventProp) {
 
-    const [openmodal,setopenmodal]=useState<boolean>(false)
-    const [id,setid]=useState<string>("")
-    const [eventdeletemodal,seteventdeletemodal]=useState<Boolean>(false)
-    const [eventId,setEventId]=useState<string>("")
-    const userRole=useSelector((state:RootState)=>state.userdetails.user.Authorization)
+    const [openmodal, setopenmodal] = useState<boolean>(false)
+    const [id, setid] = useState<string>("")
+    const [eventdeletemodal, seteventdeletemodal] = useState<Boolean>(false)
+    const [eventId, setEventId] = useState<string>("")
+    const userRole = useSelector((state: RootState) => state.userdetails.user.Authorization)
 
     function date(timestamp: string | undefined) {
         if (!timestamp) {
@@ -59,9 +61,9 @@ function Eventcard({ events,refresh,val }: IEventProp) {
         return formattedDate; // Output: "April 25, 2024"
     }
 
-    const openEditModal=(id:string)=>{
-      setopenmodal(true)
-      setid(id)
+    const openEditModal = (id: string) => {
+        setopenmodal(true)
+        setid(id)
     }
 
     return (
@@ -88,10 +90,18 @@ function Eventcard({ events,refresh,val }: IEventProp) {
                         </div>
                     </div>
                     <div>
+
                         <div className=' flex justify-center items-center'>
                             <img src="" alt="" />
                         </div>
+                        <p className='flex items-center mt-4 gap-3 text-slate-500'>
+                            <AiOutlineCalendar />
+
+                            <span>End Date {date(obj?.eventEndDate )} ,</span>
+                            <span>End Time {obj?.eventEndTime}</span>
+                            </p>
                         <div className="flex justify-between items-end">
+
                             <p className='flex items-center mt-4 gap-3 text-slate-500'>
                                 <AiOutlineCalendar />
 
@@ -101,24 +111,24 @@ function Eventcard({ events,refresh,val }: IEventProp) {
                     </div>
                 </div>
                 <div className='p-2 border-l-2 border-slate-400 w-full'>
-                 
+
                     <div className="flex justify-between items-center">
                         <div></div>
-                        { userRole=="root_node" && <div className="flex justify-center items-center gap-3">
-                        <img src={editicon} alt="" className="cursor-pointer" onClick={()=>{openEditModal(obj._id as string)}}/>
-                        
-                        <AiOutlineDelete className="w-6 h-6  hover:text-red-500 duration-75"  onClick={()=>{setEventId(obj._id as string);seteventdeletemodal(true)}}/>
+                        {userRole == "root_node" && <div className="flex justify-center items-center gap-3">
+                            <img src={editicon} alt="" className="cursor-pointer" onClick={() => { openEditModal(obj._id as string) }} />
+
+                            <AiOutlineDelete className="w-6 h-6  hover:text-red-500 duration-75" onClick={() => { setEventId(obj._id as string); seteventdeletemodal(true) }} />
                         </div>}
-                       
+
                     </div>
                     <p className="font-semibold">Description:</p>
                     <p className="text-slate-600">{obj.eventDescription}</p>
                 </div>
             </div>))}
-            {eventdeletemodal && <Eventclosemodal closemodal={seteventdeletemodal} refresh={refresh} val={val} id={eventId}/>}
-            {openmodal && <Editeventsmodal closemodal={setopenmodal} id={id} refresh={refresh} val={val}/>}
+            {eventdeletemodal && <Eventclosemodal closemodal={seteventdeletemodal} refresh={refresh} val={val} id={eventId} />}
+            {openmodal && <Editeventsmodal closemodal={setopenmodal} id={id} refresh={refresh} val={val} />}
         </div>
-       
+
     )
 }
 

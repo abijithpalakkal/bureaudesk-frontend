@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Departmentsidebar from './Departmentsidebar'
 import Employeetaskcard from '../cards/Employeetaskcard'
 import postData from '@/utils/postdata'
@@ -15,6 +15,12 @@ import { useSelector } from 'react-redux'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import { FcClearFilters } from 'react-icons/fc'
 import { setPriority } from 'os'
+import { RootState } from '@/redux/store'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Player } from "@lottiefiles/react-lottie-player";
+import { TaskStatusContext } from "../../context/TaskStatusContext.tsx";
+
 
 const Alltask = () => {
     const [dpt, setdpt] = useState<any>(null)
@@ -28,43 +34,80 @@ const Alltask = () => {
     const [status, setStatus] = useState("select")
     const [filterObj, setFilterObj] = useState<any>({})
     const companyid = useSelector((state: any) => state.companydetails.company._id)
+    const [query, setQuery] = useState("")
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null); // Define the type for selectedDate
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [lottieFiles,setLottieFiles] = useState<boolean>(false)
+    const statuscontext = useContext(TaskStatusContext);
+    const { statusDetails, setStatusDetails } = statuscontext as any
+    
 
     const context = useContext(AppContext);
     const { apiRefresh, setApiRefresh } = context;
+    const debouncedTimeout = useRef<NodeJS.Timeout | null>(null);
 
+    useEffect(()=>{
+        if(statusDetails){
+            console.log(statusDetails,789)
+            const tempTaskData:any=taskdata
+            tempTaskData[statusDetails.index].status=statusDetails.status
+            settaskdata(tempTaskData);
+            setStatusDetails(null)
+        }
+    
+      },[statusDetails])
+    
 
-
-
-    console.log("in all task")
-
-    console.log(dpt, "sadca")
 
     function changedpt(data: any) {
-        console.log(data, 948645)
+        
         setdpt(data)
     }
     useEffect(() => {
         const fetchtaskuser = async () => {
             try {
+                setLottieFiles(false)
+                
                 setskeleton(true)
-                const response: any = await postData("/company/gettask", { ...dpt, ...filterObj });
-                console.log(response);
+                const response: any = await postData("/company/gettask", { ...dpt, ...filterObj ,companyid});
+                
+                if(response.data.length==0){
+                    setLottieFiles(true)
+                }
                 const data = response.data;
 
-                for (let i = 0; i < data.length; i++) {
-                    data[i].assignedBy = await fetchData(`/user/getuserbyid/${data[i].assignedBy}`);
-                    data[i].assignedTo = await fetchData(`/user/getuserbyid/${data[i].assignedTo}`);
-                }
+               
+                const fetchUserDetails = async (userId: string) => {
+                    const userDetails = await fetchData(`/user/getuserbyid/${userId}`);
+                    return userDetails;
+                };
 
-                settaskdata(data);
+                const updatedDataPromises = data.map(async (task: any, index: number) => {
+                    const assignedBy = await fetchUserDetails(task.assignedBy);
+                    const assignedTo = await fetchUserDetails(task.assignedTo);
+
+                    return {
+                        ...task,
+                        assignedBy,
+                        assignedTo,
+                        count: index
+                    };
+                });
+
+                const updatedData: any = await Promise.all(updatedDataPromises);
+
+                settaskdata(updatedData);
                 setTaskInfoData(data[0])
 
             } catch (e) {
-                toast.error("error in fetching data")
-            } finally {
-                setskeleton(false)
-            }
 
+                toast.error("error in fetching data")
+                 
+            } 
+             finally
+              {
+                 setskeleton(false)
+             }
         }
 
         fetchtaskuser();
@@ -72,17 +115,19 @@ const Alltask = () => {
 
     useEffect(() => {
         const getData = async () => {
-
             const { data } = await postData("/user/getuserdetails", { companyid })
-            console.log(data, 89)
+            
             setCompanyEmployees(data)
+
         }
         getData()
-    })
+    }, [])
 
 
     const addFilter = (obj: { [key: string]: any }) => {
+
         // Get the key of the obj, assuming it only has one key-value pair
+        
         const key = Object.keys(obj)[0];
         const value = obj[key];
 
@@ -90,15 +135,23 @@ const Alltask = () => {
         const newFilterObj = { ...filterObj };
 
         // If the value is "none", delete the key from newFilterObj
-        if (value === "none" && newFilterObj.hasOwnProperty(key)) {
+        if ((value === "none" || value === "" || value === null) && newFilterObj.hasOwnProperty(key)) {
             delete newFilterObj[key];
         } else {
             // Update the value if the key exists, or add the new key-value pair if it doesn't
             newFilterObj[key] = value;
         }
 
-        // Set the updated filter object
-        setFilterObj(newFilterObj);
+        if (key === "taskName") {
+            if (debouncedTimeout.current) {
+                clearTimeout(debouncedTimeout.current);
+            }
+            debouncedTimeout.current = setTimeout(() => {
+                setFilterObj(newFilterObj);
+            }, 3000);
+        } else {
+            setFilterObj(newFilterObj);
+        }
     }
 
 
@@ -107,8 +160,24 @@ const Alltask = () => {
         setTaskInfoData(data)
     }
 
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
 
+    const handleDateChange = (date: Date | null) => {
+        
+        addFilter({ deadLine: formatDate(date) })
+        setSelectedDate(date);
+        setDropdownOpen(false); // Close the dropdown when a date is selected
+    };
 
+    const formatDate = (date: Date | null): string => {
+        if (!date) return 'Select Date';
+        const year = date.getFullYear();
+        const month = (`0${date.getMonth() + 1}`).slice(-2);
+        const day = (`0${date.getDate()}`).slice(-2);
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <div className='flex'>
@@ -116,7 +185,10 @@ const Alltask = () => {
             <div className='ml-4 w-full'>
                 <div className='border border-green-300 rounded-lg p-1 flex justify-between items-center px-5'>
                     <div className="relative text-gray-600">
-                        <input type="search" name="search" placeholder="Search task" className="bg-white h-8 px-5  rounded-full text-sm focus:outline-none w-32" />
+                        <input type="search" name="search" placeholder="Search task" className="bg-white h-8 px-5  rounded-full text-sm focus:outline-none w-32" value={query} onChange={(e) => {
+                            setQuery(e.target.value);
+                            addFilter({ taskName: e.target.value });
+                        }} />
                         <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
                             <svg className="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
@@ -125,20 +197,24 @@ const Alltask = () => {
                     </div>
 
                     <div>
-                        <p className='text-center text-slate-600 font-medium'>ass</p>
-                        <Dropdown>
-                            <MenuButton >
-                                <p className='flex justify-center items-center bg-white px-3 py-1 rounded-lg'>
-                                    select
-
+                        <p className='text-center text-slate-600 font-medium'>DeadLine:</p>
+                        <div className="relative inline-block">
+                            <div className="bg-white px-3 py-1 rounded-lg cursor-pointer" onClick={toggleDropdown}>
+                                <p className="flex justify-center items-center">
+                                    {selectedDate ? selectedDate.toDateString() : 'Select Date'}
                                 </p>
-                            </MenuButton>
-                            <Menu className='bg-green-300 '>
-                                <MenuItem><p className='bg-green-300 p-2 px-3 py-1 rounded-lg'>Approved</p></MenuItem>
-                                <MenuItem><p className='bg-green-300 p-2 px-3 py-1 rounded-lg'>Approved</p></MenuItem>
-                                <MenuItem><p className='bg-green-300 p-2 px-3 py-1 rounded-lg'>Approved</p></MenuItem>
-                            </Menu>
-                        </Dropdown>
+                            </div>
+                            {dropdownOpen && (
+                                <div className="absolute z-10 bg-white rounded-lg shadow-lg mt-2">
+                                    <DatePicker
+                                        selected={selectedDate}
+                                        onChange={handleDateChange}
+                                        inline
+                                        className="bg-green-300 rounded-lg p-2"
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <div>
@@ -244,15 +320,15 @@ const Alltask = () => {
                         <Dropdown>
                             <MenuButton >
                                 <p className='flex justify-center items-center bg-white px-3 py-1 rounded-lg'>
-                                    {status} 
+                                    {status}
                                 </p>
                             </MenuButton>
                             <Menu className='bg-blue-200 p-2 rounded-lg'>
-                            <MenuItem>
-                                        <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setStatus("select");addFilter({status:"none"}) }}>
-                                            <p className='  rounded-lg'>None</p>
-                                        </div>
-                                    </MenuItem>
+                                <MenuItem>
+                                    <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setStatus("select"); addFilter({ status: "none" }) }}>
+                                        <p className='  rounded-lg'>None</p>
+                                    </div>
+                                </MenuItem>
                                 <MenuItem><p className='p-2 px-3 py-1 rounded-lg cursor-pointer' onClick={() => { setStatus("Assigned"); addFilter({ status: "Assigned" }) }}>Assigned</p></MenuItem>
                                 <MenuItem><p className='p-2 px-3 py-1 rounded-lg cursor-pointer' onClick={() => { setStatus("Started"); addFilter({ status: "Started" }) }}>Started</p></MenuItem>
                                 <MenuItem><p className='p-2 px-3 py-1 rounded-lg cursor-pointer' onClick={() => { setStatus("in-Progress"); addFilter({ status: "in-Progress" }) }}>in-Progress</p></MenuItem>
@@ -264,7 +340,28 @@ const Alltask = () => {
                     </div>
 
                 </div>
-                {!skeleton && <Employeetaskcard data={taskdata} assigned='all' refresh={false} setrefresh={() => { }} getTaskInfo={getTaskInfo} />}
+                {!skeleton && (
+                <>
+                    {lottieFiles ? (
+                        <Player
+                        autoplay
+                        loop
+                        src="https://lottie.host/bddb1fb7-5bc1-45a0-ab4c-d1f328ba714f/43VLmeXx7Y.json"
+                        style={{ height: "100px", width: "100px" }}
+                    /> 
+                    ) : (
+                        <Employeetaskcard
+                        data={taskdata}
+                        assigned='all'
+                        refresh={false}
+                        setrefresh={() => { }}
+                        getTaskInfo={getTaskInfo}
+                    />
+                    )}
+
+                  
+                </>
+            )}
                 {skeleton &&
                     <>
                         <EmployeeCardSkeleton />

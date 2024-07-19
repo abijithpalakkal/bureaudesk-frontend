@@ -26,7 +26,7 @@ const Taskinfocard = ({ taskInfo }: {
      
     useEffect(()=>{
      setActiveTab('Task info')
-     console.log("hello")
+     
     },[taskInfo])
 
 

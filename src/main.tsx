@@ -5,13 +5,14 @@ import App from './App.tsx'
 import './index.css'
 import Post from "./context/Conteststore.tsx";
 import SocketContext from "./context/SocketContext.tsx";
+import TaskStatusProvider from "./context/TaskStatusContext.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store} >
         <SocketContext>
-        <App />
+            <TaskStatusProvider>
+                <App />
+            </TaskStatusProvider>
         </SocketContext>
-     
-        
     </Provider>
 )

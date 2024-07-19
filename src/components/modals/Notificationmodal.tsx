@@ -15,7 +15,6 @@ const [notification,setnotification]= useState([])
         const getData = async () => {
             const {data}=await fetchData(`/notification/notification/findall/${id}`)
             setnotification(data)
-            console.log(data,"sidebar from side")
         }
         getData()
     },[])

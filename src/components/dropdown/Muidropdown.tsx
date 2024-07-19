@@ -30,6 +30,7 @@ export default function Muidropdown({ displaymodal, position, id, dptid ,setrefr
         {Authorization!="basic_node" && Authorization !== "semi_node" && <MenuItem onClick={makemanager}>make as manager</MenuItem>}
         {Authorization!="basic_node" && <MenuItem onClick={() => { position(true) }}>edit position</MenuItem>}
         {Authorization!="basic_node" && <MenuItem>Block</MenuItem>}
+        {Authorization!="basic_node" && <MenuItem onClick={()=>{naviagte(`/listemployees/performance/${id}`)}}>performance</MenuItem>}
       </Menu>
     </Dropdown>
   );

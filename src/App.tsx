@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "./redux/store"
 import { getCompanyAction } from "./redux/actions/useractions/getCompanyAction"
 import { useSelector } from "react-redux"
-import { useNavigate, Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import Listemployeepage from "./pages/Listemployeepage"
 import Viewprofilepage from "./pages/Viewprofilepage"
 import Viewteampage from "./pages/Viewteampage"
@@ -28,12 +28,19 @@ import AddProject from "./components/maincomponents/AddProject"
 import ViewProjects from "./components/maincomponents/ViewProjects"
 import ProjectDetails from "./components/maincomponents/ProjectDetails"
 import TaskDetails from "./components/maincomponents/TaskDetails"
+import PerformacePage from "./pages/PerformacePage"
+import AdminDashboard from "./components/maincomponents/admin/AdminDashboard"
+import { useNavigate } from "react-router-dom"
 
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
-  const userid = useSelector((state: RootState) => state.userdetails.user._id)
-  const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
+  const userid = useSelector((state: RootState) => state.userdetails.user?._id)
+  const role = useSelector((state: RootState) => state.userdetails.user?.Authorization)
+  const loading = useSelector((state:RootState)=>state.userdetails.loading)
+  console.log(userid,"undefined")
+  
+
 
   useEffect(() => {
     if (!userid) {
@@ -45,6 +52,7 @@ function App() {
         }
       }
       auth()
+       
     }
 
   }, [userid])
@@ -74,15 +82,19 @@ function App() {
         <ToastContainer />
         <Toaster />
         <Routes>
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={loading?<div className="w-screen h-screen flex items-center justify-center text-2xl font-medium">loading...</div>:<ErrorPage />} />
           <Route path="/signup" element={<Signinpage />} />
-          <Route path="/" element={<Loginpage />} />
+          <Route path="/" element={loading?<div className="w-screen h-screen flex items-center justify-center text-2xl font-medium">loading...</div>:<Loginpage />} />
         </Routes>
       </Router>
     )
   }
 
+
+
+
   if (role === "root_node" || role === "semi_node") {
+
     return (
       <Router>
         <ToastContainer />
@@ -91,14 +103,14 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={!userid ? <Signinpage /> : <Navigate to={'/company'} />} />
           <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/company'} />} />
-          <Route path="/" element={userid ? <Layout/> : <Navigate to={'/'} />} >
+          <Route path="/" element={userid ? <Layout /> : <Navigate to={'/'} />} >
             <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
             <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
             <Route path="/projects/addproject" element={userid ? <AddProject /> : <Navigate to={'/'} />} />
             <Route path="/projects/viewproject" element={userid ? <ViewProjects /> : <Navigate to={'/'} />} />
             <Route path="/projects/projectdetails/:id" element={userid ? <ProjectDetails /> : <Navigate to={'/'} />} />
             <Route path="/projects/taskdetails/:id" element={userid ? <TaskDetails /> : <Navigate to={'/'} />} />
-
+            <Route path="/listemployees/performance/:id" element={userid ? <PerformacePage /> : <Navigate to={'/'} />} />
           </Route>
           <Route path="/employees" element={userid ? <Employee /> : <Navigate to={'/'} />} />
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
@@ -113,7 +125,21 @@ function App() {
       </Router>
     )
   }
+  if (role === "admin") {
 
+    return (
+      <Router>
+        <ToastContainer />
+        <Toaster />
+        <Routes>
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/" element={!userid ? <Loginpage /> : <Navigate to={'/admin'} />} />
+          <Route path="/employees" element={!userid ? <Loginpage /> : <Navigate to={'/admin'} />} />
+          <Route path="/admin" element={userid ? <AdminDashboard /> : <Navigate to={'/'} />} />
+        </Routes>
+      </Router>
+    )
+  }
 
   if (role === "basic_node") {
     return (
@@ -128,9 +154,14 @@ function App() {
           <Route path="/company" element={userid ? <Companypage /> : <Navigate to={'/'} />} />
           <Route path="/listemployees/:id" element={userid ? <Listemployeepage /> : <Navigate to={'/'} />} />
           <Route path="/viewprofile" element={userid ? <Viewprofilepage /> : <Navigate to={'/'} />} />
-          <Route path="/" element={userid ? <Layout/> : <Navigate to={'/'} />} >
+          <Route path="/" element={userid ? <Layout /> : <Navigate to={'/'} />} >
             <Route path="/events" element={userid ? <Eventspage /> : <Navigate to={'/'} />} />
             <Route path="/projects" element={userid ? <Projectpage /> : <Navigate to={'/'} />} />
+            <Route path="/projects/addproject" element={userid ? <AddProject /> : <Navigate to={'/'} />} />
+            <Route path="/projects/viewproject" element={userid ? <ViewProjects /> : <Navigate to={'/'} />} />
+            <Route path="/projects/projectdetails/:id" element={userid ? <ProjectDetails /> : <Navigate to={'/'} />} />
+            <Route path="/projects/taskdetails/:id" element={userid ? <TaskDetails /> : <Navigate to={'/'} />} />
+            <Route path="/listemployees/performance/:id" element={userid ? <PerformacePage /> : <Navigate to={'/'} />} />
           </Route>
           <Route path="/assigntask" element={userid ? <Assigntaskpage /> : <Navigate to={'/'} />} />
           <Route path="/messenger" element={userid ? <Messagerpage /> : <Navigate to={'/'} />} />

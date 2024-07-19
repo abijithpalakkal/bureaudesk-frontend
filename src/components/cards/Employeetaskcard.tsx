@@ -54,6 +54,7 @@ const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInf
 
     const displayedData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+    
     return (
         <div className='w-full pr-3 py-3'>
             {displayedData.map((item: any, index: any) => (
@@ -144,7 +145,7 @@ const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInf
                     </div>
                     {assigned === "toYou" && (
                         <div className='w-28 flex justify-center items-center'>
-                            <Muidropdownfortask defaults={item.status} id={item._id} refresh={refresh} setrefresh={setrefresh} deadline={item?.deadLine} />
+                            <Muidropdownfortask defaults={item.status} id={item._id} refresh={refresh} setrefresh={setrefresh} deadline={item?.deadLine}  index={item.count}/>
                         </div>
                     )}
                     {(assigned === "all" || assigned === "byYou") && (
@@ -167,7 +168,7 @@ const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInf
                             {item.status === "Done" && (
                                 <div className=' px-2 py-1 text-center rounded-lg'>
                                     <p className='font-medium text-green-500 text-sm'>
-                                        <Muidropdownforapprove id={item._id} refresh={refresh} setrefresh={setrefresh} />
+                                        <Muidropdownforapprove id={item._id} refresh={refresh} setrefresh={setrefresh} index={item.count}/>
                                     </p>
                                 </div>
                             )}

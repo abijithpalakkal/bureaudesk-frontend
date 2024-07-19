@@ -22,7 +22,6 @@ export const AppContext = createContext<any | undefined>(undefined);
 const Project = () => {
     const [apiRefresh, setApiRefresh] = useState(false)
 
-    console.log("rendering")
     const userRole = useSelector((state: RootState) => state.userdetails.user.Authorization)
     const navigate = useNavigate();
     return (
@@ -32,7 +31,7 @@ const Project = () => {
                 <div className='flex gap-4'>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/assigntask") }}><span >assign task</span></button>
                     <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/projects/viewproject") }}><span >All Projects</span></button>
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/projects/addproject") }}><span >add Project</span><span className='text-black'><AiOutlinePlus /></span></button>
+                    {userRole=="root_node" && <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded add employees flex justify-center items-center gap-2" onClick={() => { navigate("/projects/addproject") }}><span >add Project</span><span className='text-black'><AiOutlinePlus /></span></button>}
                 </div>
             </div>
             <div className='mt-3'>

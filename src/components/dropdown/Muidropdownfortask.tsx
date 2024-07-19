@@ -4,10 +4,13 @@ import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
 import { AiFillCaretDown } from 'react-icons/ai';
 import postData from '../../utils/postdata';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import Tasksubmitmodal from '../modals/Tasksubmitmodal';
 import SubmitTaskStatus from '../modals/SubmitTaskStatus';
+import { TaskStatusContext } from '@/context/TaskStatusContext';
+
+
 
 
 interface IProp {
@@ -16,21 +19,26 @@ interface IProp {
   refresh?: boolean
   setrefresh?: any
   deadline?: any
+  index?:any
 }
 
-const Muidropdownfortask = ({ defaults, id, setrefresh, refresh, deadline }: IProp) => {
+const Muidropdownfortask = ({ defaults, id, setrefresh, refresh, deadline ,index}: IProp) => {
 
   const [displayModal, setdisplayModal] = useState(false)
   const [displayStatusModal, setDisplayStatusModal] = useState(false)
   const [status, setStatus] = useState<string>("")
+  const context = useContext(TaskStatusContext)
+  const { statusDetails, setStatusDetails } = context as any
+  
 
 
   const handleSelect = async (clicked: string) => {
-
-
-
-    console.log(clicked);
+    
     try {
+      setStatusDetails({
+        index: index,
+        status: clicked
+      })
       await postData(`/company/updatetask/${id}`, {
         status: clicked
       })
@@ -103,8 +111,8 @@ const Muidropdownfortask = ({ defaults, id, setrefresh, refresh, deadline }: IPr
           )}
         </Menu>
       </Dropdown>
-      {displayModal && <Tasksubmitmodal display={displayModal} setdisplayModal={setdisplayModal} id={id} handleSelect={handleSelect} deadline={deadline} />}
-      {displayStatusModal && <SubmitTaskStatus setDisplayStatusModal={setDisplayStatusModal} status={status} id={id} refresh={refresh} setrefresh={setrefresh} />}
+      {displayModal && <Tasksubmitmodal display={displayModal} setdisplayModal={setdisplayModal} id={id} handleSelect={handleSelect} deadline={deadline} index={index}/>}
+      {displayStatusModal && <SubmitTaskStatus setDisplayStatusModal={setDisplayStatusModal} status={status} id={id} refresh={refresh} setrefresh={setrefresh} index={index}/>}
     </>
 
   )

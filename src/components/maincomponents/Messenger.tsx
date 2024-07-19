@@ -14,6 +14,8 @@ import addfile from "../../assets/attach.png"
 import companylogo from "../../assets/logo_2-removebg-preview (4).png"
 import { Socket } from 'socket.io-client'
 import { useSocketContext } from "../../context/SocketContext"
+import { format, toZonedTime } from 'date-fns-tz';
+
 
 
 const Messenger = ({ setZeegooCloud, url, setData }: any) => {
@@ -21,7 +23,7 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
     const [displayUserCard, setDisplayUserCard] = useState(false)
     const [availableChat, setAvailableChat] = useState<any>([])
     const [chatUserId, setChatUserId] = useState<any>([])
-    const  [chatSelect,setChatSelect] = useState<any>(null) 
+    const [chatSelect, setChatSelect] = useState<any>(null)
     const [refresh, setRefresh] = useState(true)
     const [chat, setChat] = useState("")
     const [userId, setUserId] = useState("")
@@ -34,7 +36,7 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
     const { onlineUsers } = useSocketContext()
 
 
-    console.log(onlineUsers, 852)
+
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -72,31 +74,31 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
                 setAvailableChat(chatData);
                 setChatUserId(collectedUserIds)
 
-            } catch (error) {
-                console.error('Error fetching chat data:', error);
+            } catch (error: any) {
+                toast.error(error);
             }
         };
         getData()
 
     }, [refresh])
 
-     useEffect(() => {
-        if(availableChat.length>0){
+    useEffect(() => {
+        if (availableChat.length > 0) {
             roomSelect(availableChat[0]?._id);
             setUserId(availableChat[0]?.participants[0].data._id);
             setMarker(availableChat[0]?._id);
             setChatSelect({
-                id:availableChat[0].participants[0].data._id,
-                img:availableChat[0].participants[0].data.profileImage,
-                name:availableChat[0].participants[0].data.Name,
-                email:availableChat[0].participants[0].data.email,
-                position:availableChat[0].participants[0].data.position
+                id: availableChat[0].participants[0].data._id,
+                img: availableChat[0].participants[0].data.profileImage,
+                name: availableChat[0].participants[0].data.Name,
+                email: availableChat[0].participants[0].data.email,
+                position: availableChat[0].participants[0].data.position
 
 
             })
         }
-     
-     }, [availableChat])
+
+    }, [availableChat])
 
     const submitChat = async (e: any) => {
 
@@ -129,7 +131,6 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
 
         socket?.off().on("message recieved", (newMessage: any) => {
             if (newMessage.sender != user._id) {
-                console.log("ys it reached here", newMessage)
                 setChatMessages((prev: any) => [...prev, newMessage])
             }
 
@@ -139,7 +140,6 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
 
     const roomSelect = async (id: string) => {
         setChatId(id)
-        console.log(id, "first check")
         socket.emit("join chat", (id))
         try {
             const data: any = await fetchData(`/chat/getchatbyid/${id}`)
@@ -174,14 +174,12 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
     ];
 
     testDates.forEach(date => {
-        console.log(`${date} => ${formatTime(date)}`);
     });
 
     const handleVideoCall = () => {
         if (onlineUsers.includes(userId)) {
             setData({ userId, userName: user.Name })
             setZeegooCloud(true)
-            console.log(url, 2589)
 
 
         } else {
@@ -189,6 +187,15 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
         }
 
 
+    }
+    
+
+    function convertUtcToIstTime(utcDateString:string):string {
+        const timeZone = 'Asia/Kolkata';
+        const utcDate = new Date(utcDateString);
+        const zonedDate = toZonedTime(utcDate, timeZone);
+        const formattedTime = format(zonedDate, 'hh:mm a', { timeZone });
+        return formattedTime;
     }
 
     return (
@@ -229,13 +236,13 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
                                                             setUserId(item.participants[0].data._id);
                                                             setMarker(item._id);
                                                             setChatSelect({
-                                                                id:item.participants[0].data._id,
-                                                                img:item.participants[0].data.profileImage,
-                                                                name:item.participants[0].data.Name,
-                                                                email:item.participants[0].data.email,
-                                                                position:item.participants[0].data.position
-                                                                
-                        
+                                                                id: item.participants[0].data._id,
+                                                                img: item.participants[0].data.profileImage,
+                                                                name: item.participants[0].data.Name,
+                                                                email: item.participants[0].data.email,
+                                                                position: item.participants[0].data.position
+
+
                                                             })
                                                         }}>
                                                         {onlineUsers.includes(item.participants[0].data._id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1 mt-2'></div>}
@@ -256,13 +263,13 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
                                                             setUserId(item.participants[0].data._id);
                                                             setMarker(item._id);
                                                             setChatSelect({
-                                                                id:item.participants[0].data._id,
-                                                                img:item.participants[0].data.profileImage,
-                                                                name:item.participants[0].data.Name,
-                                                                email:item.participants[0].data.email,
-                                                                position:item.participants[0].data.position
+                                                                id: item.participants[0].data._id,
+                                                                img: item.participants[0].data.profileImage,
+                                                                name: item.participants[0].data.Name,
+                                                                email: item.participants[0].data.email,
+                                                                position: item.participants[0].data.position
 
-                        
+
                                                             })
                                                         }}>
                                                         {onlineUsers.includes(item.participants[0].data._id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1 mt-2'></div>}
@@ -288,7 +295,7 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
                             <div className='w-3/4 flex flex-col h-full'>
                                 <div className='flex justify-between items-center p-1 px-3 border-b border-b-slate-300 h-16'>
                                     <div className='flex gap-3 items-center relative'>
-                                    {onlineUsers.includes(chatSelect?.id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1'></div>}
+                                        {onlineUsers.includes(chatSelect?.id) && <div className='w-2 h-2 bg-green-600 rounded-full absolute z-20 top-1'></div>}
                                         <div className='w-8 h-8 border rounded-full flex justify-center items-center overflow-hidden relative'>
                                             <img src={chatSelect?.img} alt="" className='w-8 h-8' />
                                         </div>
@@ -321,17 +328,17 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
                                             <div className='w-full'>
                                                 <div className="flex-1 mb-4 w-full overflow-hidden" >
                                                     {chatMessages?.map((msg: any, index: any) => {
-                                                        { console.log(msg.createdAt) }
+
                                                         return (
                                                             <div key={index} className={`flex ${msg.sender === user._id ? 'justify-end' : 'justify-start'}`}>
                                                                 <div
                                                                     className={`mb-2 p-2 rounded-lg max-w-xs ${msg.sender !== user._id ? 'bg-blue-100 text-left' : 'bg-green-100 text-right mr-3'
                                                                         }`}
                                                                 >
-                                                                    <p>{msg.content}</p>
+                                                                    <p>{msg?.content}</p>
                                                                     <div className="flex items-center gap-2 justify-between">
                                                                         <p className="font-semibold"></p>
-                                                                        <p className="text-[13px] text-slate-600">{formatTime(msg?.createdAt)}</p>
+                                                                        <p className="text-[13px] text-slate-600">{convertUtcToIstTime(msg?.createdAt)}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

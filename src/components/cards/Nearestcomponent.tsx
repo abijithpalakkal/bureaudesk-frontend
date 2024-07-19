@@ -7,6 +7,8 @@ import { RootState } from '../../redux/store'
 import { string } from 'yup'
 import postData from '@/utils/postdata'
 import duumyimage from "../../assets/no-event-bg.png"
+import { dividerClasses } from '@mui/material'
+import { toast } from 'react-toastify'
 
 
 interface IEvents {
@@ -15,7 +17,9 @@ interface IEvents {
   eventCategory?: string;
   priority?: string;
   eventDate?: string;
+  eventEndDate?: string;
   eventTime?: string;
+  eventEndTime?: string;
   eventDescription?: string;
   companyid?: string;
   createdAt?: string;
@@ -33,9 +37,10 @@ function Nearestcomponent({ val }: iprop) {
   useEffect(() => {
     const getEvents = async () => {
       try {
+      
         const data = await postData(`/company/getevent`, { companyid: companyid })
-        console.log(data.data)
-        console.log("jacob swarg")
+        
+
 
         data.data.sort((a: IEvents, b: IEvents) => {
           const datetimeA: any = new Date(`${a.eventDate}T${a.eventTime}`);
@@ -43,12 +48,40 @@ function Nearestcomponent({ val }: iprop) {
           return datetimeA - datetimeB;
         });
         setevents(data.data)
-      } catch (err) {
-        console.log(err)
+      } catch (err:any) {
+        toast.error(err)
       }
     }
     getEvents()
   }, [companyid, val])
+
+  const checkEventStatus = (eventStartDate: any, eventStartTime: any, eventEndDate: any, eventEndTime: any) => {
+    
+
+    // Combine the start date and time into a single string without 'Z'
+    const eventStartDateTimeString = `${eventStartDate}T${eventStartTime}:00`;
+    const eventEndDateTimeString = `${eventEndDate}T${eventEndTime}:00`;
+
+    // Create Date objects for the start and end date and time
+    const eventStartDateTime = new Date(eventStartDateTimeString);
+    const eventEndDateTime = new Date(eventEndDateTimeString);
+
+    // Get the current date and time
+    const currentDateTime = new Date();
+
+
+
+    // Compare the current date and time with the start and end date and time
+    if (currentDateTime >= eventStartDateTime && currentDateTime < eventEndDateTime) {
+     
+      return true;
+    } else {
+      
+      return false;
+    }
+  };
+
+
 
 
   function convertTo12HourTime(militaryTime: string) {
@@ -67,7 +100,7 @@ function Nearestcomponent({ val }: iprop) {
     const eventDatetime: Date = new Date(`${event.eventDate}T${event.eventTime}`);
     const timeDifference: number = eventDatetime.getTime() - currentDatetime.getTime();
     const hoursLeft: number = Math.floor(timeDifference / (1000 * 60 * 60));
-    console.log(`Hours left for event "${event.eventName}": ${hoursLeft}`);
+    
     return hoursLeft
   };
 
@@ -89,7 +122,7 @@ function Nearestcomponent({ val }: iprop) {
   }
 
   function getBorderColor(category: string) {
-    console.log(category, "👌👌")
+    
     if (category === "others") {
       return "border-blue-500";
     }
@@ -122,9 +155,17 @@ function Nearestcomponent({ val }: iprop) {
 
       {events.length > 0 ? (
         events.map((obj, index) => (
-          <div key={index} className={`border-l-2 ${getBorderColor(obj.eventCategory as string)} px-2 mt-5`}>
+          <div key={index} className={`border-l-2 ${getBorderColor(obj.eventCategory as string)} px-2 mt-5 `}>
             <div className='flex justify-between mt-5'>
-              <p className='font-nunitosans font-semibold'>{obj.eventName}</p>
+              <div className='flex justify-between items-center gap-2'>
+                <p className='font-nunitosans font-semibold'>{obj.eventName}</p>
+                <div>
+
+                  {checkEventStatus(obj.eventDate, obj.eventTime, obj.eventEndDate, obj.eventEndTime) && <div className='bg-green-600 p-1 rounded-full text-sm font-medium animate-pulse w-3 h-3 text-center  top-[-10px]'></div>}
+                </div>
+
+              </div>
+
               <p className='text-green-500'><ImArrowUp2 /></p>
             </div>
             <div className='flex justify-between items-center mt-3 '>

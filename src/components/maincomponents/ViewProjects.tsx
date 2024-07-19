@@ -16,13 +16,15 @@ const ViewProjects = () => {
     const [taskInfoData, setTaskInfoData] = useState(null)
     const [style, setstyle] = useState(0)
     const navigate = useNavigate()
+    const userRole=useSelector((state:RootState)=>state.userdetails.user.Authorization)
+    const userDepartment=useSelector((state:RootState)=>state.userdetails.user.Departmentid)
 
 
     useEffect(() => {
         const getdata = async () => {
             const { data } = await fetchData(`/company/getprojects/${companyId}`)
 
-            console.log(data, "[rojrct data")
+            
             setProject(data)
             onGoingTask(data[0]._id)
             // setTaskInfoData(data[0])
@@ -40,9 +42,19 @@ const ViewProjects = () => {
     }
 
     const onGoingTask = async (id: any) => {
-        const response: any = await postData("/company/gettask", {
-            projectId: id
-        });
+        let response:any;
+        if(userRole=="root_node"){
+             response = await postData("/company/gettask", {
+                projectId: id
+            });
+        }
+        if(userRole == "basic_node" || userRole == "basic_node"){
+            response = await postData("/company/gettask", {
+                projectId: id,
+                Departmentid:userDepartment
+            });
+        }
+        
         const data = response.data;
 
         for (let i = 0; i < data.length; i++) {
@@ -56,7 +68,6 @@ const ViewProjects = () => {
 
 
 
-        console.log(response.data, "ongoing task")
 
     }
 
@@ -83,7 +94,10 @@ const ViewProjects = () => {
 
                             <div key={index} className={`p-1  mt-1 ${style === index ? 'border-blue-500 border-l-2 pr-0' : ''}`} onClick={() => { onGoingTask(item._id); handleClick(index) }}>
                                 <div className={`p-2 bg-slate-100 rounded-xl mt-1 cursor-pointer hover:bg-blue-100 duration-0 ${style === index ? 'rounded-r-none' : ''}`}>
+                                    <div className='flex items-center'>
                                     <p className='font-semibold text-sm'>{item?.projectName}</p>
+                                     {item?.completed && <p>✅</p>}
+                                    </div>
                                     <p className='flex items-center gap-1 text-blue-400 hover:ml-1 duration-100 w-28 text-sm' onClick={() => navigate(`/projects/projectdetails/${item._id}`)}>View details<span className=''><AiOutlineRight /></span></p>
                                 </div>
                             </div>
@@ -93,7 +107,7 @@ const ViewProjects = () => {
                     </div>
                 </div>
                 <div className='w-full'>
-                    <p className='font-semibold text-xl'>31 tasks are ongoing related to this project</p>
+                    <p className='font-semibold text-xl'>{taskdata.length} tasks are ongoing related to this project</p>
                     <Employeetaskcard data={taskdata} getTaskInfo={getTaskInfo} />
                 </div>
                 <Taskinfocard taskInfo={taskInfoData} />

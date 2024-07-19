@@ -1,4 +1,4 @@
-import React, { SetStateAction, useRef, useState } from 'react'
+import React, { SetStateAction, useContext, useRef, useState } from 'react'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import { AiOutlineClose } from 'react-icons/ai'
 import addlink from "../../assets/Add Link.png"
@@ -6,6 +6,8 @@ import addfile from "../../assets/Add Attachments.png"
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { toast } from 'react-toastify'
 import postData from '@/utils/postdata'
+import { TaskStatusContext } from '@/context/TaskStatusContext';
+
 
 interface IProp {
     display: boolean
@@ -13,13 +15,15 @@ interface IProp {
     id?:string
     handleSelect?:any
     deadline?:any
+    index?:any
 }
 
-const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: IProp) => {
+const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline,index}: IProp) => {
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [cloudfiles, setcloudfiles] = useState<string[]>([])
+    const context = useContext(TaskStatusContext)
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -33,12 +37,11 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: I
                 await postData(`/company/updatetask/${id}`, {  
                     lateSubmission: true
                 });
-                console.log("Task updated with late submission.");
-            } catch (error) {
-                console.error("Error updating task:", error);
+            } catch (error:any) {
+                toast.error("Error updating task:", error);
             }
         } else {
-            console.log("Current date has not passed the deadline.");
+            toast.error("Current date has not passed the deadline.");
         }
     };
 
@@ -94,10 +97,8 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: I
             }
 
             // Log the URLs of uploaded files
-            console.log('Uploaded file URLs:', uploadedFileUrls);
             setcloudfiles(uploadedFileUrls)
         } else {
-            console.log('No files selected');
         }
       let data;
       if(uploadedFileUrls.length ==0 || null ||""){
@@ -123,9 +124,7 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline}: I
             const currentdate= new Date()
 
             checkAndUpdateTask(id,deadline)
-            console.log(data,id,123456789)
         } catch (err: any) {
-            console.log(err.message)
             toast.error(err?.message)
         }
 

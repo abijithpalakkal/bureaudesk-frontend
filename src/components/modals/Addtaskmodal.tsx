@@ -19,7 +19,7 @@ interface IProp {
 }
 
 const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
-    console.log(empid, dptid)
+  
     const companyId = useSelector((state: RootState) => state.companydetails.company._id)
     const userid = useSelector((state: RootState) => state.userdetails.user._id)
 
@@ -72,7 +72,6 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
 
             for (let i = 0; i < selectedFiles.length; i++) {
                 const file = selectedFiles[i];
-                console.log(file, "files", 896)
 
                 const formData = new FormData();
                 formData.append('file', file);
@@ -100,14 +99,12 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
             }
 
             // Log the URLs of uploaded files
-            console.log('Uploaded file URLs:', uploadedFileUrls);
             setcloudfiles(uploadedFileUrls)
         } else {
-            console.log('No files selected');
+            toast.error('No files selected');
         }
         // Create an object to hold form data
         let Data;
-        console.log(selectProject,"selectprojects")
         if (selectProject != "" && selectProject != "a") {
             Data = {
                 companyid: companyId,
@@ -140,11 +137,9 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
 
 
         // Log form data
-        console.log(Data);
         try {
             await postData("/company/addtask", Data)
         } catch (err: any) {
-            console.log(err.message)
             toast.error(err?.message)
         }
 

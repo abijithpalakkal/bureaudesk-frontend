@@ -10,7 +10,6 @@ interface iCloseProp{
 }
 
 const Eventclosemodal = ({closemodal,refresh,val,id}:iCloseProp) => {
-    console.log(id,123456789)
    
         const deletedata=async ()=>{
             await fetchData(`/company/deleteevent/${id}`)

@@ -43,7 +43,7 @@ const Zegocloud: React.FC<IProp> = ({ displayCloud,seturl,data }: IProp) => {
     const zp = ZegoUIKitPrebuilt.create(kitToken);
     zpRef.current = zp; // Store the instance in the ref
     const sharedUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID;
-    console.log(sharedUrl)
+    
     if(data){
         socket.emit("videoCall", {...data,url:sharedUrl})
     }
@@ -86,7 +86,7 @@ const Zegocloud: React.FC<IProp> = ({ displayCloud,seturl,data }: IProp) => {
   const handleCleanup = () => {
     if (zpRef.current) {
         zpRef.current.hasJoinedRoom=false
-        console.log(zpRef.current)
+        
     }
   };
 

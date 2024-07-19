@@ -33,8 +33,8 @@ function Createteammodal({ id ,modal}: Props) {
       try {
         const response = await fetchData(`/user/getdepartmentemployee/${id}`);
         setEmployee(response.data || []);
-      } catch (error) {
-        console.error('Error fetching employees:', error);
+      } catch (error:any) {
+        toast.error('Error fetching employees:', error);
       }
     }
     getEmployees();

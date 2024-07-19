@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import addlink from "../../assets/Add Link.png"
@@ -6,14 +6,18 @@ import addfile from "../../assets/Add Attachments.png"
 import { AiOutlineClose } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import postData from '@/utils/postdata'
+import { TaskStatusContext } from '@/context/TaskStatusContext';
 
 
-const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh}: any) => {
+
+const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh,index}: any) => {
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
     const [cloudfiles, setcloudfiles] = useState<string[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const context = useContext(TaskStatusContext)
+  const { statusDetails, setStatusDetails } = context as any
 
 
     const handleSubmit = async (e: any) => {
@@ -38,7 +42,6 @@ const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh
                         // Extract URL from Cloudinary response
                         const data = await response.json();
                         const url = data.secure_url;
-                        console.log(url)
                         uploadedFileUrls.push(url);
                     } else {
                         toast.error('Failed to upload file:', file.name as any);
@@ -49,7 +52,6 @@ const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh
                     return 1
                 }
             }
-            console.log('Uploaded file URLs:', uploadedFileUrls);
            
 
         }
@@ -75,7 +77,10 @@ const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh
                 }
             };
         }
-
+        setStatusDetails({
+            index: index,
+            status: status
+          })
         await postData(`/company/updatetask/${id}`,data1)
 
         setTaskDescription("")

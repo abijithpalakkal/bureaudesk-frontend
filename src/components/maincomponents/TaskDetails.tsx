@@ -3,6 +3,12 @@ import postData from '@/utils/postdata'
 import React, { useEffect, useState } from 'react'
 import { AiFillCalendar } from 'react-icons/ai'
 import { useParams } from 'react-router-dom'
+import Muidropdownforapprove from '../dropdown/Muidropdownforapprove'
+import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
+import addfile from "../../assets/Add Attachments.png"
+import Taskinfocard from '../cards/Taskinfocard'
+import { toast } from 'react-toastify'
+
 
 const TaskDetails = () => {
     const { id } = useParams()
@@ -15,7 +21,6 @@ const TaskDetails = () => {
         const getData = async () => {
 
             const response: any = await postData("/company/gettask", { _id: id });
-            console.log(response.data)
             setData(response.data)
         }
         getData()
@@ -24,14 +29,10 @@ const TaskDetails = () => {
     useEffect(() => {
         const getData = async () => {
             if (data[0]?.projectId) {
-                console.log(data[0]?.projectId, "data[0]?.projectId.teamId")
                 if (data[0]?.projectId.teamId) {
-                    console.log(data[0]?.projectId.teamId,"(data[0]?.projectId.teamId")
                     const responseData = await fetchData(`/company/getteam/${data[0]?.projectId.teamId}`)
                     setTeamDetails(responseData.data)
-                    console.log(responseData.data, "teamDetails")
                     if (responseData.data.length > 0) {
-                        console.log(responseData.data[0].members,"(responseData.data[0].members")
                         populateData(responseData.data[0].members)
                     }
                 }
@@ -43,6 +44,15 @@ const TaskDetails = () => {
         getData()
     }, [data])
 
+    function getFileNameFromUrl(url: string) {
+        if (url || url == "") {
+            const parts = url.split('/');
+            return parts[parts.length - 1];
+        }
+
+    }
+
+
     const populateData = async (arr: string[]) => {
         try {
             let arr1: any = [];
@@ -50,10 +60,9 @@ const TaskDetails = () => {
                 const { data } = await fetchData(`/user/getuserbyid/${arr[i]}`);
                 arr1.push(data);
             }
-            console.log(arr1, "arr1");
             setPopulatedData([...arr1]);
-        } catch (error) {
-            console.error('Error populating data:', error);
+        } catch (error:any) {
+            toast.error('Error populating data:', error);
         }
     };
 
@@ -64,7 +73,25 @@ const TaskDetails = () => {
     }
 
 
-    console.log(id)
+
+    const getGaugeValue = (status: any) => {
+        switch (status) {
+            case "Assigned":
+                return 0;
+            case "Started":
+                return 25;
+            case "in-Progress":
+                return 50;
+            case "Done":
+                return 80;
+            case "Approved":
+                return 100;
+            case "Rejected":
+                return 0;
+            default:
+                return 0;
+        }
+    };
     return (
         <div className='mt-5 flex w-full justify-between'>
 
@@ -83,7 +110,7 @@ const TaskDetails = () => {
                             <div key={id} className='flex justify-between mt-3 border border-blue-500 p-1 rounded-md items-center'>
                                 <img src={userData.profileImage} alt={userData?.name} className='h-4 w-4 rounded-full' />
                                 <p className='text-[12px] font-medium text-slate-500'>{userData?.Name}</p>
-                                <p  className='text-[12px] font-medium text-slate-500'>{userData?.position}</p>
+                                <p className='text-[12px] font-medium text-slate-500'>{userData?.position}</p>
                             </div>
                         ))
                     ) : (
@@ -94,24 +121,153 @@ const TaskDetails = () => {
                     <p className='text-sm font-medium text-slate-500 mt-3'>deadline </p>
                     <p className='text-lg font-medium'>{data[0].projectId.deadLine}</p>
                     <p className='flex justify-start items-center text-slate-500 text-sm mt-5'> <p className='flex items-center'>
-                    <AiFillCalendar /> <span>created at </span><span>{formatDateString(data[0].projectId.createdAt)}</span>
-                </p></p>
+                        <AiFillCalendar /> <span>created at </span><span>{formatDateString(data[0].projectId.createdAt)}</span>
+                    </p></p>
                 </div>}
                 {!data[0]?.projectId && <p className='font-semibold text-xl'>standalone Project</p>}
             </div>
             <div className='mt-6  p-2  w-7/12 min-h-96'>
                 <div className='bg-white rounded-xl p-4 h-full'>
-                    <p className='font-semibold text-2xl'>{data[0]?.taskName}</p>
+                    <div className='flex justify-between'>
+                        <p className='font-semibold text-2xl'>{data[0]?.taskName}</p>
+                        <div className='w-20'>
+                            {data[0]?.status === "Assigned" && (
+                                <div className=' px-2 py-1 text-center rounded-lg border'>
+                                    <p className='font-medium text-green-500 text-sm'>{data[0]?.status}</p>
+                                </div>
+                            )}
+                            {data[0]?.status === "Started" && (
+                                <div className='bg-slate-100 px-2 py-1 text-center rounded-lg'>
+                                    <p className='font-medium text-slate-500 text-sm'>{data[0]?.status}</p>
+                                </div>
+                            )}
+                            {data[0]?.status === "in-Progress" && (
+                                <div className='bg-blue-100 px-2 py-1 text-center rounded-lg'>
+                                    <p className='font-medium text-blue-500 text-sm'>{data[0]?.status}</p>
+                                </div>
+                            )}
+                            {data[0]?.status === "Done" && (
+                                <div className=' px-2 py-1 text-center rounded-lg'>
+                                    <p className='font-medium text-green-500 text-sm'>
+                                        done
+                                    </p>
+                                </div>
+                            )}
+                            {data[0]?.status === "Approved" && (
+                                <div className=' px-2 py-1 text-center rounded-lg'>
+                                    <p className='font-medium text-green-500 text-sm'>Approved✅</p>
+                                </div>
+                            )}
+                            {data[0]?.status === "Rejected" && (
+                                <div className=' px-2 py-1 text-center rounded-lg'>
+                                    <p className='font-medium text-red-500 text-sm'>Rejected❌</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                     <p className='text-gray-400 text-lg mt-6'>{data[0]?.taskDescription}</p>
-                    <p className='font-semibold text-xl'>task attachments</p>
-                    
-                </div>
-            </div>
-            <div className='h-96 w-3/12 p-2 min-h-96'>
-                <div className=' bg-black w-full h-full rounded-lg'>
+                    <div className='flex justify-between w-full'>
+                        <p className='font-semibold text-xl'>task attachments</p>
+                        <div className='w-20'>
+                            <Gauge
+                                width={50}
+                                height={50}
+                                value={getGaugeValue(data[0]?.status)}
+                                cornerRadius="50%"
+                                sx={(theme) => ({
+                                    [`& .${gaugeClasses.valueText}`]: {
+                                        fontSize: 10,
+                                    },
+                                    [`& .${gaugeClasses.valueArc}`]: {
+                                        fill: '#52b202',
+                                    },
+                                    [`& .${gaugeClasses.referenceArc}`]: {
+                                        fill: theme.palette.text.disabled,
+                                    },
+                                })}
+                            />
+                        </div>
+
+                    </div>
+                    <p className='font-medium text-slate-500'>status Tracking:</p>
+                    {data[0]?.comments.length > 0 && (
+                        data[0]?.comments.map((comment: any, index: any) => (
+                            <div key={index} className='flex border border-green-200 mt-2 p-1 rounded-lg justify-between'>
+                                <div className='w-24'>
+                                    <div className='w-20 '>
+                                        {comment.status === "Assigned" && (
+                                            <div className='px-2 py-1 text-center rounded-lg border'>
+                                                <p className='font-medium text-green-500 text-sm'>{comment.status}</p>
+                                            </div>
+                                        )}
+                                        {comment.status === "Started" && (
+                                            <div className='bg-slate-100 px-2 py-1 text-center rounded-lg'>
+                                                <p className='font-medium text-slate-500 text-sm'>{comment.status}</p>
+                                            </div>
+                                        )}
+                                        {comment.status === "in-Progress" && (
+                                            <div className='bg-blue-100 px-2 py-1 text-center rounded-lg'>
+                                                <p className='font-medium text-blue-500 text-[12px]'>{comment.status}</p>
+                                            </div>
+                                        )}
+                                        {comment.status === "Done" && (
+                                            <div className='px-2 py-1 text-center rounded-lg'>
+                                                <p className='font-medium text-green-500 text-sm'>Done</p>
+                                            </div>
+                                        )}
+                                        {comment.status === "Approved" && (
+                                            <div className='px-2 py-1 text-center rounded-lg'>
+                                                <p className='font-medium text-green-500 text-sm'>Approved✅</p>
+                                            </div>
+                                        )}
+                                        {comment.status === "Rejected" && (
+                                            <div className='px-2 py-1 text-center rounded-lg'>
+                                                <p className='font-medium text-red-500 text-sm'>Rejected❌</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div>
+                                    {comment?.comments}
+                                </div>
+                                <div>
+                                    {comment?.attachments? <div className='flex justify-start items-center mt-1 '>
+                                        <a
+                                            href={comment?.attachments}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className='w-36 h-28 rounded-xl relative overflow-hidden block'
+                                        >
+                                            <div className='w-36 h-28 rounded-xl relative overflow-hidden '>
+                                                <div className='flex justify-between absolute w-full'>
+                                                    <div>
+
+                                                    </div>
+                                                    <img src={addfile} alt="" className='w-8 ' />
+                                                </div>
+                                                <iframe
+                                                    src={comment?.attachments}
+                                                    className="w-48 overflow-hidden h-full"
+                                                    title="PDF"
+                                                ></iframe>
+
+                                                <div className='absolute w-full bg-white top-16 h-12 p-2 rounded-t-2xl border text-sm'>
+                                                    {getFileNameFromUrl(comment?.attachments)}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>:<p className='font-medium text-slate-500'>no attachments</p>}
+                                </div>
+                            </div>
+                        ))
+                    )}
+
 
                 </div>
             </div>
+           
+                <Taskinfocard taskInfo={data[0]}/>
+            
 
 
         </div>
