@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { AiOutlinePlus } from 'react-icons/ai'
 import fetchData from '../../utils/fetchdata'
 import Editprofilemodal from '../modals/Editprofilemodal'
 import Profilecard from '../cards/Profilecard'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata';
@@ -21,10 +19,6 @@ interface iprop {
 }
 
 function Viewprofile({ id }: iprop) {
-  const [modaldisplay, setmodaldisplay] = useState(false)
-  const [companydetails, setcompanydetails] = useState(null as any)
-  const company = useSelector((state: RootState) => state.companydetails?.company?._id)
-  const companydetails1 = useSelector((state: RootState) => state.companydetails?.company)
   const email = useSelector((state: RootState) => state.userdetails.user.email)
   const [changePasswordComponent, SetChangePasswordComponent] = useState<any>(false)
   const [otpComponent, SetOtpComponent] = useState<any>(false)
@@ -98,7 +92,7 @@ const validationSchema = Yup.object().shape({
                   confirmPassword: ''
                 }}
                 validationSchema={validationSchema}
-                onSubmit={async (values, { setSubmitting }) => {
+                onSubmit={async (values, { }) => {
 
 
                   const { data } = await postData("auth/updateuser", { ...values, email })

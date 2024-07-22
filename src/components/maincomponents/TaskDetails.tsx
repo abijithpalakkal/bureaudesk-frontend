@@ -1,9 +1,8 @@
 import fetchData from '@/utils/fetchdata'
 import postData from '@/utils/postdata'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { AiFillCalendar } from 'react-icons/ai'
 import { useParams } from 'react-router-dom'
-import Muidropdownforapprove from '../dropdown/Muidropdownforapprove'
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import addfile from "../../assets/Add Attachments.png"
 import Taskinfocard from '../cards/Taskinfocard'
@@ -13,7 +12,7 @@ import { toast } from 'react-toastify'
 const TaskDetails = () => {
     const { id } = useParams()
     const [data, setData] = useState<any>([])
-    const [teamDetails, setTeamDetails] = useState<any>([])
+    const [_teamDetails, setTeamDetails] = useState<any>([])
     const [populatedData, setPopulatedData] = useState<any>(null);
 
 

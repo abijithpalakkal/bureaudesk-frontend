@@ -1,7 +1,6 @@
 
 import Homesidebar from "../components/maincomponents/Homesidebar"
 import Company from '../components/maincomponents/Company'
-import Zegocloud from "@/components/helpers/Zegocloud"
 
 
 

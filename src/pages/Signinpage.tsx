@@ -6,7 +6,7 @@ import { useState, useRef } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignupAction } from '../redux/actions/useractions/userActions'
 import { AppDispatch } from '../redux/store'
@@ -19,7 +19,6 @@ import { toast } from 'react-toastify';
 
 
 const signinpage = () => {
-    const { message } = useSelector((state: RootState) => state.userdetails)
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
 
@@ -30,8 +29,7 @@ const signinpage = () => {
     const [otp2, setOtp2] = useState<string>("");
     const [otp3, setOtp3] = useState<string>("");
     const [otp4, setOtp4] = useState<string>("");
-    const [focusedInput, setFocusedInput] = useState<number>(0)
-    const [refresh, setrefresh] = useState<boolean>(false)
+    const [_focusedInput, setFocusedInput] = useState<number>(0)
     const [minutes, setMinutes] = useState(2);
     const [seconds, setSeconds] = useState(0);
 
@@ -41,7 +39,7 @@ const signinpage = () => {
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null)
     ];
-    const { user, loading } = useSelector((state: RootState) => state.userdetails)
+    const { loading } = useSelector((state: RootState) => state.userdetails)
     const formik = useFormik({
         initialValues: {
             email: '',

@@ -6,7 +6,7 @@ import { SiMessenger } from 'react-icons/si'
 import logo from '../../assets/logo_2-removebg-preview (4).png'
 import { ImOffice } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
-import { UseSelector, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import support from "../../assets/Support.png"
 import { userdetailslogout } from '../../redux/slices/userreducer/userReducer'
@@ -33,13 +33,12 @@ function Homesidebar(props: HomesidebarProps) {
         }
     }, [])
     const dispatch = useDispatch<AppDispatch>()
-    const comapanyimage = useSelector((state: RootState) => state.companydetails.company.Companylogo)
     const company = useSelector((state: RootState) => state.companydetails.company)
     const { socket } = useSocketContext()
     const user = useSelector((state: any) => state.userdetails.user._id)
 
     const handleLogoutClick = async () => {
-        const data = await fetchData("/auth/logout")
+         await fetchData("/auth/logout")
         socket.emit("disconnec", user)
         socket.close()
         dispatch(userdetailslogout())

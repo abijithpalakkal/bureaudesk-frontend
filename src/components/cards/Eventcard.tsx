@@ -1,13 +1,11 @@
 
 import { AiOutlineCalendar, AiOutlineDelete } from "react-icons/ai"
 import event from "../../assets/event image.png"
-import { formatProdErrorMessage } from "@reduxjs/toolkit";
 import birthday from "../../assets/eventbirthday.png"
 import inaguaration from "../../assets/eventinaguration-removebg-preview.png"
 import seminar from "../../assets/eventseminar.jpg"
 import meeting from "../../assets/eventmeeting.jpg"
 import editicon from "../../assets/edit icon.png"
-import { boolean } from "yup";
 import { useState } from "react";
 import Editeventsmodal from "../modals/Editeventsmodal";
 import Eventclosemodal from "../modals/Eventclosemodal";
@@ -36,11 +34,7 @@ interface IEventProp {
     refresh?: any
     val?: Boolean
 }
-interface IDateProp {
-    year?: string
-    month?: string
-    day?: string
-}
+
 function Eventcard({ events, refresh, val }: IEventProp) {
 
     const [openmodal, setopenmodal] = useState<boolean>(false)
@@ -68,7 +62,7 @@ function Eventcard({ events, refresh, val }: IEventProp) {
 
     return (
         <div className='w-full'>
-            {events?.map((obj: IEvents, index: number) => (<div className='flex bg-white rounded-lg  mt-3'>
+            {events?.map((obj: IEvents) => (<div className='flex bg-white rounded-lg  mt-3'>
                 <div className='p-5 w-96'>
                     <div>
                         <div className='flex justify-start items-center gap-3 '>

@@ -1,8 +1,7 @@
-import React from 'react'
 import logo from "../../assets/dummy-profile-pic-300x300-1.png"
 import editicon from "../../assets/edit icon.png"
 
-function Profilecard({ user,displaymodal,setdisplaymodal }: any) {
+function Profilecard({ user,setdisplaymodal }: any) {
   function convertISOToNormalDate(isoDateString:string) {
     const date = new Date(isoDateString);
   

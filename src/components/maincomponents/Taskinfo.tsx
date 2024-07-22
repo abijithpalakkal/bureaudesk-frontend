@@ -1,6 +1,5 @@
-import React from 'react'
 import Cardskeleton from '../skeleton/Cardskeleton'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import addfile from "../../assets/Add Attachments.png"
 import progress from "../../assets/progress.png"
 import { AiFillCalendar } from 'react-icons/ai'
@@ -12,10 +11,7 @@ interface Task {
     deadLine: string;
     estimate: string;
 }
-interface IProp {
-    apiRefresh: boolean
-    setApiRefresh: Dispatch<SetStateAction<boolean>>;
-}
+
 
 const Taskinfo = ({ taskInfo }: {
 
@@ -24,7 +20,6 @@ const Taskinfo = ({ taskInfo }: {
 }) => {
 
     const [displayModal, setDisplayModal] = useState(false)
-    const [expired, setExpired] = useState(false)
     const navigate=useNavigate()
 
 
@@ -41,8 +36,7 @@ const Taskinfo = ({ taskInfo }: {
         return date.toLocaleDateString('en-US', options);
     }
 
-    const inputDate = "2024-05-09T06:34:30.142Z";
-    const formattedDate = formatDateString(inputDate);
+    
 
     function formatDateString2(dateString: any) {
         const date = new Date(dateString);

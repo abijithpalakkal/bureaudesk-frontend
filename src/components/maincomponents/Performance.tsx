@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Profilecard from '../cards/Profilecard';
 import PersonalPerformance from './manger/PersonalPerformance';
 import fetchData from '@/utils/fetchdata';

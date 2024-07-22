@@ -49,7 +49,7 @@ const useReducer=createSlice({
     },
     extraReducers:(builder)=>{
        builder
-       .addCase(userSignupAction.pending, (state, action) => {
+       .addCase(userSignupAction.pending, (state) => {
         state.loading = true;
         state.message = "Loading";
       })
@@ -68,14 +68,12 @@ const useReducer=createSlice({
         if((action.payload as iError).message=="Error while signing up"){
             toast.error("Error while signing up")
         }
-       
-        const mesg = (action.payload as { message: string }).message;
         state.error = action.error as string;
         state.message = "rejected";
         state.loading = false;
       })
        
-      .addCase(userLoginAction.pending, (state, action) => {
+      .addCase(userLoginAction.pending, (state) => {
         state.loading = true;
         state.message = "Loading";
       })
@@ -93,7 +91,7 @@ const useReducer=createSlice({
       })
 
 
-      .addCase(userauth.pending, (state, action) => {
+      .addCase(userauth.pending, (state) => {
         state.loading = true;
         state.message = "Loading";
       })

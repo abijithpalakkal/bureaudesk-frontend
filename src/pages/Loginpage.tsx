@@ -1,23 +1,20 @@
-import React, { useCallback, useState } from 'react'
+import  { useCallback, useState } from 'react'
 import logo from '../assets/logo_2-removebg-preview (4).png'
 import designlogo from '../assets/theam.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { userLoginAction } from '../redux/actions/useractions/userActions'
 import { AppDispatch } from '../redux/store'
 import { getCompanyAction } from '../redux/actions/useractions/getCompanyAction'
-import cityphoto from "../assets/beautiful-architecture-office.avif"
-import team from "../assets/office_desk.png"
 import Particles from 'react-tsparticles'
 import { loadSlim } from 'tsparticles-slim'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 
 
 const loginpage = () => {
-    const [blur, setblur] = useState(false)
+    const [_blur, setblur] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
@@ -155,7 +152,7 @@ const loginpage = () => {
                         <p className='cursor-pointer text-xl font-semibold  hover:mt-3 duration-300 ' onClick={() => { navigate("/signup") }}>Signup</p>
                     </div>
                 </div>
-                <div className='md:w-2/4 hidden md:block bg-blue-400 flex justify-center items-center'>
+                <div className="md:w-2/4 hidden md:block bg-blue-400 flex-1 justify-center items-center">
                     <div className='flex flex-col justify-center items-center gap-[80px]'>
                         <img src={logo} className='w-[110px]' />
                         <p className='text-[30px] font-semibold p-3 text-center'>Your place to work Plan. Create. Control.</p>

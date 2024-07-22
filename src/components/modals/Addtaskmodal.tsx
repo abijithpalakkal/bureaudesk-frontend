@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { BiArrowBack } from 'react-icons/bi'
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { AiOutlineClose } from 'react-icons/ai'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
@@ -9,7 +8,6 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import { toast } from 'react-toastify'
-import { Root } from '@radix-ui/react-tabs'
 import fetchData from '@/utils/fetchdata'
 
 interface IProp {
@@ -30,7 +28,7 @@ const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
     const [description, setDescription] = useState("");
     const [selectProject, SetSelectProject] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-    const [cloudfiles, setcloudfiles] = useState<string[]>([])
+    const [_cloudfiles, setcloudfiles] = useState<string[]>([])
     const [projects, setprojects] = useState<any>(null)
     const companyid = useSelector((state: any) => state?.companydetails?.company._id);
 

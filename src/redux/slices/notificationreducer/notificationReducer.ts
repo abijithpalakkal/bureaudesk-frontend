@@ -4,8 +4,8 @@ const notificationSlice = createSlice({
   name: 'notification',
   initialState: false,
   reducers: {
-    setNotificationTrue: (state) => true,
-    setNotificationFalse: (state) => false,
+    setNotificationTrue: () => true,
+    setNotificationFalse: () => false,
   }
 });
 

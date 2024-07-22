@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import Dropdown from '@mui/joy/Dropdown';
 import MenuButton from '@mui/joy/MenuButton';
 import Menu from '@mui/joy/Menu';
@@ -10,7 +10,7 @@ import { TaskStatusContext } from '@/context/TaskStatusContext';
 const Muidropdownforapprove = ({ id, refresh, setrefresh, index }: any) => {
 
   const context = useContext(TaskStatusContext)
-  const { statusDetails, setStatusDetails } = context as any
+  const { setStatusDetails } = context as any
   const submitApprove = async (e: string) => {
     setStatusDetails({
       index: index,

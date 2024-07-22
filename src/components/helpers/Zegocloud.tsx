@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useNavigate } from 'react-router-dom';
 import { useSocketContext } from "../../context/SocketContext"
-import { Socket } from 'socket.io-client'
 
 interface IProp {
   displayCloud?: any;

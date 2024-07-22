@@ -1,9 +1,7 @@
 import React, { SetStateAction, useState, Dispatch } from 'react';
-import { BiArrowBack } from 'react-icons/bi';
 import Uibuttons from '../buttons/uibuttons/Uibuttons';
 import { AiOutlineClose } from 'react-icons/ai';
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
-import fetchData from '../../utils/fetchdata';
 import postData from '../../utils/postdata';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

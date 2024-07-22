@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import logo from "../../assets/dummy-profile-pic-300x300-1.png"
 import fetchData from '../../utils/fetchdata'
-import { BsArrowRight } from 'react-icons/bs'
 import AlertDialogSlide from '../modals/Muiconfirmationmodal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 
 
 
-interface iprop {
-    _id?: string,
 
-    name?: string,
-
-    members?: Array<string>,
-
-    teamlead?: string,
-
-    departmentid?: string,
-
-}
 function Viewteamcard({ items, setrefresh, refresh }: any) {
     const [data, setdata] = useState<any[]>([])
     const Authorization = useSelector((state: RootState) => state.userdetails.user.Authorization)

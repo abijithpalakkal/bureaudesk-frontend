@@ -1,6 +1,4 @@
-import Departments from '@/components/maincomponents/Departments'
 import Homesidebar from '@/components/maincomponents/Homesidebar'
-import React from 'react'
 import DashBoard from '@/components/maincomponents/DashBoard'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'

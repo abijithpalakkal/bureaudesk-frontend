@@ -1,12 +1,8 @@
 import Homenavbar from '@/components/maincomponents/Homenavbar'
 import Homesidebar from '@/components/maincomponents/Homesidebar'
-import React from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-const Layout = ({ pages }: {
-  pages?: string
-
-}) => {
+const Layout = () => {
 
   const location = useLocation();
   const pathSegment = location.pathname.split('/').filter(Boolean).pop();

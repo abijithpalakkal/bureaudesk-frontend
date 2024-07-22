@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import progress from "../../assets/progress.png";
-import fetchData from '@/utils/fetchdata';
+import { useEffect, useState } from 'react';
+
 import dummy from "../../assets/dummy-profile-pic-300x300-1.png";
 import Muidropdownfortask from '../dropdown/Muidropdownfortask';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
@@ -18,7 +17,6 @@ interface IPropData {
 const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInfo }: IPropData) => {
     const [selector, setSelector] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [guageValue, setGaugeValue] = useState(0)
     const itemsPerPage = 5;
 
     const totalPages = Math.ceil(data.length / itemsPerPage);

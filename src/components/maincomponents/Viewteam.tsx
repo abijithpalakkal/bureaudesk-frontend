@@ -1,11 +1,6 @@
 
-import { AiOutlinePlus } from 'react-icons/ai'
 import Homenavbar from './Homenavbar'
 import { useEffect, useState } from 'react'
-import Adddepartmentmodal from '../modals/Adddepartmentmodal'
-import Departmentcards from '../cards/Departmentcards'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
 import Viewteamcard from '../cards/Viewteamcard'
 import { useParams } from 'react-router-dom'
 import fetchData from '../../utils/fetchdata'

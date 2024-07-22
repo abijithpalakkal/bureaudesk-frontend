@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
@@ -37,7 +37,7 @@ const Messengeremployees = ({ setDisplayUserCard, refresh, setRefresh,chatUserId
 
     const createChat = async (id: string) => {
         try {
-            const data = await postData("/chat/addchat", {
+            await postData("/chat/addchat", {
                 participants: [userId, id]
             })
             setAddedStatus([...addStatus, id])

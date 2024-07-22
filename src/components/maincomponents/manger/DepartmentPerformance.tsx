@@ -2,7 +2,7 @@
 import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import { BarChart } from '@mui/x-charts'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineUsergroupDelete } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
@@ -19,14 +19,11 @@ const DepartmentPerformance = () => {
     const [totalEmployes, setTotalEmplpoyees] = useState()
     const [totalTask, setTotalTask] = useState()
     const [doneTask, setDoneTask] = useState()
-    const [approvedTask, setApprovedTask] = useState()
     const [submittedTask, setsubmmittedtask] = useState()
     const [rejectedTask, setRejectedTask] = useState([])
     const [yettosubmitt, setyettosubmit] = useState()
     const [latesubmission, setlatesubmission] = useState()
     const companyId = useSelector((state: RootState) => state.companydetails.company._id);
-    const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
-    const userId = useSelector((state: RootState) => state.userdetails.user._id)
     const userDepartment= useSelector((state: RootState) => state.userdetails.user.Departmentid)
 
     useEffect(() => {

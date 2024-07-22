@@ -1,25 +1,20 @@
 import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
-import React, { useEffect, useState } from 'react'
-import { RootOptions } from 'react-dom/client'
+import  { useEffect, useState } from 'react'
 import { AiOutlineUsergroupDelete } from 'react-icons/ai'
-import { UseSelector, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { motion } from 'framer-motion';
 
-interface IProp {
-    type?: string
-}
+
 
 const Performancecard = () => {
 
     const [totalEmployes, setTotalEmplpoyees] = useState()
     const [totalTask, setTotalTask] = useState()
     const [doneTask, setDoneTask] = useState()
-    const [approvedTask, setApprovedTask] = useState()
     const [submittedTask, setsubmmittedtask] = useState()
-    const [yettosubmitt, setyettosubmit] = useState()
+    const [_yettosubmitt, setyettosubmit] = useState()
     const companyId = useSelector((state: RootState) => state.companydetails.company._id);
-    const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
 
     useEffect(() => {
         const getData = async () => {

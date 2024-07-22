@@ -11,7 +11,6 @@ interface Props {
 }
 
 function Editprofilemodal({ modal }: Props) {
-    const [user,setuser]=useState(null as any)
 
     useEffect(()=>{
         async  function fetch(){

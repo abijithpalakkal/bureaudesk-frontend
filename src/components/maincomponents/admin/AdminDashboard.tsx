@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '../../../assets/logo_2-removebg-preview (4).png'
 import fetchData from '@/utils/fetchdata'
 import postData from '@/utils/postdata'
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
     };
 
     const logout=async()=>{
-        const data = await fetchData("/auth/logout")
+         await fetchData("/auth/logout")
         dispatch(userdetailslogout())
         dispatch(usercompanylogout())
         navigate("/")

@@ -1,21 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import Homenavbar from './Homenavbar'
-import { AiOutlineDown, AiOutlinePlus, AiOutlineRight } from 'react-icons/ai'
+import  { useState } from 'react'
+import { AiOutlinePlus } from 'react-icons/ai'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useNavigate } from 'react-router-dom'
-import Departmentsidebar from './Departmentsidebar'
 import Alltask from './Alltask'
 import Taskassignedbyyou from './Taskassignedbyyou'
 import Taskassignedtoyou from './Taskassignedtoyou'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { createContext } from 'react'
-import Tasksubmitmodal from '../modals/Tasksubmitmodal'
 
-interface IProp {
-    apiRefresh: boolean
-    setApiRefresh: Dispatch<SetStateAction<boolean>>;
-}
+
 
 export const AppContext = createContext<any | undefined>(undefined);
 

@@ -1,19 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Taskinfo from '../maincomponents/Taskinfo';
 import Submittedtask from '../maincomponents/Submittedtask';
-import postData from '@/utils/postdata';
 
-
-
-interface Task {
-    deadLine: string;
-    estimate: string;
-}
-interface IProp {
-    apiRefresh: boolean
-    setApiRefresh: Dispatch<SetStateAction<boolean>>;
-}
 
 
 const Taskinfocard = ({ taskInfo }: {

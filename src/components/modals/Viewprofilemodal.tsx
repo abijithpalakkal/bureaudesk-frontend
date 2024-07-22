@@ -1,8 +1,5 @@
-import React, { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import postData from '../../utils/postdata';
+
 import Profilecard from '../cards/Profilecard';
 
 

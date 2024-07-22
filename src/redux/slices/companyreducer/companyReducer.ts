@@ -27,7 +27,7 @@ const useReducer:any = createSlice({
 },
   extraReducers: (builder) => {
     builder
-      .addCase(getCompanyAction.pending, (state, action) => {
+      .addCase(getCompanyAction.pending, (state) => {
         state.loading = true;
         state.message = "Loading";
       })

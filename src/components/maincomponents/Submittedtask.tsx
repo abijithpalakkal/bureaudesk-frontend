@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import addfile from "../../assets/Add Attachments.png"
 import postData from '@/utils/postdata';
 import { useNavigate } from 'react-router-dom';

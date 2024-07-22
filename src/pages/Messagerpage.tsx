@@ -1,6 +1,6 @@
 import Homesidebar from '@/components/maincomponents/Homesidebar'
 import Messenger from '@/components/maincomponents/Messenger'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Zegocloud from '@/components/helpers/Zegocloud'
 import { useLocation } from 'react-router-dom';
 

@@ -1,13 +1,10 @@
-import React from 'react'
 import "./uibtn.css"
-import { useNavigate } from 'react-router-dom'
 
 
 interface Ibtn{
     btnname:string
 }
 function Uibuttons({btnname}:Ibtn) {
-    const naviagate=useNavigate()
     return (
         <button className="animated-button">
         

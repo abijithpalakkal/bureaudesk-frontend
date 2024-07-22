@@ -28,7 +28,7 @@ const Muidropdownfortask = ({ defaults, id, setrefresh, refresh, deadline ,index
   const [displayStatusModal, setDisplayStatusModal] = useState(false)
   const [status, setStatus] = useState<string>("")
   const context = useContext(TaskStatusContext)
-  const { statusDetails, setStatusDetails } = context as any
+  const { setStatusDetails } = context as any
   
 
 

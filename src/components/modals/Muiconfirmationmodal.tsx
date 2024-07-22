@@ -9,7 +9,6 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { BsArrowRight } from 'react-icons/bs';
 import fetchData from '../../utils/fetchdata';
-import { DispatchProp } from 'react-redux';
 import { toast } from 'react-toastify';
 
 interface iprop{

@@ -1,7 +1,7 @@
 import { RootState } from '@/redux/store';
 import postData from '@/utils/postdata';
 import { BarChart } from '@mui/x-charts';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { AiOutlineUsergroupDelete } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
@@ -14,16 +14,14 @@ const PersonalPerformance = () => {
     value: 60,
   };
 
-  const [totalEmployes, setTotalEmplpoyees] = useState<number | null>(null);
+  const [_totalEmployes, setTotalEmplpoyees] = useState<number | null>(null);
   const [totalTask, setTotalTask] = useState<number | null>(null);
   const [doneTask, setDoneTask] = useState<number | null>(null);
-  const [approvedTask, setApprovedTask] = useState<number | null>(null);
   const [submittedTask, setsubmmittedtask] = useState<number | null>(null);
   const [rejectedTask, setRejectedTask] = useState<number | null>(null);
   const [yettosubmitt, setyettosubmit] = useState<number | null>(null);
   const [latesubmission, setlatesubmission] = useState<number | null>(null);
   const companyId = useSelector((state: RootState) => state.companydetails.company._id);
-  const role = useSelector((state: RootState) => state.userdetails.user.Authorization);
 
   const { id } = useParams();
   const userId = id || useSelector((state: RootState) => state.userdetails.user._id);

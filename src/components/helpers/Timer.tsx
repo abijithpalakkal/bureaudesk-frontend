@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AppDispatch } from '../../redux/store';
 
 interface IProp {
     minutes: number

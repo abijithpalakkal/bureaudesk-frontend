@@ -1,4 +1,3 @@
-import React from 'react'
 import Homenavbar from '../Homenavbar'
 import Nearestcomponent from '../../cards/Nearestcomponent'
 import Activitystream from '../../cards/Activitystream'

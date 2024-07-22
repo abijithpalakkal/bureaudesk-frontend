@@ -1,24 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import Homenavbar from './Homenavbar'
-import { AiFillFileAdd, AiOutlineClose, AiOutlinePlus, AiOutlineSearch, AiOutlineSend } from 'react-icons/ai'
-import { BsCameraVideo, BsFilePlus, BsPlusSquareFill } from 'react-icons/bs'
+import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai'
+import { BsCameraVideo } from 'react-icons/bs'
 import { BiSend } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import Messengeremployees from '../cards/Messengeremployees'
 import postData from '@/utils/postdata'
 import fetchData from '@/utils/fetchdata'
 import { toast } from 'react-toastify'
 import addfile from "../../assets/attach.png"
 import companylogo from "../../assets/logo_2-removebg-preview (4).png"
-import { Socket } from 'socket.io-client'
 import { useSocketContext } from "../../context/SocketContext"
 import { format, toZonedTime } from 'date-fns-tz';
 
 
 
-const Messenger = ({ setZeegooCloud, url, setData }: any) => {
+const Messenger = ({ setZeegooCloud, setData }: any) => {
     const user = useSelector((state: RootState) => state.userdetails.user)
     const [displayUserCard, setDisplayUserCard] = useState(false)
     const [availableChat, setAvailableChat] = useState<any>([])
@@ -30,7 +28,6 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
     const [marker, setMarker] = useState("")
     const { socket } = useSocketContext()
     const [chatId, setChatId] = useState("");
-    const [receivedChat, setReceivedChat] = useState("")
     const [chatMessages, setChatMessages] = useState<any | null>(null)
     const messagesEndRef = useRef<any>(null)
     const { onlineUsers } = useSocketContext()
@@ -152,29 +149,10 @@ const Messenger = ({ setZeegooCloud, url, setData }: any) => {
 
     }
 
-    function formatTime(isoString: string) {
-        const date = new Date(isoString);
+   
 
-        let hours = date.getUTCHours(); // Get the hours in UTC
-        const minutes = date.getUTCMinutes();
 
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // The hour '0' should be '12'
 
-        const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-        return `${hours}:${minutesStr} ${ampm}`;
-    }
-
-    const testDates = [
-        "2024-06-06T00:00:00.000Z", // 12:00 AM
-        "2024-06-06T13:18:37.848Z", // 1:18 PM
-        "2024-06-06T23:59:59.999Z", // 11:59 PM
-        "2024-06-06T11:59:59.999Z", // 11:59 AM
-    ];
-
-    testDates.forEach(date => {
-    });
 
     const handleVideoCall = () => {
         if (onlineUsers.includes(userId)) {

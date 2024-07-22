@@ -1,11 +1,9 @@
 import { RootState } from '@/redux/store';
-import React from 'react'
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { SOCKET_URL } from "../config/constant";
 import io from "socket.io-client"
 import hotToast from 'react-hot-toast';
-import { BsFillPhoneLandscapeFill } from 'react-icons/bs';
 import { BiPhoneCall } from 'react-icons/bi';
 
 
@@ -58,7 +56,7 @@ const SocketContext = ({ children }: any) => {
             newSocket.on('incomingCall', (data: any) => {
 
                 hotToast(
-                    (t) => (<div className='bg-green-100 h-10 flex justify-center items-center rounded-md gap-3'>
+                    (_t) => (<div className='bg-green-100 h-10 flex justify-center items-center rounded-md gap-3'>
                         <BiPhoneCall className='h-8 w-8 text-green-500 ' />
                         <p className='font-medium'>   from {data?.userName}</p>
                         <p className='text-blue-500'><a href={data?.url}>join now</a></p>

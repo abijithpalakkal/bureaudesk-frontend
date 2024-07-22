@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
 import { AiFillClockCircle, AiOutlineRight } from 'react-icons/ai'
 import { ImArrowUp2 } from 'react-icons/im'
-import fetchData from '../../utils/fetchdata'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import { string } from 'yup'
 import postData from '@/utils/postdata'
 import duumyimage from "../../assets/no-event-bg.png"
-import { dividerClasses } from '@mui/material'
 import { toast } from 'react-toastify'
 
 

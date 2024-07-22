@@ -1,10 +1,8 @@
 import fetchData from '@/utils/fetchdata';
-import React, { useEffect, useState } from 'react'
-import { GrAttachment } from 'react-icons/gr';
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import progress from "../../assets/progress.png"
 import { AiFillCalendar } from 'react-icons/ai';
-import updateData from '@/utils/updatedata';
 import { toast } from 'react-toastify';
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
@@ -129,7 +127,7 @@ const ProjectDetails = () => {
                     <p className='font-semibold text-xl'>task attachments({project[0]?.attachments.length})</p>
                     {project[0]?.attachments && <div className='grid grid-cols-5'>
 
-                        {project[0]?.attachments.map((obj: string, index: number) => (<div className='flex justify-start items-center mt-1 '>
+                        {project[0]?.attachments.map((obj: string) => (<div className='flex justify-start items-center mt-1 '>
                             <a
                                 href={obj}
                                 target="_blank"
