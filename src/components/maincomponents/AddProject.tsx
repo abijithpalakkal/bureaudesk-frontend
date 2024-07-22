@@ -18,7 +18,6 @@ const AddProject = () => {
     const [populatedData, setPopulatedData] = useState<any>(null);
     const [attachments, setAttachments] = useState<any>([]); // State to hold selected files with name and URL
     const [fileInputKey, setFileInputKey] = useState<number>(0); // Key to reset file input
-    const [showAttachments,setShowAttachments] = useState<any>([]) 
 
 
     const companyid = useSelector((state: any) => state?.companydetails?.company._id);
@@ -85,7 +84,7 @@ const AddProject = () => {
         }
 
        if(teamId!=""){
-        let { data } = await postData("/company/addproject", {
+        await postData("/company/addproject", {
             projectName: projectName,
             projectDescription: projectDescription,
             priority: priority,
@@ -95,7 +94,7 @@ const AddProject = () => {
             teamId
         })
        }else{
-        let { data } = await postData("/company/addproject", {
+       await postData("/company/addproject", {
             projectName: projectName,
             projectDescription: projectDescription,
             priority: priority,

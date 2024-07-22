@@ -14,10 +14,9 @@ const SubmitTaskStatus = ({ setDisplayStatusModal, status,id ,refresh,setrefresh
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
-    const [cloudfiles, setcloudfiles] = useState<string[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null);
     const context = useContext(TaskStatusContext)
-  const { statusDetails, setStatusDetails } = context as any
+  const { setStatusDetails } = context as any
 
 
     const handleSubmit = async (e: any) => {

@@ -1,13 +1,11 @@
 
-import { AiFillClockCircle, AiOutlinePlus, AiOutlineRight } from 'react-icons/ai'
+import { AiOutlinePlus, } from 'react-icons/ai'
 import Homenavbar from './Homenavbar'
 import { useState } from 'react'
 import Adddepartmentmodal from '../modals/Adddepartmentmodal'
 import Departmentcards from '../cards/Departmentcards'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import { BsFileArrowUp } from 'react-icons/bs'
-import { ImArrowUp2 } from 'react-icons/im'
 import Nearestcomponent from '../cards/Nearestcomponent'
 import Activitystream from '../cards/Activitystream'
 

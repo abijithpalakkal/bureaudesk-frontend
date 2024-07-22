@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
-import Departmentcards from '../cards/Departmentcards'
 import Nearestcomponent from '../cards/Nearestcomponent'
 import Activitystream from '../cards/Activitystream'
 import Performancecard from '../cards/Performancecard'
@@ -9,7 +8,6 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import postData from '@/utils/postdata'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { LineChart } from '@mui/x-charts/LineChart';
 import { motion } from 'framer-motion';
 
 
@@ -19,10 +17,10 @@ const DashBoard = () => {
 
 
 
-  const [totalEmployes, setTotalEmplpoyees] = useState()
+  const [_totalEmployes, setTotalEmplpoyees] = useState()
   const [totalTask, setTotalTask] = useState()
   const [doneTask, setDoneTask] = useState()
-  const [approvedTask, setApprovedTask] = useState()
+  const [approvedTask, _setApprovedTask] = useState()
   const [submittedTask, setsubmmittedtask] = useState()
   const [yettosubmitt, setyettosubmit] = useState()
   const [rejectedTask, setRejectedTask] = useState()

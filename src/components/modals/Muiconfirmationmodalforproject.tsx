@@ -7,9 +7,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { BsArrowRight } from 'react-icons/bs';
-import fetchData from '../../utils/fetchdata';
-import { DispatchProp } from 'react-redux';
 import { toast } from 'react-toastify';
 import updateData from '@/utils/updatedata';
 

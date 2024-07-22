@@ -1,6 +1,6 @@
 import { RootState } from '@/redux/store'
 import fetchData from '@/utils/fetchdata'
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import Employeetaskcard from '../cards/Employeetaskcard'
@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 const ViewProjects = () => {
     const [project, setProject] = useState<any>([])
     const companyId = useSelector((state: RootState) => state.companydetails.company._id)
-    const [projectId, setProjectId] = useState("")
     const [taskdata, settaskdata] = useState([])
     const [taskInfoData, setTaskInfoData] = useState(null)
     const [style, setstyle] = useState(0)

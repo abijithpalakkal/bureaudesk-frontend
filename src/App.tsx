@@ -13,7 +13,6 @@ import { Navigate } from "react-router-dom"
 import Listemployeepage from "./pages/Listemployeepage"
 import Viewprofilepage from "./pages/Viewprofilepage"
 import Viewteampage from "./pages/Viewteampage"
-import Post from "./context/Conteststore"
 import ErrorPage from "./pages/Errorpage404"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +29,6 @@ import ProjectDetails from "./components/maincomponents/ProjectDetails"
 import TaskDetails from "./components/maincomponents/TaskDetails"
 import PerformacePage from "./pages/PerformacePage"
 import AdminDashboard from "./components/maincomponents/admin/AdminDashboard"
-import { useNavigate } from "react-router-dom"
 
 
 function App() {

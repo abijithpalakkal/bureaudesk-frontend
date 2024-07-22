@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import { useDispatch, useSelector } from 'react-redux'

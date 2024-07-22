@@ -1,16 +1,14 @@
 import { RootState } from '@/redux/store'
 import fetchData from '@/utils/fetchdata'
-import { log } from 'console'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 
 const Departmentsidebar = ({ setdpt }: { setdpt: any }) => {
     const [dptdata, setdptdata] = useState<any>([])
-    const [loading, setloading] = useState(true)
+    const [_loading, setloading] = useState(true)
     const [style, setstyle] = useState(0)
     const company = useSelector((state: RootState) => state.companydetails.company)
-    const Authorization = useSelector((state: RootState) => state.userdetails.user.Authorization)
     const companyId = useSelector((state: RootState) => state.companydetails.company._id)
 
 

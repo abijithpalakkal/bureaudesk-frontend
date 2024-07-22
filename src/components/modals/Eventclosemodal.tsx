@@ -1,5 +1,4 @@
 import fetchData from '@/utils/fetchdata'
-import React, { useEffect } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 
 interface iCloseProp{

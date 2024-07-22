@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import Departmentsidebar from './Departmentsidebar'
 import Employeetaskcard from '../cards/Employeetaskcard'
 import postData from '@/utils/postdata'
@@ -10,12 +10,8 @@ import { toast } from 'react-toastify'
 import EmployeeCardSkeleton from '../skeleton/EmployeeCardSkeleton'
 import Dropdown from '@mui/joy/Dropdown'
 import { Menu, MenuButton, MenuItem } from '@mui/base'
-import { AiFillCaretDown, AiFillFilter } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
-import { FcClearFilters } from 'react-icons/fc'
-import { setPriority } from 'os'
-import { RootState } from '@/redux/store'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Player } from "@lottiefiles/react-lottie-player";
@@ -43,7 +39,7 @@ const Alltask = () => {
     
 
     const context = useContext(AppContext);
-    const { apiRefresh, setApiRefresh } = context;
+    const { apiRefresh } = context;
     const debouncedTimeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(()=>{
@@ -235,7 +231,7 @@ const Alltask = () => {
                                 </MenuItem>
 
 
-                                {companyEmployees?.map((obj: any, index: number) => (
+                                {companyEmployees?.map((obj: any) => (
                                     <MenuItem>
                                         <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setAssignedBy(obj.Name ? obj.Name : "select"); addFilter({ assignedBy: obj._id }) }}>
                                             <p className='  rounded-lg'>{obj.Name ? obj.Name : obj.email}</p>
@@ -265,7 +261,7 @@ const Alltask = () => {
                                     </div>
                                 </MenuItem>
 
-                                {companyEmployees?.map((obj: any, index: number) => (
+                                {companyEmployees?.map((obj: any) => (
                                     <MenuItem>
                                         <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setAssignedTo(obj.Name ? obj.Name : "select"); addFilter({ assignedTo: obj._id }) }}>
                                             <p className='  rounded-lg'>{obj.Name ? obj.Name : obj.email}</p>

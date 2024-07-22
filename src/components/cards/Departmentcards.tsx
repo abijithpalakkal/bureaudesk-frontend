@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import fetchData from '../../utils/fetchdata'
 import { CircularProgress } from '@mui/material'
-import { AiOutlinePlus } from 'react-icons/ai'
 import Addemployees from '../modals/Addemployees'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
@@ -11,18 +10,7 @@ import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { BiEdit } from 'react-icons/bi'
 import { Player } from "@lottiefiles/react-lottie-player";
 
-interface iDepartment {
-    _id?: string,
-    Name?: string
-    companyid?: string
-    departmentlogo?: string
 
-}
-interface MyObjectType {
-    managerName: string;
-    mangerImage: string;
-    // Add other properties as needed
-};
 function Departmentcards() {
     const navigate = useNavigate()
     const [dptdata, setdptdata] = useState<any>([])

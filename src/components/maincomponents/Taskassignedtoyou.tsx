@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import Employeetaskcard from '../cards/Employeetaskcard'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -20,7 +20,6 @@ import { TaskStatusContext } from "../../context/TaskStatusContext.tsx";
 const Taskassignedtoyou = () => {
   const companyid = useSelector((state: RootState) => state.companydetails.company._id)
   const userid = useSelector((state: RootState) => state.userdetails.user._id)
-  const role = useSelector((state: RootState) => state.userdetails.user.Authorization)
 
   const [taskdata, settaskdata] = useState([])
   const [taskInfoData, setTaskInfoData] = useState(null)
@@ -28,7 +27,6 @@ const Taskassignedtoyou = () => {
   const [skeleton, setskeleton] = useState(false)
   const [filterObj, setFilterObj] = useState<any>({})
   const [assignedBy, setAssignedBy] = useState("select")
-  const [assignedTo, setAssignedTo] = useState("select")
   const [priority, setPriority] = useState<any>("select")
   const [status, setStatus] = useState("select")
   const [query, setQuery] = useState("")
@@ -43,7 +41,7 @@ const Taskassignedtoyou = () => {
 
 
   const context = useContext(AppContext);
-  const { apiRefresh, setApiRefresh } = context;
+  const { apiRefresh } = context;
   useEffect(() => {
     if (statusDetails) {
       console.log(statusDetails, 789)
@@ -216,7 +214,7 @@ const Taskassignedtoyou = () => {
                 </MenuItem>
 
 
-                {companyEmployees?.map((obj: any, index: number) => (
+                {companyEmployees?.map((obj: any) => (
                   <MenuItem>
                     <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setAssignedBy(obj.Name ? obj.Name : "select"); addFilter({ assignedBy: obj._id }) }}>
                       <p className='  rounded-lg'>{obj.Name ? obj.Name : obj.email}</p>

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
-import { ImCross } from 'react-icons/im'
 import Createcompanymodal from '../modals/Createcompanymodal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { AiFillCalendar } from 'react-icons/ai'
 import { Player } from "@lottiefiles/react-lottie-player";
-import * as Yup from 'yup';
 import logo from "../../assets/dummy-profile-pic-300x300-1.png"
 import postData from '@/utils/postdata'
 
@@ -19,7 +17,6 @@ function Company() {
     const [rootNodeData, setRootNodeData] = useState(null as any)
     const company = useSelector((state: RootState) => state.companydetails?.company?._id)
     const companydetails1 = useSelector((state: RootState) => state.companydetails?.company)
-    const email = useSelector((state: RootState) => state.userdetails.user.email)
 
 
     function formatDateString(dateString: any) {
@@ -36,25 +33,10 @@ function Company() {
         }
     }, [company])
 
-    const validationSchemaOtp = Yup.object({
-        otp: Yup.string()
-            .length(4, 'OTP must be exactly 4 digits')
-            .matches(/^[0-9]+$/, 'OTP must be numeric')
-            .required('OTP is required')
-    });
+  
 
 
-    const validationSchema = Yup.object().shape({
-        currentPassword: Yup.string().required('Current password is required'),
-        newPassword: Yup.string()
-            .required('New password is required')
-            .min(8, 'New password must be at least 8 characters long')
-            .matches(/[a-zA-Z]/, 'New password must contain at least one letter')
-            .matches(/\d/, 'New password must contain at least one number'),
-        confirmPassword: Yup.string()
-            .required('Confirm password is required')
-            .oneOf([Yup.ref('newPassword') as unknown as string, ''], 'Confirm password must match the new password'),
-    });
+ 
 
     useEffect(() => {
         const getRootData = async () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 import Employeetaskcard from '../cards/Employeetaskcard'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
@@ -26,7 +26,6 @@ const Taskassignedbyyou = () => {
     const [skeleton, setskeleton] = useState(false)
     const [refresh, setrefresh] = useState(true)
     const [filterObj, setFilterObj] = useState<any>({})
-    const [assignedBy, setAssignedBy] = useState("select")
     const [assignedTo, setAssignedTo] = useState("select")
     const [priority, setPriority] = useState<any>("select")
     const [status, setStatus] = useState("select")
@@ -36,7 +35,7 @@ const Taskassignedbyyou = () => {
     const [companyEmployees, setCompanyEmployees] = useState<any>(null)
     const statuscontext = useContext(TaskStatusContext);
     const context = useContext(AppContext);
-    const { apiRefresh, setApiRefresh } = context;
+    const { apiRefresh } = context;
     const { statusDetails, setStatusDetails } = statuscontext as any
     const debouncedTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -219,7 +218,7 @@ const Taskassignedbyyou = () => {
                                     </div>
                                 </MenuItem>
 
-                                {companyEmployees?.map((obj: any, index: number) => (
+                                {companyEmployees?.map((obj: any) => (
                                     <MenuItem>
                                         <div className='px-2 border border-black mb-1 rounded-lg hover:bg-green-300' onClick={() => { setAssignedTo(obj.Name ? obj.Name : "select"); addFilter({ assignedTo: obj._id }) }}>
                                             <p className='  rounded-lg'>{obj.Name ? obj.Name : obj.email}</p>

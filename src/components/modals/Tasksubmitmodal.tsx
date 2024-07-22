@@ -1,4 +1,4 @@
-import React, { SetStateAction, useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import { AiOutlineClose } from 'react-icons/ai'
 import addlink from "../../assets/Add Link.png"
@@ -6,7 +6,6 @@ import addfile from "../../assets/Add Attachments.png"
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { toast } from 'react-toastify'
 import postData from '@/utils/postdata'
-import { TaskStatusContext } from '@/context/TaskStatusContext';
 
 
 interface IProp {
@@ -18,12 +17,11 @@ interface IProp {
     index?:any
 }
 
-const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline,index}: IProp) => {
+const Tasksubmitmodal = ({ setdisplayModal,id,handleSelect,deadline}: IProp) => {
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-    const [cloudfiles, setcloudfiles] = useState<string[]>([])
-    const context = useContext(TaskStatusContext)
+    const [_cloudfiles, setcloudfiles] = useState<string[]>([])
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -120,9 +118,7 @@ const Tasksubmitmodal = ({ display, setdisplayModal,id,handleSelect,deadline,ind
             await postData("/company/submittask",
                data
             )
-            const deadlone=deadline
-            const currentdate= new Date()
-
+           
             checkAndUpdateTask(id,deadline)
         } catch (err: any) {
             toast.error(err?.message)

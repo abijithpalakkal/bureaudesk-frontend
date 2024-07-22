@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { BiArrowBack } from 'react-icons/bi'
 import logo from "../../assets/logo_without_writing-removebg-preview.png"
 import { AiOutlineClose } from 'react-icons/ai'
 import addlink from "../../assets/Add Link.png"
@@ -28,8 +27,7 @@ const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
     const [TaskTime, setTaskTime] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [visible, setVisible] = useState(false);
-    const [cloudfiles, setcloudfiles] = useState<string[]>([])
+    const [_cloudfiles, setcloudfiles] = useState<string[]>([])
 
     
     useEffect(()=>{

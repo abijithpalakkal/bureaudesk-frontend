@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import Homenavbar from './Homenavbar'
 import Departmentsidebar from './Departmentsidebar'
 import Listemployeecard from '../cards/Listemployeecard'
-import fetchData from '@/utils/fetchdata'
 import postData from '@/utils/postdata'
 import { toast } from 'react-toastify';
-import { BiArrowBack } from 'react-icons/bi'
 import { RiArrowGoBackLine } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
-import Addtaskmodal from '../modals/Addtaskmodal'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 const Assigntask = () => {
