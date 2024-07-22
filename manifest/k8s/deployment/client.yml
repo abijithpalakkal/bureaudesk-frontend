@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bureaudesk-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bureaudesk-client
+  template:
+    metadata:
+      labels:
+        app: bureaudesk-client
+    spec:
+      containers:
+      - name: bureaudesk-client
+        image: abhijithunni/bureaudesk-frontend:latest
+        envFrom:
+        - configMapRef:
+            name: client-config 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bureaudesk-client
+spec:
+  selector:
+    app: bureaudesk-client
+  ports:
+  - protocol: TCP
+    port: 5173
+    targetPort: 5173
+      
