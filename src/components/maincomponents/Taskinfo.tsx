@@ -6,11 +6,9 @@ import { AiFillCalendar } from 'react-icons/ai'
 import editicon from "../../assets/edit icon.png"
 import Edittaskmodal from '../modals/Edittaskmodal'
 import { useNavigate } from 'react-router-dom'
+import { Task } from '@/interface/taskinfo'
 
-interface Task {
-    deadLine: string;
-    estimate: string;
-}
+
 
 
 const Taskinfo = ({ taskInfo }: {

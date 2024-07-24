@@ -2,14 +2,8 @@ import  { useEffect, useState } from 'react'
 import addfile from "../../assets/Add Attachments.png"
 import postData from '@/utils/postdata';
 import { useNavigate } from 'react-router-dom';
+import { TaskInfo } from '@/interface/submittedtask';
 
-interface TaskInfo {
-    _id: string;
-    taskId: string;
-    taskNote: string;
-    taskFile: string;
-    __v: number;
-}
 
 
 

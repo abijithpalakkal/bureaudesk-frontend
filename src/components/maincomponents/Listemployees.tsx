@@ -11,11 +11,10 @@ import { RootState } from '../../redux/store'
 import Nearestcomponent from '../cards/Nearestcomponent'
 import Activitystream from '../cards/Activitystream'
 import { Player } from "@lottiefiles/react-lottie-player";
+import { iprop } from '@/interface/listemployees'
 
 
-interface iprop {
-    department: string
-}
+
 function Listemployees({ department }: iprop) {
 
     const navigate = useNavigate()

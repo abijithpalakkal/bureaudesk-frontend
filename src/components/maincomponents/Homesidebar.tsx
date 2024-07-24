@@ -16,14 +16,12 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { useSocketContext } from "../../context/SocketContext";
 import { useEffect } from 'react'
+import { HomesidebarProps } from '@/interface/homesidebar'
 
 
 
 
 
-interface HomesidebarProps {
-    page?: string;
-}
 
 function Homesidebar(props: HomesidebarProps) {
 

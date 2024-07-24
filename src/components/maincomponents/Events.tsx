@@ -9,20 +9,9 @@ import Activitystream from '../cards/Activitystream'
 import postData from '@/utils/postdata'
 import { Player } from "@lottiefiles/react-lottie-player";
 import { toast } from 'react-toastify'
+import { IEvents } from '@/interface/event'
 
-interface IEvents {
-    _id?: string;
-    eventName?: string;
-    eventCategory?: string;
-    priority?: string;
-    eventDate?: string;
-    eventTime?: string;
-    eventDescription?: string;
-    companyid?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    __v?: number;
-}
+
 
 function Events() {
     const companyid = useSelector((state: RootState) => state.companydetails.company._id)

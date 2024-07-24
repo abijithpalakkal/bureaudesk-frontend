@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import dummy from "../../assets/dummy-profile-pic-300x300-1.png";
 import Muidropdownfortask from '../dropdown/Muidropdownfortask';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import Muidropdownforapprove from '../dropdown/Muidropdownforapprove';
+import { IPropData } from '@/interface/employeeTaskCard';
 
-interface IPropData {
-    data?: any[];
-    assigned?: string;
-    refresh?: boolean;
-    setrefresh?: any;
-    getTaskInfo?: any;
-}
+
 
 const Employeetaskcard = ({ data = [], assigned, refresh, setrefresh, getTaskInfo }: IPropData) => {
     const [selector, setSelector] = useState("");

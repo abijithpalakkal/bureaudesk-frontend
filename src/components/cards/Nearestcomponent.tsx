@@ -6,27 +6,10 @@ import { RootState } from '../../redux/store'
 import postData from '@/utils/postdata'
 import duumyimage from "../../assets/no-event-bg.png"
 import { toast } from 'react-toastify'
+import { IEvents, iprop } from '@/interface/nearestComponent'
 
 
-interface IEvents {
-  _id?: string;
-  eventName?: string;
-  eventCategory?: string;
-  priority?: string;
-  eventDate?: string;
-  eventEndDate?: string;
-  eventTime?: string;
-  eventEndTime?: string;
-  eventDescription?: string;
-  companyid?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  __v?: number;
-}
 
-interface iprop {
-  val: any
-}
 
 function Nearestcomponent({ val }: iprop) {
   const companyid = useSelector((state: RootState) => state.companydetails.company._id)

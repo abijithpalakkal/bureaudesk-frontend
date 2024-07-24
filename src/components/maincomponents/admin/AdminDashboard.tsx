@@ -7,15 +7,12 @@ import { AppDispatch } from '../../../redux/store'
 import { useNavigate } from 'react-router-dom'
 import { userdetailslogout } from '../../../redux/slices/userreducer/userReducer'
 import { usercompanylogout } from '../../../redux/slices/companyreducer/companyReducer'
+import { Company } from '@/interface/adminDashBoard'
 
 
 
 
-interface Company {
-    _id: string;
-    name: string;
-    // Add more fields as needed
-}
+
 
 
 

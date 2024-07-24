@@ -11,12 +11,11 @@ import postData from '@/utils/postdata';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import updateData from '@/utils/updatedata';
 import { toast } from 'react-toastify';
+import { iprop } from '@/interface/viewprofile';
 
 
 
-interface iprop {
-  id: string
-}
+
 
 function Viewprofile({ id }: iprop) {
   const email = useSelector((state: RootState) => state.userdetails.user.email)
