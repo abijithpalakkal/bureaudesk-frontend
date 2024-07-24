@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { getCompanyAction } from '../../redux/actions/useractions/getCompanyAction';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material'
+import { baseUrl } from '../../config/constant';
 
 interface Props {
     modalstatus: Dispatch<SetStateAction<boolean>>;
@@ -30,7 +31,7 @@ function Createcompanymodal({ modalstatus }: Props) {
             body: formData
         });
         const url = await response.json()
-        await axios.post("http://localhost:8000/company/createcompany", {
+        await axios.post(`${baseUrl}/company/createcompany`, {
             Name: companyName,
             Companylogo: url.secure_url,
             Bussinesstype: businessType,

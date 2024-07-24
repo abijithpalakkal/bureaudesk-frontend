@@ -29,17 +29,7 @@ function Adddepartmentmodal({ modalstatus }: Props) {
       departmentlogo: url.secure_url,
       companyid
     })
-    /*await axios.post("http://localhost:8000/company/createdepartment", {
-      Name: departName,
-      departmentlogo: url.secure_url,
-      companyid
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-
-    })*/
+ 
     modalstatus(false)
 
   }

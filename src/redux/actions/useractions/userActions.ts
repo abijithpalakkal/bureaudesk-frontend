@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { handleErrors } from "../../../utils/handleErrors";
 import fetchData from "../../../utils/fetchdata";
+import {baseUrl} from "../../../config/constant"
 
 interface IProps {
     otp?: string;
@@ -13,7 +14,7 @@ export const userSignupAction = createAsyncThunk(
     "user/usersignup",
     async (usercredential: IProps, { rejectWithValue }) => {
         try {
-            const response = await axios.post('http://localhost:8000/auth/otpsignup', {
+            const response = await axios.post(`${baseUrl}/auth/otpsignup`, {
                 ...usercredential
             }, {
                 headers: {
@@ -40,7 +41,7 @@ export const userLoginAction = createAsyncThunk(
     "user/userlogin",
     async (usercredential: IProps, { rejectWithValue }) => {
         try {
-            const response = await axios.post("http://localhost:8000/auth/login", usercredential, {
+            const response = await axios.post(`${baseUrl}/auth/login`, usercredential, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -50,7 +51,7 @@ export const userLoginAction = createAsyncThunk(
             if (response.data.errorResponse) {
                 throw new Error(response.data.errorResponse.message)
             } else {
-                const response1 = await axios.post("http://localhost:8000/user/getuserdetailsforlogin", { id: response.data._id }, {
+                const response1 = await axios.post(`${baseUrl}/user/getuserdetailsforlogin`, { id: response.data._id }, {
                     headers: {
                         "Content-Type": "application/json",
                     },

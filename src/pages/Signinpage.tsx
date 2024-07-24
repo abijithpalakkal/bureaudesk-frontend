@@ -15,6 +15,7 @@ import { CircularProgress } from '@mui/material'
 import Timer from "../components/helpers/Timer"
 import postData from '../utils/postdata'
 import { toast } from 'react-toastify';
+import { baseUrl } from '../config/constant'
 
 
 
@@ -60,7 +61,7 @@ const signinpage = () => {
         }),
         onSubmit: async (values) => {
         
-            axios.post('http://localhost:8000/auth/otpsignup', {
+            axios.post(`${baseUrl}/auth/otpsignup`, {
                 // Request body/data
                 email: values.email,
             }).then((data) => {
