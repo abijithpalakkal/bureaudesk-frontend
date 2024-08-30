@@ -6,16 +6,12 @@ import postData from '../../utils/postdata';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toast } from 'react-toastify';
+import { editeventmodalIProp } from '@/interface/generic';
 
 
-interface IProp {
-    closemodal: Dispatch<SetStateAction<boolean>>;
-    id?:string
-    refresh?:any
-    val?:Boolean
-}
 
-function Editeventsmodal({ closemodal,id,refresh,val}: IProp) {
+
+function Editeventsmodal({ closemodal,id,refresh,val}: editeventmodalIProp) {
     const companyid = useSelector((state: RootState) => state.companydetails.company._id)
     const [eventName, setEventName] = useState('');
     const [eventCategory, setEventCategory] = useState('');

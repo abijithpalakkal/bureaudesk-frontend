@@ -1,14 +1,10 @@
 import fetchData from '@/utils/fetchdata'
 import { BiArrowBack } from 'react-icons/bi'
+import { eventclosemodaliCloseProp } from '@/interface/generic'
 
-interface iCloseProp{
-    closemodal:any
-    refresh:any
-    val:any
-    id:string
-}
 
-const Eventclosemodal = ({closemodal,refresh,val,id}:iCloseProp) => {
+
+const Eventclosemodal = ({closemodal,refresh,val,id}:eventclosemodaliCloseProp) => {
    
         const deletedata=async ()=>{
             await fetchData(`/company/deleteevent/${id}`)

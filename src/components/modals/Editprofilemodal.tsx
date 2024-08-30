@@ -6,11 +6,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Dispatch } from '@reduxjs/toolkit';
 import fetchData from '../../utils/fetchdata';
-interface Props {
-    modal: Dispatch<SetStateAction<any>>;
-}
+import { editprofilemodalProps } from '@/interface/generic';
 
-function Editprofilemodal({ modal }: Props) {
+
+function Editprofilemodal({ modal }: editprofilemodalProps) {
 
     useEffect(()=>{
         async  function fetch(){

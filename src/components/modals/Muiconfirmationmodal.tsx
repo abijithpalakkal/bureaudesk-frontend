@@ -10,12 +10,9 @@ import { TransitionProps } from '@mui/material/transitions';
 import { BsArrowRight } from 'react-icons/bs';
 import fetchData from '../../utils/fetchdata';
 import { toast } from 'react-toastify';
+import { muiconfirmationmodaliprop } from '@/interface/generic';
 
-interface iprop{
-    id?:string
-    refresh?:boolean
-    setrefresh?:any
-}
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide({id,refresh,setrefresh}:iprop) {
+export default function AlertDialogSlide({id,refresh,setrefresh}:muiconfirmationmodaliprop) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

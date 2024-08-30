@@ -7,12 +7,10 @@ import { getCompanyAction } from '../../redux/actions/useractions/getCompanyActi
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material'
 import { baseUrl } from '../../config/constant';
+import { createcompanymodalProps } from '@/interface/generic';
 
-interface Props {
-    modalstatus: Dispatch<SetStateAction<boolean>>;
-};
 
-function Createcompanymodal({ modalstatus }: Props) {
+function Createcompanymodal({ modalstatus }: createcompanymodalProps) {
     const [companyName, setCompanyName] = useState('');
     const [logo, setLogo] = useState("");
     const [businessType, setBusinessType] = useState('');

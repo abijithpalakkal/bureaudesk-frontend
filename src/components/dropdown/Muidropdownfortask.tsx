@@ -9,18 +9,12 @@ import { toast } from 'react-toastify';
 import Tasksubmitmodal from '../modals/Tasksubmitmodal';
 import SubmitTaskStatus from '../modals/SubmitTaskStatus';
 import { TaskStatusContext } from '@/context/TaskStatusContext';
+import { IProp } from '@/interface/muidropdownfortask';
 
 
 
 
-interface IProp {
-  defaults?: string
-  id?: string
-  refresh?: boolean
-  setrefresh?: any
-  deadline?: any
-  index?:any
-}
+
 
 const Muidropdownfortask = ({ defaults, id, setrefresh, refresh, deadline ,index}: IProp) => {
 

@@ -5,4 +5,4 @@ metadata:
   labels:
     app: bureaudesk-client
 data:
-  VITE_REACT_APP_SOCKET_URL: "http://localhost:3005"
+  VITE_REACT_APP_SOCKET_URL: "https://bureaudesk.futstore.me"

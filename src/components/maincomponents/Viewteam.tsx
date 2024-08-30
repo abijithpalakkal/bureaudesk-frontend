@@ -5,20 +5,9 @@ import Viewteamcard from '../cards/Viewteamcard'
 import { useParams } from 'react-router-dom'
 import fetchData from '../../utils/fetchdata'
 import { useNavigate } from 'react-router-dom'
+import { iprop } from '@/interface/viewteam'
 
-interface iprop{
 
-    _id?:string,
-    
-    name?:string,
-    
-    members?:Array<string>,
-   
-    teamlead?:string,
-   
-    departmentid?:string,
-   
-}
 
 function Viewteam() {
     const navigate=useNavigate()

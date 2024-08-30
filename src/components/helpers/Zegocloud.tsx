@@ -2,12 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useNavigate } from 'react-router-dom';
 import { useSocketContext } from "../../context/SocketContext"
+import { IProp } from '@/interface/zegocloud';
 
-interface IProp {
-  displayCloud?: any;
-  seturl:any
-  data:any
-}
+
 
 const randomID = (len: number): string => {
   let result = '';

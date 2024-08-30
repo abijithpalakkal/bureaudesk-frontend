@@ -8,14 +8,11 @@ import postData from '@/utils/postdata'
 import { toast } from 'react-toastify'
 import { useContext } from 'react'
 import { AppContext } from '../maincomponents/Project'
+import { edittaskmodalIProp } from '@/interface/generic'
 
-interface IProp {
-    displayModal?:boolean
-    setDisplayModal: Dispatch<SetStateAction<boolean>>
-    taskInfo:any
-}
 
-const Edittaskmodal = ({setDisplayModal,taskInfo}:IProp) => {
+
+const Edittaskmodal = ({setDisplayModal,taskInfo}:edittaskmodalIProp) => {
     const context = useContext(AppContext);
     const { apiRefresh, setApiRefresh } = context;
 

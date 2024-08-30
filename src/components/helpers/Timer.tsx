@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { IProp } from '@/interface/timer';
 
-interface IProp {
-    minutes: number
-    setMinutes: React.Dispatch<React.SetStateAction<number>>;
-    seconds: number
-    setSeconds: React.Dispatch<React.SetStateAction<number>>
-}
+
 function Timer({ minutes, setMinutes, setSeconds, seconds }: IProp) {
 
     const [expired, setExpired] = useState(false);

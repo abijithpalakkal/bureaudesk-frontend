@@ -6,18 +6,12 @@ import addfile from "../../assets/Add Attachments.png"
 import Uibuttons from '../buttons/uibuttons/Uibuttons'
 import { toast } from 'react-toastify'
 import postData from '@/utils/postdata'
+import { tasksubmitmodalIProp } from '@/interface/generic'
 
 
-interface IProp {
-    display: boolean
-    setdisplayModal: any
-    id?:string
-    handleSelect?:any
-    deadline?:any
-    index?:any
-}
 
-const Tasksubmitmodal = ({ setdisplayModal,id,handleSelect,deadline}: IProp) => {
+
+const Tasksubmitmodal = ({ setdisplayModal,id,handleSelect,deadline}: tasksubmitmodalIProp) => {
 
     const [taskDescription, setTaskDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);

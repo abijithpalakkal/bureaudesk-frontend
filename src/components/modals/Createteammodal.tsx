@@ -4,22 +4,13 @@ import fetchData from '../../utils/fetchdata';
 import postData from '../../utils/postdata';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-
-interface Employee {
-  _id: string;
-  Name: string;
-  email: string;
-  position: string;
-}
-
-interface Props {
-  id: string;
-  modal:any
-}
+import { createteammodalEmployee } from '@/interface/generic';
+import { createteammodalProps } from '@/interface/generic';
 
 
-function Createteammodal({ id ,modal}: Props) {
-  const [employee, setEmployee] = useState<Employee[]>([]);
+
+function Createteammodal({ id ,modal}: createteammodalProps) {
+  const [employee, setEmployee] = useState<createteammodalEmployee[]>([]);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [selectedTeamLead, setSelectedTeamLead] = useState<string | null>(null);
   const [teamname, setTeamname] = useState('');

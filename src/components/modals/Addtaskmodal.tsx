@@ -9,12 +9,9 @@ import { RootState } from '@/redux/store'
 import postData from '@/utils/postdata'
 import { toast } from 'react-toastify'
 import fetchData from '@/utils/fetchdata'
+import { IProp } from '@/interface/addtaskmodal'
 
-interface IProp {
-    display: Dispatch<SetStateAction<boolean>>
-    empid?: string
-    dptid?: string
-}
+
 
 const Addtaskmodal = ({ display, empid, dptid }: IProp) => {
   

@@ -6,13 +6,10 @@ import postData from '../../utils/postdata';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { toast } from 'react-toastify';
+import { IProp } from '@/interface/addeventmodal';
 
 
-interface IProp {
-    closemodal: Dispatch<SetStateAction<boolean>>;
-    refresh:any
-    val:Boolean
-}
+
 
 function Addeventmodal({ closemodal,refresh,val }: IProp) {
     const companyid = useSelector((state: RootState) => state.companydetails.company._id)

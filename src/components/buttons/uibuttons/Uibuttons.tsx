@@ -1,9 +1,8 @@
 import "./uibtn.css"
+import { Ibtn } from "@/interface/uibuttons"
 
 
-interface Ibtn{
-    btnname:string
-}
+
 function Uibuttons({btnname}:Ibtn) {
     return (
         <button className="animated-button">

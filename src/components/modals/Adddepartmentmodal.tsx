@@ -3,10 +3,8 @@ import { BiArrowBack } from 'react-icons/bi'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import postData from '../../utils/postdata';
+import { Props } from '@/interface/adddepartmentmodal';
 
-interface Props {
-  modalstatus: Dispatch<SetStateAction<boolean>>;
-};
 
 
 function Adddepartmentmodal({ modalstatus }: Props) {

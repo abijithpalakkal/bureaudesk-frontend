@@ -1,10 +1,8 @@
 import { ReactNode } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
+import { CommonModalProps } from '@/interface/commonmodal';
 
-interface CommonModalProps {
-  children?: ReactNode;
-  onClose: any
-}
+
 
 function Commonmodal({children,onClose}:CommonModalProps) {
   return (

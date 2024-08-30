@@ -9,14 +9,9 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { toast } from 'react-toastify';
 import updateData from '@/utils/updatedata';
+import { muiconfirmationmodalforprojectsiprop } from '@/interface/generic';
 
 
-interface iprop {
-    id?: string
-    refresh?: boolean
-    setrefresh?: any
-    confetti:any
-}
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -26,7 +21,7 @@ const Transition = React.forwardRef(function Transition(
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-const Muiconfirmationmodalforproject = ({ id, refresh, setrefresh,confetti}: iprop) => {
+const Muiconfirmationmodalforproject = ({ id, refresh, setrefresh,confetti}: muiconfirmationmodalforprojectsiprop) => {
 
     const [open, setOpen] = React.useState(false);
 
