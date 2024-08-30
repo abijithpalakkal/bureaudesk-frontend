@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState, Dispatch, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
 import Uibuttons from '../buttons/uibuttons/Uibuttons';
 import { AiOutlineClose } from 'react-icons/ai';
 import logo from "../../assets/logo_without_writing-removebg-preview.png"

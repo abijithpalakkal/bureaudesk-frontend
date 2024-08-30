@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react'
+import {  SyntheticEvent, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

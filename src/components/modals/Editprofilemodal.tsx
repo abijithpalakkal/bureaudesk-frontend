@@ -1,10 +1,9 @@
-import React, { SetStateAction, SyntheticEvent, useEffect, useState } from 'react'
+import React, {  SyntheticEvent, useEffect, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import logo from "../../assets/dummy-profile-pic-300x300-1.png"
 import postData from '../../utils/postdata';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Dispatch } from '@reduxjs/toolkit';
 import fetchData from '../../utils/fetchdata';
 import { editprofilemodalProps } from '@/interface/generic';
 

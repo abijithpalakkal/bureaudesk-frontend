@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import {  useState } from 'react'
 import axios from 'axios';
 import { BiArrowBack } from 'react-icons/bi';
 import { AppDispatch, RootState } from '../../redux/store';

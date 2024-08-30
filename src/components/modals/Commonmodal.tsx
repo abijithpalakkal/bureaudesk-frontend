@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+
 import { BiArrowBack } from 'react-icons/bi'
 import { CommonModalProps } from '@/interface/commonmodal';
 
