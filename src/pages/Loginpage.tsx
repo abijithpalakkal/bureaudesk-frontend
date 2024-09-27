@@ -228,14 +228,14 @@ const loginpage = () => {
                             <div className='border border-gray-300 mt-3 rounded-2xl p-3 text-center'>
                                 <p className='text-sm text-slate-700 mt-1'>Demo user Login Credentials:</p>
                                 <p className='text-slate-500 mt-1 text-xs'>Demo owner Login Credentials:</p>
-                                <p className='text-slate-500 text-xm'>Email: abhijithunni00@gmail.com</p>
-                                <p className='text-slate-500 text-xm'>Password: 123456789as</p>
-                                <p className='text-slate-500 mt-1 text-xm'>Demo manager Login Credentials:</p>
-                                <p className='text-slate-500 text-xm'>Email: dofebi4710@avashost.com</p>
-                                <p className='text-slate-500 text-xm'>Password: 123456789a</p>
-                                <p className='text-slate-500 mt-1 text-xm'>Demo employees Login Credentials:</p>
-                                <p className='text-slate-500 text-xm'>Email: tevek77713@apifan.com</p>
-                                <p className='text-slate-500 text-xm'>Password: 123456789a</p>
+                                <p className='text-slate-500 text-xs'>Email: abhijithunni00@gmail.com</p>
+                                <p className='text-slate-500 text-xs'>Password: 123456789as</p>
+                                <p className='text-slate-500 mt-1 text-xs'>Demo manager Login Credentials:</p>
+                                <p className='text-slate-500 text-xs'>Email: dofebi4710@avashost.com</p>
+                                <p className='text-slate-500 text-xs'>Password: 123456789a</p>
+                                <p className='text-slate-500 mt-1 text-xs'>Demo employees Login Credentials:</p>
+                                <p className='text-slate-500 text-xs'>Email: tevek77713@apifan.com</p>
+                                <p className='text-slate-500 text-xs'>Password: 123456789a</p>
                             </div>
                         </form>
                     </div>
