@@ -225,7 +225,7 @@ const loginpage = () => {
                             <div className="flex items-center justify-center mt-4">
                                 <p className='text-sm'>dont have an account?<span className="text-blue-700 cursor-pointer" onClick={() => { navigate("/signup") }}>sign up</span></p>
                             </div>
-                            <div className='border border-gray-300 mt-5 rounded-2xl p-3 text-center'>
+                            <div className='border border-gray-300 mt-3 rounded-2xl p-3 text-center'>
                                 <p className='text-sm text-slate-700 mt-1'>Demo user Login Credentials:</p>
                                 <p className='text-slate-500 mt-1 text-xs'>Demo owner Login Credentials:</p>
                                 <p className='text-slate-500 text-xm'>Email: abhijithunni00@gmail.com</p>
