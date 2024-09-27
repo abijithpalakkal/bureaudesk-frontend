@@ -11,7 +11,7 @@ import { getCompanyAction } from '../redux/actions/useractions/getCompanyAction'
 import Particles from 'react-tsparticles'
 import { loadSlim } from 'tsparticles-slim'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
-import { CircularProgress } from '@mui/material'
+
 
 
 const loginpage = () => {
