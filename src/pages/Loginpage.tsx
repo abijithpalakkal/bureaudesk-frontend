@@ -217,12 +217,25 @@ const loginpage = () => {
                                 <button
                                     className="bg-blue-500 w-[200px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit"
+                                    disabled={loading}
                                 >
                                     {loading?<CircularProgress/>:"login"}
                                 </button>
                             </div>
                             <div className="flex items-center justify-center mt-4">
                                 <p className='text-sm'>dont have an account?<span className="text-blue-700 cursor-pointer" onClick={() => { navigate("/signup") }}>sign up</span></p>
+                            </div>
+                            <div className='border border-gray-300 mt-5 rounded-2xl p-3 text-center'>
+                                <p className='text-lg text-slate-700 mt-1'>Demo user Login Credentials:</p>
+                                <p className='text-slate-500 mt-2 text-sm'>Demo owner Login Credentials:</p>
+                                <p className='text-slate-500 text-sm'>Email: abhijithunni00@gmail.com</p>
+                                <p className='text-slate-500 text-sm'>Password: 123456789as</p>
+                                <p className='text-slate-500 mt-2 text-sm'>Demo manager Login Credentials:</p>
+                                <p className='text-slate-500 text-sm'>Email: dofebi4710@avashost.com</p>
+                                <p className='text-slate-500 text-sm'>Password: 123456789a</p>
+                                <p className='text-slate-500 mt-2 text-sm'>Demo employees Login Credentials:</p>
+                                <p className='text-slate-500 text-sm'>Email: tevek77713@apifan.com</p>
+                                <p className='text-slate-500 text-sm'>Password: 123456789a</p>
                             </div>
                         </form>
                     </div>
