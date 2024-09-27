@@ -4,16 +4,18 @@ import designlogo from '../assets/theam.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLoginAction } from '../redux/actions/useractions/userActions'
-import { AppDispatch } from '../redux/store'
+import { AppDispatch, RootState } from '../redux/store'
 import { getCompanyAction } from '../redux/actions/useractions/getCompanyAction'
 import Particles from 'react-tsparticles'
 import { loadSlim } from 'tsparticles-slim'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { CircularProgress } from '@mui/material'
 
 
 const loginpage = () => {
+    const loading = useSelector((state:RootState)=>state.userdetails.loading)
     const [_blur, setblur] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
@@ -216,7 +218,7 @@ const loginpage = () => {
                                     className="bg-blue-500 w-[200px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit"
                                 >
-                                    login
+                                    {loading?<CircularProgress/>:"login"}
                                 </button>
                             </div>
                             <div className="flex items-center justify-center mt-4">

@@ -35,7 +35,6 @@ function App() {
   const dispatch = useDispatch<AppDispatch>()
   const userid = useSelector((state: RootState) => state.userdetails.user?._id)
   const role = useSelector((state: RootState) => state.userdetails.user?.Authorization)
-  const loading = useSelector((state:RootState)=>state.userdetails.loading)
   console.log(userid,"undefined")
   
 
@@ -80,9 +79,9 @@ function App() {
         <ToastContainer />
         <Toaster />
         <Routes>
-          <Route path="*" element={loading?<div className="w-screen h-screen flex items-center justify-center text-2xl font-medium">loading...</div>:<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/signup" element={<Signinpage />} />
-          <Route path="/" element={loading?<div className="w-screen h-screen flex items-center justify-center text-2xl font-medium">loading...</div>:<Loginpage />} />
+          <Route path="/" element={<Loginpage />} />
         </Routes>
       </Router>
     )
